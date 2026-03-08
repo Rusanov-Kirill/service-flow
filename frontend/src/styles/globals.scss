@@ -1,0 +1,45 @@
+@use './fonts.scss';
+@use './variables' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: $white;
+    color: $text-primary;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+}
+
+h1 {
+    font-size: $font-size-5xl;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: $black;
+}
+
+h2 {
+    font-size: $font-size-3xl;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: $spacing-md;
+    color: $black;
+}
+
+.section-desc {
+    font-size: $font-size-lg;
+    color: $text-secondary;
+    max-width: 600px;
+    margin: 0 auto $spacing-3xl auto;
+    text-align: center;
+}
