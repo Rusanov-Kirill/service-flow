@@ -67,12 +67,12 @@ export default defineConfig([
         'error', 
         {
           groups: [
-            'builtin',    
-            'external',   
-            'internal',   
-            'parent',     
-            'sibling',    
-            'index',      
+            'builtin',   // встроенные (fs, path) 
+            'external',  // из node_modules (react, lodash) 
+            'internal',  // по алиасам (@/components) 
+            'parent',    // из родительских папок (../) 
+            'sibling',   // из текущей папки (./) 
+            'index',     // индексные файлы (./index) 
           ],
           'newlines-between': 'always', 
           alphabetize: { 
