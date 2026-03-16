@@ -1,0 +1,48 @@
+# Логи бэкенда
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Зависимости
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Сборка бэкенда
+dist
+build
+*.local
+
+# Переменные окружения бэкенда
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Базы данных
+*.sqlite
+*.db
+*.sql
+*.sqlite3
+
+# Тесты и покрытие бэкенда
+coverage
+.nyc_output
+*.lcov
+*.trace
+
+# Docker специфичный для бэкенда
+docker-compose.override.yml
+
+# Сертификаты и ключи 
+*.pem
+*.key
+*.crt
+*.p12
