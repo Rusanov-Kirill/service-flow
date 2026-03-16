@@ -1,0 +1,7 @@
+@use '../styles/variables.scss' as *;
+
+@mixin wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+}
