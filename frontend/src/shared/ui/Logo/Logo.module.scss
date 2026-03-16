@@ -1,0 +1,23 @@
+.logo {
+    font-size: $font-size-2xl;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    user-select: none;
+    cursor: pointer;
+
+    &-footer {
+        color: $white;
+
+        span {
+            color: $gray-muted;
+        }
+    }
+
+    &-header {
+        color: $primary;
+    }
+
+    span {
+        color: $text-primary;
+    }
+}
