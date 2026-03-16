@@ -3,11 +3,14 @@ $primary: #6B4EFF;
 $primary-dark: #5842d4;
 $text-primary: #1A1F2B;
 $text-secondary: #5A657C;
+$nav-text-primary: #2C3442;
 $border-light: #EDF0F5;
 $border: #D0D5E0;
 $bg-light: #F5F7FA;
 $bg-lighter: #F8FAFF;
 $white: #FFFFFF;
+$white-90per: rgba(255, 255, 255, 0.9);
+$gray-muted: #9BA3B5;
 $black: #0A0F1C;
 
 // Отступы
@@ -24,14 +27,16 @@ $radius-sm: 12px;
 $radius-md: 16px;
 $radius-lg: 24px;
 $radius-xl: 32px;
-$radius-full: 40px;
-$radius-round: 60px;
+$radius-2xl: 40px;
+$radius-3xl: 60px;
+$radius-round: 50%;
 
 // Тени
 $shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.02);
 $shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
 $shadow-lg: 0 20px 35px -10px rgba(107, 78, 255, 0.15);
 $shadow-primary: 0 8px 16px -6px rgba(107, 78, 255, 0.3);
+$shadow-primary-hover: 0 12px 20px -8px rgba(107, 78, 255, 0.4);
 
 // Шрифты
 $font-family: 'Inter', sans-serif;
@@ -43,3 +48,9 @@ $font-size-2xl: 1.8rem;
 $font-size-3xl: 2.5rem;
 $font-size-4xl: 3rem;
 $font-size-5xl: 3.5rem;
+
+// Длительности
+$duration-instant: 0.1s;
+$duration-fast: 0.2s;
+$duration-base: 0.3s;
+$duration-slow: 0.5s;
