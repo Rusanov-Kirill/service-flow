@@ -1,0 +1,38 @@
+.header {
+    padding: $spacing-lg 0;
+    border-bottom: 1px solid $border-light;
+    background-color: $white-90per;
+    backdrop-filter: blur(8px);
+    position: relative;
+    top: 0;
+    z-index: 10;
+
+    .wrapper {
+        @include wrapper;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .nav-links {
+            display: flex;
+            gap: $spacing-2xl;
+            align-items: center;
+
+            a {
+                text-decoration: none;
+                color: $nav-text-primary;
+                font-weight: 500;
+                transition: color $duration-fast;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: $spacing-md;
+        }
+    }
+}
