@@ -1,0 +1,44 @@
+.btn {
+  display: inline-block;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-xl - 2px;
+  font-weight: 600;
+  font-size: $font-size-sm;
+  text-decoration: none;
+  transition: all $duration-fast cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  will-change: transform, background-color, box-shadow, border-color;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transform: translateZ(0);
+
+  &-primary {
+    background-color: $primary;
+    color: $white;
+    box-shadow: $shadow-primary;
+
+    &:hover {
+      background-color: $primary-dark;
+      transform: translateY(-2px) translateZ(0);
+      box-shadow: $shadow-primary-hover;
+    }
+  }
+
+  &-secondary {
+    background-color: transparent;
+    color: $text-primary;
+    border: 1px solid $border;
+
+    &:hover {
+      background-color: $bg-light;
+      border-color: $gray-muted;
+      transform: translateY(-2px) translateZ(0);
+    }
+  }
+
+  &-large {
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-md;
+  }
+}
