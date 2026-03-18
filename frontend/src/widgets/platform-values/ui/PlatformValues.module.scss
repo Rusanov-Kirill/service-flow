@@ -5,10 +5,6 @@
     .wrapper {
         @include wrapper;
 
-        h2 {
-            text-align: center
-        }
-
         .values-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
