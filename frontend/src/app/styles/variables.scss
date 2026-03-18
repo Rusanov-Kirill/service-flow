@@ -4,14 +4,21 @@ $primary-dark: #5842d4;
 $text-primary: #1A1F2B;
 $text-secondary: #5A657C;
 $nav-text-primary: #2C3442;
+$border-extra-light: #E0E6ED; 
 $border-light: #EDF0F5;
 $border: #D0D5E0;
 $bg-light: #F5F7FA;
 $bg-lighter: #F8FAFF;
+$bg-switcher: #F0F3F8;
 $white: #FFFFFF;
 $white-90per: rgba(255, 255, 255, 0.9);
+$gray-extra-light: #E6EAF2;
+$gray-soft: #F0F3FF;
 $gray-muted: #9BA3B5;
 $black: #0A0F1C;
+$red: #FF5F5F;
+$yellow: #FFBD2E;
+$green: #28C840;
 
 // Отступы
 $spacing-xs: 8px;
@@ -40,6 +47,9 @@ $shadow-primary-hover: 0 12px 20px -8px rgba(107, 78, 255, 0.4);
 
 // Шрифты
 $font-family: 'Inter', sans-serif;
+$font-size-3xs: 0.8rem;
+$font-size-2xs: 0.9rem;
+$font-size-xs: 0.95rem;
 $font-size-sm: 1rem;
 $font-size-md: 1.125rem;
 $font-size-lg: 1.25rem;
