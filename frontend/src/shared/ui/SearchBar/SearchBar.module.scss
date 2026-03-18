@@ -1,0 +1,14 @@
+.input {
+    flex: 1;
+    padding: $spacing-md $spacing-lg;
+    border: 1px solid $border;
+    border-radius: $radius-2xl;
+    font-size: $font-size-sm;
+    outline: none;
+    transition: border $duration-fast;
+
+    &:focus {
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba(107, 78, 255, 0.1);
+    }
+}
