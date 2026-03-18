@@ -1,0 +1,77 @@
+.hero-client {
+    background: linear-gradient(135deg, #667EEA 0%, $primary 100%);
+    border-radius: $radius-xl;
+    color: $white;
+    padding: $spacing-3xl;
+
+    .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-3xl;
+        align-items: center;
+
+        .hero-client-content {
+            h1 {
+                color: $white;
+                font-size: $font-size-4xl;
+                margin-bottom: $spacing-xs;
+            }
+
+            p {
+                font-size: $font-size-lg - 0.05;
+                color: $white-90per;
+                margin-bottom: $spacing-lg;
+            }
+
+            .search-bar {
+                background: $white;
+                border-radius: $radius-3xl;
+                padding: $spacing-xs;
+                display: flex;
+                margin-bottom: $spacing-lg;
+                box-shadow: $shadow-lg;
+                position: relative;
+
+
+                .search-bar-input {
+                    flex: 1;
+                    padding: $spacing-md $spacing-lg;
+                    border: none;
+                    border-radius: $radius-3xl;
+                    font-size: 1rem;
+                    outline: none;
+                    min-width: 0; 
+                    width: 100%;
+                }
+            }
+
+            .popular-categories {
+                display: flex;
+                gap: $spacing-md;
+                flex-wrap: wrap;
+
+                .category-tag {
+                    background: rgba($white, 0.15);
+                    padding: $spacing-xs $spacing-lg;
+                    border-radius: $radius-2xl;
+                    font-size: $font-size-xs;
+                    color: $white;
+                    cursor: pointer;
+                    transition: background $duration-fast;
+
+                    &:hover {
+                        background: rgba($white, 0.25);
+                    }
+                }
+            }
+        }
+
+        .hero-client-image {
+            background: rgba($white, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: $radius-lg;
+            padding: $spacing-xl;
+            border: 1px solid rgba($white, 0.2);
+        }
+    }
+}
