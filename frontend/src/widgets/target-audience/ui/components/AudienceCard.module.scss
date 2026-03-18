@@ -1,0 +1,54 @@
+.audience-card {
+    background: $white;
+    border-radius: $radius-xl;
+    padding: 2*$spacing-lg $spacing-2xl;
+    transition: transform $duration-base;
+    border: 1px solid $border-light;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 40px -20px rgba(107, 78, 255, 0.2);
+    }
+
+    .audience-icon {
+        width: 70px;
+        height: 70px;
+        background: $gray-soft;
+        border-radius: $radius-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $spacing-lg;
+        font-size: $font-size-2xl;
+        color: $primary;
+    }
+
+    h3 {
+        font-size: $font-size-1-8xl;
+        margin-bottom: $spacing-md;
+    }
+
+    p {
+        color: $text-secondary;
+        font-size: $font-size-md;
+        margin-bottom: $spacing-lg;
+        line-height: 1.6;
+    }
+
+    .audience-features {
+        list-style: none;
+        margin-bottom: $spacing-xl;
+
+        li {
+            padding: $spacing-sm 0;
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            color: $nav-text-primary;
+
+            svg {
+                color: $primary;
+            }
+        }
+    }
+}
