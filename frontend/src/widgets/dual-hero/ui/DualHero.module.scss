@@ -1,0 +1,29 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dual-hero {
+    padding: $spacing-3xl 0 $spacing-2xl;
+    background: linear-gradient(180deg, $white 0%, $bg-lighter 100%);
+
+    .wrapper {
+        @include wrapper;
+
+        .hero-container {
+            position: relative;
+            min-height: 500px;
+
+            .hero-animation {
+                animation: fadeIn $duration-base ease;
+            }
+        }
+    }
+}
