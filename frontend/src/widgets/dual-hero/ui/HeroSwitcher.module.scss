@@ -1,0 +1,30 @@
+.hero-switcher {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+    background: $bg-switcher;
+    padding: $spacing-xs;
+    border-radius: $spacing-3xl;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .switcher-btn {
+        padding: $spacing-xs $spacing-xl;
+        border-radius: $spacing-2xl;
+        border: none;
+        background: transparent;
+        font-weight: 600;
+        font-size: $font-size-sm;
+        cursor: pointer;
+        transition: all $duration-fast;
+        color: $text-secondary;
+
+        &.active {
+            background: $white;
+            color: $primary;
+            box-shadow: $shadow-md;
+        }
+    }
+}
