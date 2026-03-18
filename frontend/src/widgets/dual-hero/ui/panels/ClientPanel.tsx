@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Button from '@/shared/ui/Button';
 import MasterCard from '@/shared/ui/MasterCard';
 import SearchBar from '@/shared/ui/SearchBar';
-import CityDropdown from '@features/ui/CityDropdown';
+import CityDropdown from '@/features/city-dropdown';
 
 import styles from './ClientPanel.module.scss';
 
