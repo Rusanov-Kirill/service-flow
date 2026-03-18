@@ -1,0 +1,40 @@
+.feature-card {
+    background: $white;
+    padding: $spacing-2xl $spacing-lg;
+    border-radius: $radius-xl;
+    border: 1px solid $border-light;
+    transition: all $duration-base ease;
+    text-align: left;
+
+    &:hover {
+        transform: translateY(-8px);
+        border-color: $primary-25;
+        box-shadow: $shadow-lg;
+    }
+
+    .feature-icon {
+        background: $gray-soft;
+        width: 60px;
+        height: 60px;
+        border-radius: $radius-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $spacing-lg;
+
+        svg {
+            font-size: $font-size-1-8xl;
+            color: $primary;
+        }
+    }
+
+    h3 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-sm;
+        font-weight: 600;
+    }
+
+    p {
+        color: $text-secondary;
+    }
+}
