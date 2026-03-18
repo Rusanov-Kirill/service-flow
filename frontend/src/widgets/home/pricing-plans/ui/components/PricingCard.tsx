@@ -1,8 +1,9 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from './PricingCard.module.scss';
 import Button from '@/shared/ui/Button';
+
+import styles from './PricingCard.module.scss';
 
 interface PricingCardProps {
     isPopular?: boolean;
