@@ -1,5 +1,7 @@
 import { faHandshake, faRocket, faClock } from '@fortawesome/free-solid-svg-icons';
 
+import SectionHeading from '@/shared/ui/SectionHeading';
+
 import ValueItem from './components/ValueItem';
 import styles from './PlatformValues.module.scss';
 
@@ -7,8 +9,9 @@ const PlatformValues = () => {
     return (
         <section className={styles.values}>
             <div className={styles.wrapper}>
-                <h2>Экосистема, которая объединяет</h2>
-                <p className='section-desc'>Мы создаем пространство, где специалисты растут, а клиенты находят лучшее</p>
+                <SectionHeading heading='Экосистема, которая объединяет'>
+                    Мы создаем пространство, где специалисты растут, а клиенты находят лучшее
+                </SectionHeading>
                 <div className={styles['values-grid']}>
                     <ValueItem heading='Доверие и прозрачность' icon={faHandshake}>
                         Честные отзывы, реальное расписание, никаких скрытых платежей — всё открыто для обеих сторон
