@@ -1,0 +1,112 @@
+.pricing-card {
+    background: $white;
+    border-radius: $radius-xl;
+    padding: $spacing-2xl $spacing-xl;
+    text-align: left;
+    border: 1px solid $border-light;
+    transition: all $duration-base cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+        transform: translateY(-4px);
+        border-color: $primary;
+        box-shadow: 0 20px 30px -10px rgba(107, 78, 255, 0.3);
+
+        .btn-primary {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px -8px rgba(107, 78, 255, 0.5);
+        }
+
+        .btn-secondary {
+            border-color: $primary;
+            color: $primary;
+            background: rgba(107, 78, 255, 0.05);
+        }
+
+        li {
+            transform: translateX(4px);
+
+            svg {
+                transform: scale(1.2);
+            }
+        }
+
+        .price {
+            color: $primary;
+            transform: scale(1.02);
+
+            span {
+                color: $gray-muted;
+            }
+        }
+    }
+
+    &.popular {
+        border: 2px solid $primary;
+        box-shadow: 0 20px 30px -12px rgba(107, 78, 255, 0.4);
+        background: linear-gradient(145deg, $white, #FAF8FF);
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: $primary;
+            color: $white;
+            padding: 6px 20px;
+            border-radius: $radius-2xl;
+            font-weight: 600;
+            font-size: $font-size-2xs;
+            box-shadow: 0 4px 12px rgba(107, 78, 255, 0.4);
+            transition: all $duration-base ease;
+        }
+
+        &:hover {
+            transform: translateY(-6px);
+            border-color: $primary-darker;
+            box-shadow: 0 25px 40px -15px $primary;
+            background: linear-gradient(145deg, $white, #F5F0FF);
+
+            .popular-badge {
+                background: $primary-darker;
+                transform: translateX(-50%) scale(1.05);
+                box-shadow: 0 6px 16px rgba(107, 78, 255, 0.5);
+            }
+        }
+    }
+
+    .btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    li {
+        padding: $spacing-sm 0;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        color: $nav-text-primary;
+        transition: transform $duration-fast ease;
+
+        svg {
+            color: $primary;
+            transition: transform $duration-base ease;
+        }
+    }
+
+    .price {
+        font-size: $font-size-4xl;
+        font-weight: 700;
+        margin: $spacing-lg 0;
+        transition: all $duration-base ease;
+
+        span {
+            font-size: $font-size-sm;
+            font-weight: 400;
+            color: #7B8A9B;
+            transition: color $duration-base ease;
+        }
+    }
+}
