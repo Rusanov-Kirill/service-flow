@@ -1,0 +1,43 @@
+.city-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 240px;
+    background: $white;
+    border-radius: $radius-lg;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+    padding: $spacing-xs;
+    z-index: 100;
+
+    .city-option {
+        padding: 14px 20px;
+        cursor: pointer;
+        border-radius: $radius-md;
+        transition: all $duration-fast;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        color: $nav-text-primary;
+
+        &:hover {
+            background: $bg-light;
+        }
+
+        &.active {
+            background: $gray-soft;
+            color: $primary;
+            font-weight: 500;
+        }
+
+        & svg {
+            color: $primary;
+            font-size: $font-size-2xs;
+            width: 16px;
+            opacity: 0;
+        }
+
+        &.active svg {
+            opacity: 1;
+        }
+    }
+}

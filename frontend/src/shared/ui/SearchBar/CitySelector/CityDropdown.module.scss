@@ -1,0 +1,56 @@
+.dropdown-open {
+    animation: dropdownFade $duration-fast ease;
+}
+
+.city-selector {
+    position: relative;
+    border-left: 1px solid $border-extra-light;
+
+    .selected-city {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        padding: $spacing-md 20px;
+        cursor: pointer;
+        background: transparent;
+        transition: background $duration-fast;
+        border-radius: $radius-2xl;
+        white-space: nowrap;
+        color: $nav-text-primary;
+        font-weight: 500;
+        user-select: none;
+
+        &:hover {
+            background: $bg-light;
+        }
+
+        svg:first-child {
+            color: $primary;
+            font-size: $font-size-2xs;
+        }
+
+        svg:last-child {
+            font-size: $font-size-3xs;
+            color: $gray-muted;
+            transition: transform $duration-fast;
+        }
+    }
+
+    &.active {
+        .selected-city svg:last-child {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
