@@ -1,0 +1,25 @@
+.preview-card {
+    background: $white;
+    border-radius: $radius-md - 4px;
+    padding: $spacing-md;
+    box-shadow: $shadow-sm;
+
+    .preview-line {
+        height: 12px;
+        background: $gray-extra-light;
+        border-radius: $radius-lg - 4px;
+        margin-bottom: $spacing-sm - 2px;
+
+        &.short {
+            width: 60%;
+        }
+
+        &.width-40 {
+            width: 40%;
+        }
+
+        &.width-70 {
+            width: 70%;
+        }
+    }
+}
