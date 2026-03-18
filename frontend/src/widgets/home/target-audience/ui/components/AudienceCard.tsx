@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@/shared/ui/Button';
 
 import styles from './AudienceCard.module.scss';
+import WidgetHeading from '@/shared/ui/WidgetHeading';
 
 interface AudienceCardProps {
     heading: string;
@@ -17,11 +18,13 @@ interface AudienceCardProps {
 const AudienceCard = ({ heading, description, audienceIcon, features, btnVariant, btnText }: AudienceCardProps) => {
     return (
         <div className={styles['audience-card']}>
-            <div className={styles['audience-icon']}>
-                <FontAwesomeIcon icon={audienceIcon} />
-            </div>
-            <h3>{heading}</h3>
-            <p>{description}</p>
+            <WidgetHeading
+                className={styles['audience-icon']}
+                heading={heading}
+                icon={audienceIcon}
+            >
+                {description}
+            </WidgetHeading>
             <ul className={styles['audience-features']}>
                 {features.map((feature, index) => (
                     <li key={index}>
