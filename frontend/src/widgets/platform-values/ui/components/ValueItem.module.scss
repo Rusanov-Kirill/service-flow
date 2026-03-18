@@ -1,0 +1,27 @@
+.value-item {
+    text-align: center;
+    padding: $spacing-lg;
+
+    .value-icon {
+        width: 80px;
+        height: 80px;
+        background: $gray-soft;
+        border-radius: $radius-2xl;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto $spacing-lg;
+        font-size: 2 * $font-size-sm;
+        color: $primary;
+    }
+
+    h3 {
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-md;
+    }
+
+    p {
+        color: $text-secondary;
+        line-height: 1.6;
+    }
+}
