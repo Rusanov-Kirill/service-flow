@@ -2,10 +2,10 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 
+import CityDropdown from '@/features/city-dropdown';
 import Button from '@/shared/ui/Button';
 import MasterCard from '@/shared/ui/MasterCard';
 import SearchBar from '@/shared/ui/SearchBar';
-import CityDropdown from '@/features/city-dropdown';
 
 import styles from './ClientPanel.module.scss';
 
