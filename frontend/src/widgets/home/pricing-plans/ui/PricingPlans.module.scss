@@ -1,0 +1,16 @@
+.pricing {
+    padding: 80px 0;
+    background-color: $bg-lighter;
+    text-align: center;
+
+    .wrapper {
+        @include wrapper;
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: $spacing-xl;
+            margin-top: $spacing-2xl;
+        }
+    }
+}
