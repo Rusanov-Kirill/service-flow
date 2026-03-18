@@ -1,8 +1,9 @@
 import { useState } from 'react';
+
 import styles from './DualHero.module.scss';
 import HeroSwitcher from './HeroSwitcher.tsx';
-import SpecialistPanel from './panels/SpecialistPanel.tsx';
 import ClientPanel from './panels/ClientPanel.tsx';
+import SpecialistPanel from './panels/SpecialistPanel.tsx';
 
 const DualHero = () => {
     const [isSpecialist, setIsSpecialist] = useState<boolean>(true);

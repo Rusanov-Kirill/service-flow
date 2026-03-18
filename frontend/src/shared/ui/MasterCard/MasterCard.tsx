@@ -1,5 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import styles from './MasterCard.module.scss';
 import type { MasterCardProps } from './MasterCard.types.ts';
 

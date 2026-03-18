@@ -1,5 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBriefcase, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import styles from './HeroSwitcher.module.scss';
 
 interface HeroSwitcherProps {

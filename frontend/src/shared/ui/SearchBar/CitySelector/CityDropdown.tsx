@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapPin, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import CitySelector from "./CitySelector";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+
 import styles from './CityDropdown.module.scss';
+import CitySelector from "./CitySelector";
 
 interface CityDropdownProps {
     selectedCity: string;

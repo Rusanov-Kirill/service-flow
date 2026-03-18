@@ -1,8 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Button from '@/shared/ui/Button';
 import SearchBar from '@/shared/ui/SearchBar';
+
 import DashboardPreview from '../components/DashboardPreview';
+
 import styles from './SpecialistPanel.module.scss';
 
 const SpecialistPanel = () => {

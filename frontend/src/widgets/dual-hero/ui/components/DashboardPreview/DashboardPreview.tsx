@@ -1,4 +1,5 @@
 import PreviewCard from "../PreviewCard/PreviewCard";
+
 import styles from './DashboardPreview.module.scss';
 
 const DashboardPreview = () => {

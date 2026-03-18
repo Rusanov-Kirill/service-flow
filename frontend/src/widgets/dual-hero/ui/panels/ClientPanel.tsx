@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+
 import Button from '@/shared/ui/Button';
-import CityDropdown from '@/shared/ui/SearchBar/CitySelector';
-import SearchBar from '@/shared/ui/SearchBar';
 import MasterCard from '@/shared/ui/MasterCard';
+import SearchBar from '@/shared/ui/SearchBar';
+import CityDropdown from '@/shared/ui/SearchBar/CitySelector';
+
 import styles from './ClientPanel.module.scss';
 
 const ClientPanel = () => {
