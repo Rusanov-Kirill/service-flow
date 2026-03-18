@@ -1,0 +1,41 @@
+.hero-specialist {
+    .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+        gap: $spacing-3xl;
+        align-items: center;
+
+        .hero-content {
+            max-width: 540px;
+
+            h1 {
+                margin-bottom: $spacing-lg;
+            }
+
+            p {
+                font-size: $font-size-lg;
+                color: $text-secondary;
+                margin-bottom: $spacing-xl;
+            }
+        }
+
+        .hero-form {
+            display: flex;
+            gap: $spacing-md;
+            margin-bottom: $spacing-lg;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: $spacing-2xl;
+            color: $text-secondary;
+            font-size: $font-size-xs;
+
+            span svg {
+                color: $primary;
+                margin-right: $spacing-xs;
+            }
+        }
+    }
+}
