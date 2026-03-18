@@ -1,8 +1,8 @@
 import styles from './Button.module.scss';
 import type { ButtonProps } from './Button.types.ts';
 
-const Button = ({ children, variant, size, ...props }: ButtonProps) => {
-    const buttonClasses = [
+const Button = ({ children, variant, size, isSearch, ...props }: ButtonProps) => {
+    const buttonClasses = isSearch ? styles['search-btn'] : [
         styles.btn,
         styles[`btn-${variant}`],
         styles[`btn-${size}`],

@@ -42,3 +42,38 @@
     font-size: $font-size-md;
   }
 }
+
+.search-btn {
+  background: $primary;
+  border: none;
+  color: $white;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $radius-3xl;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $duration-base cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, background-color;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  white-space: nowrap;
+
+  span {
+    font-size: $font-size-2xs;
+  }
+
+  &:hover {
+    background: $primary-dark;
+    transform: scale(1.06);
+  }
+
+  & svg {
+    width: $font-size-sm;
+    font-size: $font-size-sm;
+    transition: transform $duration-base cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover svg {
+    transform: scale(1.15) rotate(-3deg);
+  }
+}
