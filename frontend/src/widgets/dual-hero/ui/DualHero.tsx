@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import HeroSwitcher from '@features/ui/HeroSwitcher';
+
 import styles from './DualHero.module.scss';
-import HeroSwitcher from './HeroSwitcher.tsx';
 import ClientPanel from './panels/ClientPanel.tsx';
 import SpecialistPanel from './panels/SpecialistPanel.tsx';
 
