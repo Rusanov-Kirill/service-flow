@@ -1,0 +1,15 @@
+.for-whom {
+    padding: 100px 0;
+    background: $bg-lighter;
+
+    .wrapper {
+        @include wrapper;
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: $spacing-xl;
+            margin-top: $spacing-2xl;
+        }
+    }
+}
