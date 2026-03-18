@@ -2,8 +2,8 @@ import { faStore, faUserClock } from '@fortawesome/free-solid-svg-icons';
 
 import SectionHeading from '@/shared/ui/SectionHeading';
 
-import styles from './TargetAudience.module.scss';
 import AudienceCard from './components/AudienceCard';
+import styles from './TargetAudience.module.scss';
 
 const TargetAudience = () => {
     const specialistFeatures = [
