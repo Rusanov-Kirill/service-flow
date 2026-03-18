@@ -1,0 +1,52 @@
+$dashboard-padding: $spacing-lg - 4px;
+
+.hero-image {
+    background: $white;
+    border-radius: $radius-lg;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
+    padding: $dashboard-padding;
+    border: 1px solid $border-light;
+
+    .dashboard-preview {
+        background-color: $bg-light;
+        border-radius: $radius-md;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        .preview-header {
+            background-color: $white;
+            padding: $spacing-md;
+            display: flex;
+            gap: $spacing-xs;
+            border-bottom: 1px solid $border-extra-light;
+
+            .preview-circle {
+                width: 12px;
+                height: 12px;
+                border-radius: $radius-round;
+                background-color: $border;
+
+                &.red {
+                    background-color: $red;
+                }
+
+                &.yellow {
+                    background-color: $yellow;
+                }
+
+                &.green {
+                    background-color: $green;
+                }
+            }
+        }
+
+        .preview-content {
+            padding: $dashboard-padding;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: $spacing-md;
+        }
+    }
+}
