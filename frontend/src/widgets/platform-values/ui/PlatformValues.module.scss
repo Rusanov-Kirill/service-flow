@@ -1,0 +1,19 @@
+.values {
+    padding: 100px 0;
+    background: $white;
+
+    .wrapper {
+        @include wrapper;
+
+        h2 {
+            text-align: center
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: $spacing-2xl;
+            margin-top: $spacing-2xl;
+        }
+    }
+}
