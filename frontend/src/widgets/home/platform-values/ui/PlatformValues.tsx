@@ -1,13 +1,14 @@
 import { faHandshake, faRocket, faClock } from '@fortawesome/free-solid-svg-icons';
+import { forwardRef } from 'react';
 
 import SectionHeading from '@/shared/ui/SectionHeading';
 
 import ValueItem from './components/ValueItem';
 import styles from './PlatformValues.module.scss';
 
-const PlatformValues = () => {
+const PlatformValues = forwardRef<HTMLDivElement>((_, ref) => {
     return (
-        <section className={styles.values}>
+        <section ref={ref} className={styles.values}>
             <div className={styles.wrapper}>
                 <SectionHeading heading='Экосистема, которая объединяет'>
                     Мы создаем пространство, где специалисты растут, а клиенты находят лучшее
@@ -26,6 +27,8 @@ const PlatformValues = () => {
             </div>
         </section>
     );
-};
+});
+
+PlatformValues.displayName = 'PlatformValues';
 
 export default PlatformValues;

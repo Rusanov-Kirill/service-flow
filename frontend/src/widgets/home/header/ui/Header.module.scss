@@ -14,11 +14,14 @@
         align-items: center;
 
         .nav-links {
+            cursor: pointer;
             display: flex;
             gap: $spacing-2xl;
             align-items: center;
 
-            a {
+            button {
+                border: 0;
+                background-color: transparent;
                 text-decoration: none;
                 color: $nav-text-primary;
                 font-weight: 500;

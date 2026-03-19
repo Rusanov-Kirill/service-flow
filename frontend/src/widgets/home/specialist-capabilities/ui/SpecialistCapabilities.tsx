@@ -1,13 +1,14 @@
 import { faCalendarCheck, faWallet, faUsers, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { forwardRef } from 'react';
 
 import SectionHeading from '@/shared/ui/SectionHeading';
 
 import FeatureCard from './components/FeatureCard';
 import styles from './SpecialistCapabilities.module.scss';
 
-const SpecialistCapabilities = () => {
+const SpecialistCapabilities = forwardRef<HTMLDivElement>((_, ref) => {
     return (
-        <section className={styles['for-specialists']}>
+        <section ref={ref} className={styles['for-specialists']}>
             <div className={styles.wrapper}>
                 <SectionHeading heading='Возможности для специалистов'>
                     Всё необходимое для профессионального роста
@@ -29,6 +30,8 @@ const SpecialistCapabilities = () => {
             </div>
         </section>
     );
-};
+});
+
+SpecialistCapabilities.displayName = 'SpecialistCapabilities';
 
 export default SpecialistCapabilities;

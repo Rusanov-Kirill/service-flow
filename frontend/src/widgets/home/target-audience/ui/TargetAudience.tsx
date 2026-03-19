@@ -1,11 +1,12 @@
 import { faStore, faUserClock } from '@fortawesome/free-solid-svg-icons';
+import { forwardRef } from 'react';
 
 import SectionHeading from '@/shared/ui/SectionHeading';
 
 import AudienceCard from './components/AudienceCard';
 import styles from './TargetAudience.module.scss';
 
-const TargetAudience = () => {
+const TargetAudience = forwardRef<HTMLDivElement>((_, ref) => {
     const specialistFeatures = [
         'Календарь и онлайн-запись 24/7',
         'Финансовый учёт и отчёты',
@@ -21,7 +22,7 @@ const TargetAudience = () => {
     ];
 
     return (
-        <section className={styles['for-whom']}>
+        <section ref={ref} className={styles['for-whom']}>
             <div className={styles.wrapper}>
                 <SectionHeading heading='Для кого ServiceFlow'>
                     Универсальное решение для двух миров
@@ -47,6 +48,8 @@ const TargetAudience = () => {
             </div>
         </section>
     );
-};
+});
+
+TargetAudience.displayName = 'TargetAudience';
 
 export default TargetAudience;

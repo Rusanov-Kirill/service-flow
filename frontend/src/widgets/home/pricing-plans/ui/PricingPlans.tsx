@@ -1,9 +1,11 @@
+import { forwardRef } from 'react';
+
 import SectionHeading from '@/shared/ui/SectionHeading';
 
 import PricingCard from './components/PricingCard';
 import styles from './PricingPlans.module.scss';
 
-const PricingPlans = () => {
+const PricingPlans = forwardRef<HTMLDivElement>((_, ref) => {
     const startFeatures = [
         'До 10 записей в месяц',
         'База клиентов',
@@ -24,7 +26,7 @@ const PricingPlans = () => {
     ];
 
     return (
-        <section className={styles.pricing}>
+        <section ref={ref} className={styles.pricing}>
             <div className={styles.wrapper}>
                 <SectionHeading heading='Тарифы для специалистов'>
                     Растём вместе с вами. Можно начать бесплатно.
@@ -56,6 +58,8 @@ const PricingPlans = () => {
             </div>
         </section>
     );
-};
+});
+
+PricingPlans.displayName = 'PricingPlans';
 
 export default PricingPlans;
