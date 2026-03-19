@@ -35,6 +35,8 @@ $spacing-2xs: $spacing-xs - 4px;
     }
 
     .rating {
+        display: flex;
+        align-items: center;
         color: $yellow;
         margin-left: auto;
         font-weight: 700;

@@ -1,10 +1,11 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { memo } from 'react';
 
 import styles from './MasterCard.module.scss';
 import type { MasterCardProps } from './MasterCard.types.ts';
 
-const MasterCard = ({ initials, name, specialty, rating }: MasterCardProps) => {
+const MasterCard =  memo(({ initials, name, specialty, rating }: MasterCardProps) => {
     return (
         <div className={styles['master-card']}>
             <div className={styles['master-avatar']}>{initials}</div>
@@ -17,6 +18,6 @@ const MasterCard = ({ initials, name, specialty, rating }: MasterCardProps) => {
             </div>
         </div>
     );
-};
+});
 
 export default MasterCard;

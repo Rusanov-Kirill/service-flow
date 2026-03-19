@@ -1,6 +1,5 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
 
 import CityDropdown from '@/features/city-dropdown';
 import Button from '@/shared/ui/Button';
@@ -9,10 +8,9 @@ import SearchBar from '@/shared/ui/SearchBar';
 
 import styles from './ClientPanel.module.scss';
 
-const ClientPanel = () => {
-    const [selectedCity, setSelectedCity] = useState('Москва');
-    const categories = ['Красота', 'Образование', 'Фитнес', 'Ремонт', 'Консультации'];
+const categories = ['Красота', 'Образование', 'Фитнес', 'Ремонт', 'Консультации'];
 
+const ClientPanel = () => {
     return (
         <div className={styles['hero-client']}>
             <div className={styles.wrapper}>
@@ -22,10 +20,7 @@ const ClientPanel = () => {
 
                     <div className={styles['search-bar']}>
                         <SearchBar className={styles['search-bar-input']} type="text" placeholder="Что ищете?" />
-                        <CityDropdown 
-                            selectedCity={selectedCity}
-                            onCityChange={setSelectedCity}
-                        />
+                        <CityDropdown />
                         <Button isSearch>
                             <FontAwesomeIcon icon={faSearch} />
                             <span>Найти</span>

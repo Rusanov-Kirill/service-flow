@@ -38,10 +38,9 @@
                     padding: $spacing-md $spacing-lg;
                     border: none;
                     border-radius: $radius-3xl;
-                    font-size: 1rem;
+                    font-size: $font-size-sm;
                     outline: none;
-                    min-width: 0; 
-                    width: 100%;
+                    width: 243px;
                 }
             }
 
@@ -72,6 +71,10 @@
             border-radius: $radius-lg;
             padding: $spacing-xl;
             border: 1px solid rgba($white, 0.2);
+
+            :last-child {
+                margin-bottom: 0;
+            }
         }
     }
 }
