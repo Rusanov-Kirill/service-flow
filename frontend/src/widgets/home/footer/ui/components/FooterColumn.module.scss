@@ -1,0 +1,22 @@
+.footer-col {
+    h4 {
+        color: $white;
+        margin-bottom: $spacing-lg;
+        font-size: $font-size-lg; 
+        font-weight: 600;
+    }
+
+    a {
+        cursor: pointer;
+        display: block;
+        color: $gray-muted;
+        text-decoration: none;
+        margin-bottom: $spacing-sm;
+        transition: color $duration-fast;
+        font-size: $font-size-sm;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+}
