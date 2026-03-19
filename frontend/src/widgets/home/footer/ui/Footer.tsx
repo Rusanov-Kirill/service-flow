@@ -1,10 +1,10 @@
 import { faTelegram, faVk, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import FooterColumn from './components/FooterColumn';
-
-import styles from './Footer.module.scss';
 import Logo from '@/shared/ui/Logo';
+
+import FooterColumn from './components/FooterColumn';
+import styles from './Footer.module.scss';
 
 const Footer = () => {
     const firstLinks = ['Возможности', 'Тарифы', 'Для самозанятых'];
