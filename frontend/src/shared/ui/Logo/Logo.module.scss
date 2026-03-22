@@ -3,6 +3,7 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     user-select: none;
+    transform: translateY(-2px);
     cursor: pointer;
 
     &-footer {
@@ -19,5 +20,13 @@
         span {
             color: $text-primary;
         }
+    }
+
+    @media (max-width: 1023px) and (min-width: 768px) {
+        font-size: $font-size-lg;
+    }
+
+    @media (max-width: 529px) {
+        font-size: $font-size-lg;
     }
 }
