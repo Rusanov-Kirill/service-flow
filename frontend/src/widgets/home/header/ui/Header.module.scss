@@ -1,9 +1,9 @@
 .header {
-    padding: $spacing-lg 0;
+    padding: $spacing-md 0;
     border-bottom: 1px solid $border-light;
     background-color: $white-90per;
     backdrop-filter: blur(8px);
-    position: relative;
+    position: sticky;
     top: 0;
     z-index: 10;
 
@@ -13,29 +13,222 @@
         justify-content: space-between;
         align-items: center;
 
-        .nav-links {
-            cursor: pointer;
+        .burger {
+            display: none;
+            border: none;
+            flex-shrink: 0;
+            border-radius: $radius-sm;
+            background-color: $bg-light-blue;
+            width: $font-size-3xl;
+            padding: 8px;
+            z-index: 9999;
+
+            svg path {
+                fill: $text-primary;
+            }
+        }
+
+        .dropdown-menu {
             display: flex;
-            gap: $spacing-2xl;
-            align-items: center;
 
-            button {
-                border: 0;
-                background-color: transparent;
-                text-decoration: none;
-                color: $nav-text-primary;
-                font-weight: 500;
-                transition: color $duration-fast;
+            .nav-links {
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                gap: $spacing-2xl;
+                align-items: center;
 
-                &:hover {
-                    color: $primary;
+                button {
+                    border: 0;
+                    background-color: transparent;
+                    text-decoration: none;
+                    color: $nav-text-primary;
+                    font-weight: 500;
+                    transition: color $duration-fast;
+
+                    &:hover {
+                        color: $primary;
+                    }
                 }
+            }
+
+            .sign-in {
+                display: none;
             }
         }
 
         .auth-buttons {
             display: flex;
             gap: $spacing-md;
+        }
+    }
+
+    @media (max-width: 1300px) and (min-width: 1024px) {
+        .wrapper {
+            .nav-links {
+                gap: $spacing-lg;
+
+                button {
+                    font-size: $font-size-xs;
+                }
+            }
+
+            .auth-buttons {
+                button {
+                    font-size: $font-size-xs;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .wrapper {
+            padding: 0 $spacing-lg;
+
+            .dropdown-menu {
+                padding: 0 $spacing-lg;
+
+                .nav-links {
+                    gap: $spacing-sm;
+
+                    button {
+                        font-size: $font-size-3xs;
+                    }
+                }
+            }
+
+            .auth-buttons {
+                gap: $spacing-xs;
+
+                button {
+                    padding: $spacing-sm $spacing-md;
+                    font-size: $font-size-3xs;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 767px) and (min-width: 530px) {
+        .wrapper {
+            padding: 0 $spacing-md;
+            flex-wrap: wrap;
+            gap: $spacing-md;
+
+            .dropdown-menu {
+                order: 3;
+                width: 100%;
+
+                .nav-links {
+                    width: 100%;
+                    justify-content: space-between;
+                    gap: $spacing-lg;
+                    margin-top: $spacing-sm;
+                    padding: $spacing-sm $spacing-md;
+                }
+            }
+
+            .auth-buttons {
+                gap: $spacing-sm;
+
+                button {
+                    padding: $spacing-sm $spacing-md;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        .wrapper {
+            padding: 0 $spacing-lg;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: $spacing-xs;
+
+            .burger {
+                display: flex;
+                order: 3;
+            }
+
+            .dropdown-menu {
+                display: flex;
+                flex-direction: column;
+                order: 3;
+                position: absolute;
+                top: calc(100% + $spacing-md);
+                left: 0;
+                margin: 0 $spacing-md;
+                border-radius: $radius-md;
+                width: calc(100% - (2 * $spacing-md));
+                background-color: $white;
+                box-shadow: 0 0 24px 0 rgba($black, 0.1);
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all $duration-fast;
+                z-index: 9999;
+
+                .nav-links {
+                    flex-direction: column;
+                    width: 100%;
+                    padding: $spacing-md 0;
+                    margin-top: $spacing-md;
+                    gap: $spacing-lg;
+
+                    button {
+                        font-size: $font-size-xs;
+                    }
+                }
+
+                .sign-in {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    align-self: center;
+                    width: 80%;
+                    margin: $spacing-md 0;
+                    padding: $spacing-sm $spacing-md;
+                    border: 0;
+                    border-radius: $radius-sm;
+                    background-color: $bg-light-blue;
+                    font-weight: 600;
+                    box-shadow: 0px 0px 8px 3px rgba(34, 60, 80, 0.1);
+                }
+
+
+                &.open {
+                    transform: translateY(0);
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+
+            .auth-buttons {
+                display: flex;
+                order: 2;
+                margin-left: auto;
+
+                button {
+                    padding: $spacing-sm $spacing-sm;
+                    font-size: $font-size-2xs;
+
+                    &:first-child {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 370px) {
+        .wrapper {
+            flex-wrap: nowrap;
+
+            .auth-buttons {
+                button {
+                    padding: $spacing-xs $spacing-sm;
+                    font-size: $font-size-3xs;
+                }
+            }
         }
     }
 }
