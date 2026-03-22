@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 
 import { HomePageSectionRefsContext } from '@/pages/home/context';
-import Button from '@shared/ui/Button';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
+import Button from '@shared/ui/Button';
 import Logo from '@shared/ui/Logo';
 
 import styles from './Header.module.scss';
@@ -15,22 +15,22 @@ const Header = () => {
     const handleScrollValues = () => {
         refs?.platformValuesRef?.current?.scrollIntoView();
         setIsMenuOpen(!isMenuOpen);
-    }
+    };
 
     const handleScrollAudience = () => {
         refs?.targetAudienceRef?.current?.scrollIntoView();
         setIsMenuOpen(!isMenuOpen);
-    }
+    };
 
     const handleScrollCapabilities = () => {
         refs?.specialistCapabilitiesRef?.current?.scrollIntoView();
         setIsMenuOpen(!isMenuOpen);
-    }
+    };
 
     const handleScrollPricing = () => {
         refs?.pricingRef?.current?.scrollIntoView();
         setIsMenuOpen(!isMenuOpen);
-    }
+    };
 
     return (
         <header className={styles.header}>

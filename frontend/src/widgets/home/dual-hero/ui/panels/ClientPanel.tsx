@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import CityDropdown from '@/features/city-dropdown';
 import Button from '@/shared/ui/Button';
-import MasterCard from '@/shared/ui/MasterCard';
 import InputField from '@/shared/ui/InputField';
+import MasterCard from '@/shared/ui/MasterCard';
 
 import styles from './ClientPanel.module.scss';
 
