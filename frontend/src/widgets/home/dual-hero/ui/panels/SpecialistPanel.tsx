@@ -2,7 +2,7 @@ import { faCheckCircle, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Button from '@/shared/ui/Button';
-import SearchBar from '@/shared/ui/SearchBar';
+import InputField from '@/shared/ui/InputField';
 
 import DashboardPreview from '../components/DashboardPreview';
 
@@ -18,7 +18,7 @@ const SpecialistPanel = () => {
                         доходов/расходов и аналитика без сложностей.
                     </p>
                     <div className={styles['hero-form']}>
-                        <SearchBar type='email' placeholder='Введите ваш email' />
+                        <InputField type='email' placeholder='Введите ваш email' />
                         <Button variant='primary' size='large'>Начать бесплатно</Button>
                     </div>
                     <div className={styles['hero-stats']}>

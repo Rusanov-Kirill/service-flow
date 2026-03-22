@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CityDropdown from '@/features/city-dropdown';
 import Button from '@/shared/ui/Button';
 import MasterCard from '@/shared/ui/MasterCard';
-import SearchBar from '@/shared/ui/SearchBar';
+import InputField from '@/shared/ui/InputField';
 
 import styles from './ClientPanel.module.scss';
 
@@ -19,7 +19,7 @@ const ClientPanel = () => {
                     <p>Парикмахеры, маникюр, репетиторы, фитнес-тренеры и другие специалисты рядом с вами</p>
 
                     <div className={styles['search-bar']}>
-                        <SearchBar className={styles['search-bar-input']} type="text" placeholder="Что ищете?" />
+                        <InputField className={styles['search-bar-input']} type="text" placeholder="Что ищете?" />
                         <CityDropdown />
                         <Button isSearch>
                             <FontAwesomeIcon icon={faSearch} />
