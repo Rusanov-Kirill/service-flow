@@ -12,12 +12,14 @@
 
         .hero-client-content {
             h1 {
+                text-align: left;
                 color: $white;
                 font-size: $font-size-4xl;
                 margin-bottom: $spacing-xs;
             }
 
             p {
+                text-align: left;
                 font-size: $font-size-lg - 0.05;
                 color: $white-90per;
                 margin-bottom: $spacing-lg;

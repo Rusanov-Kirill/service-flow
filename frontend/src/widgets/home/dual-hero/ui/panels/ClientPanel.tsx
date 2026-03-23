@@ -5,6 +5,7 @@ import CityDropdown from '@/features/city-dropdown';
 import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
 import MasterCard from '@/shared/ui/MasterCard';
+import SectionHeading from '@/shared/ui/SectionHeading';
 
 import styles from './ClientPanel.module.scss';
 
@@ -15,9 +16,9 @@ const ClientPanel = () => {
         <div className={styles['hero-client']}>
             <div className={styles.wrapper}>
                 <div className={styles['hero-client-content']}>
-                    <h1>Найди мастера и запишись онлайн</h1>
-                    <p>Парикмахеры, маникюр, репетиторы, фитнес-тренеры и другие специалисты рядом с вами</p>
-
+                    <SectionHeading heading='Найди мастера и запишись онлайн' headingLevel='1'>
+                        Парикмахеры, маникюр, репетиторы, фитнес-тренеры и другие специалисты рядом с вами
+                    </SectionHeading>
                     <div className={styles['search-bar']}>
                         <InputField className={styles['search-bar-input']} type="text" placeholder="Что ищете?" />
                         <CityDropdown />
