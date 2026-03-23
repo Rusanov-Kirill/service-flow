@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
+import SectionHeading from '@/shared/ui/SectionHeading';
 
 import DashboardPreview from '../components/DashboardPreview';
 
@@ -13,10 +14,10 @@ const SpecialistPanel = () => {
         <div className={styles['hero-specialist']}>
             <div className={styles.wrapper}>
                 <div className={styles['hero-content']}>
-                    <h1>Управляй бронированиями и финансами в одном окне</h1>
-                    <p>ServiceFlow — SaaS-платформа для самозанятых и малого бизнеса. Онлайн-запись, учет
+                    <SectionHeading heading='Управляй бронированиями и финансами в одном окне' headingLevel='1'>
+                        ServiceFlow — SaaS-платформа для самозанятых и малого бизнеса. Онлайн-запись, учет
                         доходов/расходов и аналитика без сложностей.
-                    </p>
+                    </SectionHeading>
                     <div className={styles['hero-form']}>
                         <InputField type='email' placeholder='Введите ваш email' />
                         <Button variant='primary' size='large'>Начать бесплатно</Button>
@@ -30,7 +31,9 @@ const SpecialistPanel = () => {
                         </span>
                     </div>
                 </div>
-                <DashboardPreview />
+                <div className={styles.dashboard}>
+                    <DashboardPreview/>
+                </div>
             </div>
         </div>
     );

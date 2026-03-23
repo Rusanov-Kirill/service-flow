@@ -11,31 +11,145 @@
 
             h1 {
                 margin-bottom: $spacing-lg;
+                text-align: left;
             }
 
             p {
+                text-align: left;
                 font-size: $font-size-lg;
                 color: $text-secondary;
                 margin-bottom: $spacing-xl;
             }
-        }
 
-        .hero-form {
-            display: flex;
-            gap: $spacing-md;
-            margin-bottom: $spacing-lg;
-        }
+            .hero-form {
+                display: flex;
+                gap: $spacing-md;
+                margin-bottom: $spacing-lg;
 
-        .hero-stats {
-            display: flex;
-            gap: $spacing-2xl;
-            color: $text-secondary;
-            font-size: $font-size-xs;
+                button {
+                    flex-shrink: 0;
+                }
+            }
 
-            span svg {
-                color: $primary;
-                margin-right: $spacing-xs;
+            .hero-stats {
+                display: flex;
+                gap: $spacing-2xl;
+                color: $text-secondary;
+                font-size: $font-size-xs;
+
+                span svg {
+                    color: $primary;
+                    margin-right: $spacing-xs;
+                }
             }
         }
     }
+
+    @media (max-width: 1300px) and (min-width: 1024px) {
+        .wrapper {
+            .hero-content {
+                .hero-form {
+                    button {
+                        font-size: $font-size-xs;
+                        padding: $spacing-xs $spacing-md;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .wrapper {
+            grid-template-columns: 1fr 0.7fr;
+
+            .hero-content {
+                h1 {
+                    font-size: $font-size-3xl;
+                }
+
+                p {
+                    font-size: $font-size-md;
+                }
+
+                .hero-form {
+                    input {
+                        max-width: 225px;
+                        font-size: $font-size-2xs;
+                        padding-right: $spacing-md;
+                    }
+
+                    button {
+                        flex-shrink: 0;
+                        font-size: $font-size-2xs;
+                        padding: $spacing-xs $spacing-md;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 767px) and (min-width: 530px) {
+        .wrapper {
+            grid-template-columns: 1fr;
+
+            .hero-content {
+                min-width: 100%;
+
+                p {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+
+                .hero-form {
+                    @media (max-width: 570px) {
+                        input {
+                            max-width: 235px;
+                        }
+                    }
+                }
+            }
+
+            .dashboard {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        .wrapper {
+            grid-template-columns: 1fr;
+
+            .hero-content {
+                h1 {
+                    font-size: $font-size-2xl;
+                }
+
+                p {
+                    font-size: $font-size-md;
+                }
+
+                .hero-form {
+                    flex-direction: column;
+                }
+
+                .hero-stats {
+                    justify-content: space-between;
+                }
+            }
+
+            .dashboard {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 370px) {
+        .wrapper {
+            .hero-content {
+                .hero-stats {
+                    font-size: $font-size-3xs;
+                }
+            }
+        }
+    } 
 }
