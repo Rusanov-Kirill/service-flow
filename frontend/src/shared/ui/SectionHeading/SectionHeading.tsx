@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"; 
 
+import styles from './SectionHeading.module.scss';
+
 interface SectionHeadingProps {
     children: ReactNode;
     heading: string;
@@ -8,10 +10,10 @@ interface SectionHeadingProps {
 
 const SectionHeading = ({ children, heading, headingLevel }: SectionHeadingProps) => {
     return (
-        <>
-            {headingLevel === '1' ? <h1 style={{ textAlign: 'center' }}>{heading}</h1> : <h2 style={{ textAlign: 'center' }}>{heading}</h2>}
+        <div className={styles.container}>
+            {headingLevel === '1' ? <h1>{heading}</h1> : <h2>{heading}</h2>}
             <p className='section-desc'>{children}</p>
-        </>
+        </div>
     );
 };
 
