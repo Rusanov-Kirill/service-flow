@@ -2,14 +2,14 @@ import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ReactNode } from 'react';
 
-interface FeatureCardProps {
+interface WidgetHeadingProps {
     children: ReactNode;
     className?: string;
     icon: IconDefinition;
     heading: string;
 }
 
-const WidgetHeading = ({ children, className, icon, heading }: FeatureCardProps) => {
+const WidgetHeading = ({ children, className, icon, heading }: WidgetHeadingProps) => {
     return (
         <>
             <div className={className}>
