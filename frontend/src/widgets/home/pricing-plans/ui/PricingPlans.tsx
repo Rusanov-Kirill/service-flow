@@ -28,7 +28,7 @@ const PricingPlans = forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <section ref={ref} className={styles.pricing}>
             <div className={styles.wrapper}>
-                <SectionHeading heading='Тарифы для специалистов'>
+                <SectionHeading heading='Тарифы для специалистов' headingLevel='2'>
                     Растём вместе с вами. Можно начать бесплатно.
                 </SectionHeading>
                 <div className={styles['pricing-grid']}>

@@ -10,7 +10,7 @@ const PlatformValues = forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <section ref={ref} className={styles.values}>
             <div className={styles.wrapper}>
-                <SectionHeading heading='Экосистема, которая объединяет'>
+                <SectionHeading heading='Экосистема, которая объединяет' headingLevel='2'>
                     Мы создаем пространство, где специалисты растут, а клиенты находят лучшее
                 </SectionHeading>
                 <div className={styles['values-grid']}>

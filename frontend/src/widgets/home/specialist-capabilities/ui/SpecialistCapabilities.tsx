@@ -10,7 +10,7 @@ const SpecialistCapabilities = forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <section ref={ref} className={styles['for-specialists']}>
             <div className={styles.wrapper}>
-                <SectionHeading heading='Возможности для специалистов'>
+                <SectionHeading heading='Возможности для специалистов' headingLevel='2'>
                     Всё необходимое для профессионального роста
                 </SectionHeading>
                 <div className={styles['features-grid']}>

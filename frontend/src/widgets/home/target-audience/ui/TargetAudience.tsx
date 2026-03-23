@@ -24,7 +24,7 @@ const TargetAudience = forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <section ref={ref} className={styles['for-whom']}>
             <div className={styles.wrapper}>
-                <SectionHeading heading='Для кого ServiceFlow'>
+                <SectionHeading heading='Для кого ServiceFlow' headingLevel='2'>
                     Универсальное решение для двух миров
                 </SectionHeading>
                 <div className={styles['audience-grid']}>
