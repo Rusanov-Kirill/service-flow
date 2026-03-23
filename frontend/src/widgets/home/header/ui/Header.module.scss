@@ -46,8 +46,10 @@
                     font-weight: 500;
                     transition: color $duration-fast;
 
-                    &:hover {
-                        color: $primary;
+                    @media (hover: hover) and (pointer: fine) {
+                        &:hover {
+                            color: $primary;
+                        }
                     }
                 }
             }
@@ -108,41 +110,11 @@
         }
     }
 
-    @media (max-width: 767px) and (min-width: 530px) {
+    @media (max-width: 767px) {
         .wrapper {
             padding: 0 $spacing-md;
-            flex-wrap: wrap;
-            gap: $spacing-md;
-
-            .dropdown-menu {
-                order: 3;
-                width: 100%;
-
-                .nav-links {
-                    width: 100%;
-                    justify-content: space-between;
-                    gap: $spacing-lg;
-                    margin-top: $spacing-sm;
-                    padding: $spacing-sm $spacing-md;
-                }
-            }
-
-            .auth-buttons {
-                gap: $spacing-sm;
-
-                button {
-                    padding: $spacing-sm $spacing-md;
-                }
-            }
-        }
-    }
-
-    @media (max-width: 529px) {
-        .wrapper {
-            padding: 0 $spacing-lg;
-            flex-wrap: wrap;
             justify-content: flex-start;
-            gap: $spacing-xs;
+            gap: $spacing-md;
 
             .burger {
                 display: flex;
@@ -206,11 +178,23 @@
                 display: flex;
                 order: 2;
                 margin-left: auto;
+                gap: $spacing-xs;
 
                 button {
                     padding: $spacing-sm $spacing-sm;
                     font-size: $font-size-2xs;
+                }
+            }
+        }
+    }
 
+    @media (max-width: 529px) {
+        .wrapper {
+            padding: 0 $spacing-lg;
+            gap: $spacing-xs;
+
+            .auth-buttons {
+                button {
                     &:first-child {
                         display: none;
                     }
