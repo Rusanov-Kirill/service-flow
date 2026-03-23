@@ -48,5 +48,13 @@ $dashboard-padding: $spacing-lg - 4px;
             grid-template-columns: 1fr 1fr;
             gap: $spacing-md;
         }
+
+        @media (max-width: 1023px) and (min-width: 768px) {
+            height: 400px;
+
+            .preview-content {
+                grid-template-columns: 1fr;
+            }
+        }
     }
 }
