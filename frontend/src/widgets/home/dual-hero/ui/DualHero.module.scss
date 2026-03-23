@@ -26,4 +26,10 @@
             }
         }
     }
+
+    @media (max-width: 767px) and (min-width: 530px) {
+        .wrapper {
+            padding: 0 $spacing-lg;
+        }
+    }
 }
