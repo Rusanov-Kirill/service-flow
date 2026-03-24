@@ -1,13 +1,14 @@
 .city-dropdown {
     position: absolute;
     top: calc(100% + 8px);
-    left: 0;
+    right: 0;
     min-width: 240px;
     background: $white;
     border-radius: $radius-lg;
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
     padding: $spacing-xs;
     z-index: 100;
+    
 
     .city-option {
         padding: 14px 20px;

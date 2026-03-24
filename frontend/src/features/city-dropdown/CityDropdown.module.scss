@@ -1,10 +1,10 @@
-.dropdown-open {
-    animation: dropdownFade $duration-fast ease;
-}
+$spacing-2xs: $spacing-xs - 2px;
 
 .city-selector {
     position: relative;
     border-left: 1px solid $border-extra-light;
+    display: flex;
+    align-items: center;
 
     .selected-city {
         display: flex;
@@ -41,16 +41,28 @@
             transform: rotate(180deg);
         }
     }
-}
 
-@keyframes dropdownFade {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
+    @media (max-width: 767px) {
+        .selected-city {
+            padding: $spacing-xs;
+
+            span {
+                font-size: $font-size-3xs;
+            }
+        }
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    @media (max-width: 529px) {
+        flex-shrink: 0;
+        background-color: $white;
+        border-radius: 0 $radius-3xl $radius-3xl 0;
+
+        .selected-city {
+            padding: $spacing-2xs;
+            
+            span {
+                display: none;
+            }
+        }
     }
 }
