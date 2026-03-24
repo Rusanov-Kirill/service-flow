@@ -73,9 +73,165 @@
             border-radius: $radius-lg;
             padding: $spacing-xl;
             border: 1px solid rgba($white, 0.2);
+            overflow: hidden;
 
             :last-child {
                 margin-bottom: 0;
+            }
+        }
+    }
+
+    @media (max-width: 1300px) and (min-width: 1024px) {
+        padding: $spacing-xl;
+
+        .wrapper {
+            gap: $spacing-xl;
+
+            .hero-client-content {
+                h1 {
+                    font-size: $font-size-3xl;
+                }
+
+                p {
+                    font-size: $font-size-md;
+                    margin-bottom: $spacing-md;
+                }
+
+                .search-bar {
+                    padding: $spacing-xs;
+                    margin-bottom: $spacing-md;
+                    box-shadow: $shadow-lg;
+
+                    .search-bar-input {
+                        padding: $spacing-xs $spacing-md;
+                        font-size: $font-size-xs;
+                        width: auto;
+                    }
+                }
+            }
+
+            .hero-client-image {
+                padding: $spacing-md;
+            }
+        }
+    }
+
+    @media (max-width: 1023px) {
+        padding-right: 1.3 * $spacing-3xl;
+
+        .wrapper {
+            grid-template-columns: 1fr;
+
+            .hero-client-content {
+                p {
+                    font-size: $font-size-xl;
+                    margin-inline: 0;
+                    max-width: 100%;
+                }
+
+                .search-bar {
+                    width: 90%;
+                    min-width: 555px;
+
+                    .search-bar-input {
+                        font-size: $font-size-md;
+                        width: 0;
+                    }
+                }
+
+                .popular-categories {
+                    .category-tag {
+                        font-size: $font-size-md;
+                    }
+                }
+            }
+
+            .hero-client-image {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 767px) {
+        padding: $spacing-xl;
+
+        .wrapper {
+            .hero-client-content {
+                h1 {
+                    font-size: $font-size-3xl;
+                }
+
+                p {
+                    font-size: $font-size-md;
+                }
+
+                .search-bar {
+                    width: 100%;
+                    min-width: 0;
+
+                    .search-bar-input {
+                        padding: $spacing-xs $spacing-md;
+                        font-size: $font-size-2xs;
+                        width: 0;
+                    }
+                }
+
+                .popular-categories {
+                    .category-tag {
+                        font-size: $font-size-2xs;
+                    }
+                }
+            }
+
+            .hero-client-image {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        .wrapper {
+            .hero-client-content {
+                h1 {
+                    font-size: $font-size-2xl;
+                }
+
+                p {
+                    font-size: $font-size-sm;
+                }
+
+                .search-bar {
+                    flex-wrap: wrap;
+                    background: transparent;
+                    padding: 0;
+
+                    .search-bar-input {
+                        width: 100%;
+                        padding: $spacing-xs $spacing-md;
+                        font-size: $font-size-3xs;
+                        width: 0;
+                        background-color: $white;
+                        border-radius: $radius-3xl 0 0 $radius-3xl;
+                    }
+
+                    button {
+                        width: 100%; 
+                        margin-top: $spacing-xs;
+                        background-color: $white;
+                        color: $text-secondary;
+                        justify-content: center;
+                    }
+                }
+
+                .popular-categories {
+                    .category-tag {
+                        font-size: $font-size-3xs;
+                    }
+                }
+            }
+
+            .hero-client-image {
+                display: none;
             }
         }
     }
