@@ -1,5 +1,6 @@
 $master-card-space-rad: $spacing-lg - 4px;
 $spacing-2xs: $spacing-xs - 4px;
+$spacing-3xs: $spacing-xs - 8px;
 
 .master-card {
     background: $white;
@@ -22,6 +23,12 @@ $spacing-2xs: $spacing-xs - 4px;
         color: $primary;
         font-weight: bold;
         user-select: none;
+        flex-shrink: 0;
+    }
+
+    .master-info {
+        flex: 1;           
+        min-width: 0;      
     }
 
     .master-info h4 {
@@ -32,6 +39,9 @@ $spacing-2xs: $spacing-xs - 4px;
         color: $text-secondary;
         font-size: $font-size-2xs;
         margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .rating {
@@ -40,5 +50,31 @@ $spacing-2xs: $spacing-xs - 4px;
         color: $yellow;
         margin-left: auto;
         font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 1300px) and (min-width: 1024px) {
+        padding: $spacing-sm;
+        gap: $spacing-xs;
+
+        .master-avatar {
+            width: 40px;
+            height: 40px;
+        }
+
+        .master-info {
+            h4 {
+                font-size: $font-size-xs;
+                margin-bottom: $spacing-3xs;
+            }
+
+            p {
+                font-size: $font-size-2xs;
+            }
+        }
+
+        .rating {
+            font-size: $font-size-2xs;
+        }
     }
 }
