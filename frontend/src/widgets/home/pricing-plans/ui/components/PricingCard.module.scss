@@ -96,6 +96,10 @@
         }
     }
 
+    button {
+        margin-top: $spacing-sm;
+    }
+
     .price {
         font-size: $font-size-4xl;
         font-weight: 700;
@@ -107,6 +111,26 @@
             font-weight: 400;
             color: #7B8A9B;
             transition: color $duration-base ease;
+        }
+    }
+
+    @media (max-width: 1023px) {
+        .price {
+            font-size: $font-size-xl;
+            margin: $spacing-sm 0;
+        }
+
+        li {
+            font-size: $font-size-xs;
+        }
+    }
+
+    @media (max-width: 529px) {
+        padding: $spacing-xl $spacing-md;
+        height: 100%;
+
+        li {
+            font-size: $font-size-2xs;
         }
     }
 }
