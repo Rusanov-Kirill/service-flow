@@ -13,4 +13,22 @@
             margin-top: $spacing-2xl;
         }
     }
+
+    @media (max-width: 1300px) {
+        .wrapper {
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        .wrapper {
+            padding: 0 $spacing-md;
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
 }

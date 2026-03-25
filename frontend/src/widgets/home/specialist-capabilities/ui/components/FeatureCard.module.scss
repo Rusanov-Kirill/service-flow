@@ -37,4 +37,14 @@
     p {
         color: $text-secondary;
     }
+
+    @media (max-width: 767px) {
+        h3 {
+            font-size: $font-size-lg;
+        }
+
+        p {
+            font-size: $font-size-xs;
+        }
+    }
 }
