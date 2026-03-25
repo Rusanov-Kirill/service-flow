@@ -12,4 +12,12 @@
             margin-top: $spacing-2xl;
         }
     }
+
+    @media (max-width: 768px) {
+        .wrapper {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
 }

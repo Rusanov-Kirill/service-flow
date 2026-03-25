@@ -1,6 +1,7 @@
 .value-item {
     text-align: center;
     padding: $spacing-lg;
+    justify-items: center;
 
     .value-icon {
         width: 80px;
@@ -11,7 +12,7 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto $spacing-lg;
-        font-size: 2 * $font-size-sm;
+        font-size: $font-size-2xl;
         color: $primary;
     }
 
@@ -23,5 +24,27 @@
     p {
         color: $text-secondary;
         line-height: 1.6;
+    }
+
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            font-size: $font-size-1-8xl;
+        }
+
+        h3 {
+            font-size: $font-size-lg;
+        }
+
+        p {
+            font-size: $font-size-xs;
+        }
+    }
+
+    @media (max-width: 767px) {
+        p {
+            width: 80%;
+        }
     }
 }
