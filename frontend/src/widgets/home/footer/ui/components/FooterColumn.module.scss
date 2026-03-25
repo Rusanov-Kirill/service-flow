@@ -19,4 +19,10 @@
             color: $primary;
         }
     }
+
+    @media (max-width: 767px) {
+        h4 {
+            line-height: 1.9;
+        }
+    }
 }

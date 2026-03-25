@@ -25,7 +25,7 @@
                     a {
                         cursor: pointer;
                         color: #CBD5E0;
-                        font-size: $font-size-xl; 
+                        font-size: $font-size-xl;
                         transition: color $duration-fast;
 
                         &:hover {
@@ -42,6 +42,30 @@
             border-top: 1px solid $nav-text-primary;
             color: #7B8A9B;
             font-size: $font-size-2xs;
+        }
+    }
+
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .wrapper {
+            .footer-grid {
+                gap: $spacing-xl;
+            }
+        }
+    }
+
+    @media (max-width: 767px) {
+        .wrapper {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        .wrapper {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
         }
     }
 }
