@@ -32,4 +32,10 @@
             padding: 0 $spacing-lg;
         }
     }
+
+    @media (max-width: 529px) {
+        .wrapper {
+            padding: 0 $spacing-md;
+        }
+    }
 }
