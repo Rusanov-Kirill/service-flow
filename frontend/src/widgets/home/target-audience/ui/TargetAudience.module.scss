@@ -12,4 +12,13 @@
             margin-top: $spacing-2xl;
         }
     }
+
+    @media (max-width: 767px) {
+        .wrapper {
+            padding: 0 $spacing-md;
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
 }
