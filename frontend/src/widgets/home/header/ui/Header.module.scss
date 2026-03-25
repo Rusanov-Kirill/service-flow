@@ -1,11 +1,11 @@
 .header {
-    padding: $spacing-md 0;
+    padding: $spacing-lg 0 $spacing-md;
     border-bottom: 1px solid $border-light;
-    background-color: $white-90per;
+    background-color: $white;
     backdrop-filter: blur(8px);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000;
 
     .wrapper {
         @include wrapper;
