@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 
-type LogoType = 'footer' | 'header';
+type LogoType = 'primary' | 'secondary';
 
 export interface LogoProps extends HTMLAttributes<HTMLDivElement> {
     type: LogoType; 

@@ -35,7 +35,7 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.wrapper}>
-                <Logo type='header' />
+                <Logo type='primary' />
                 <Button
                     className={styles.burger}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}

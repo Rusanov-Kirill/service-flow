@@ -16,7 +16,7 @@ const Footer = () => {
             <div className={styles.wrapper}>
                 <div className={styles['footer-grid']}>
                     <div className={styles['footer-col']}>
-                        <Logo type='footer' />
+                        <Logo type='secondary' />
                         <p>Платформа для специалистов и их клиентов. Бронирование, финансы, коммуникация.</p>
                         <div className={styles['social-links']}>
                             <a aria-label="Telegram">
