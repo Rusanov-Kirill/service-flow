@@ -1,10 +1,10 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo, useState } from 'react';
 import { useForm, FormProvider, useFormContext } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import FormField from '@/shared/ui/auth/FormField';
-import ProgressBar from '@/shared/ui/ProgressBar';
 import Button from '@/shared/ui/Button';
+import ProgressBar from '@/shared/ui/ProgressBar';
 
 import { registerSchema } from '../model/RegisterForm.types';
 import type { RegisterFormData } from '../model/RegisterForm.types';

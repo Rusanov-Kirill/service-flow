@@ -1,13 +1,12 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 
+import styles from '../../register/ui/RegisterForm.module.scss';
 import { loginSchema } from '../model/LoginForm.types';
 import type { LoginFormData } from '../model/LoginForm.types';
-
-import styles from '../../register/ui/RegisterForm.module.scss';
 
 const LoginForm = () => {
     const { register, handleSubmit, formState: { errors }, trigger } = useForm<LoginFormData>({
