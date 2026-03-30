@@ -5,10 +5,12 @@ import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
 import Button from '@shared/ui/Button';
 import Logo from '@shared/ui/Logo';
+import { useRedirect } from '@/shared/utils/useRedirect';
 
 import styles from './Header.module.scss';
 
 const Header = () => {
+    const { redirectToLogin, redirectToRegister } = useRedirect();
     const refs = useContext(HomePageSectionRefsContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -53,8 +55,8 @@ const Header = () => {
                     <Button className={styles['sign-in']}>Войти</Button>
                 </div>
                 <div className={styles['auth-buttons']}>
-                    <Button variant='secondary'>Войти</Button>
-                    <Button variant='primary'>Регистрация</Button>
+                    <Button variant='secondary' onClick={redirectToLogin}>Войти</Button>
+                    <Button variant='primary' onClick={redirectToRegister}>Регистрация</Button>
                 </div>
             </div>
         </header>

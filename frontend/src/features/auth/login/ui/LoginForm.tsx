@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form';
 
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
+import { useRedirect } from '@/shared/utils/useRedirect';
 
 import styles from '../../register/ui/RegisterForm.module.scss';
 import { loginSchema } from '../model/LoginForm.types';
 import type { LoginFormData } from '../model/LoginForm.types';
 
 const LoginForm = () => {
+    const { redirectToRegister } = useRedirect();
     const { register, handleSubmit, formState: { errors }, trigger } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         mode: "onBlur",
@@ -24,11 +26,6 @@ const LoginForm = () => {
             console.log('Логин:', data);
             // TODO: отправка на сервер
         }
-    };
-
-    const handleRegisterClick = () => {
-        console.log('Переход на регистрацию');
-        // TODO: редирект на /register
     };
 
     return (
@@ -65,7 +62,7 @@ const LoginForm = () => {
                 <Button
                     type="button"
                     className={styles['auth-link']}
-                    onClick={handleRegisterClick}
+                    onClick={redirectToRegister}
                 >
                    Регистрация
                 </Button>
