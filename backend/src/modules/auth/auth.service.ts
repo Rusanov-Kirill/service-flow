@@ -1,7 +1,8 @@
 import { hashPassword, comparePassword } from '../../shared/utils/bcrypt';
 import { generateAccessToken, generateRefreshToken } from '../../shared/utils/jwt';
 import { authRepository } from './auth.repository';
-import { RegisterInput, LoginInput, AuthResponse } from './auth.types';
+import { AuthResponse } from './auth.types';
+import { RegisterInput, LoginInput } from './auth.validation';
 
 export const authService = {
     register: async (input: RegisterInput): Promise<AuthResponse> => {
