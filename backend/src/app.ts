@@ -4,10 +4,12 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import path from 'path';
+// import path from 'path';
+
+import authRoutes from './modules/auth/auth.routes';
 
 import { config } from './shared/config';
-// import { errorHandler } from './shared/middleware/error.middleware';
+ import { errorHandler } from './shared/middleware/error.middleware';
 
 const app = express();
 
@@ -36,16 +38,15 @@ if (config.nodeEnv === 'development') {
     app.use(morgan('dev'));
 }
 
-// Routes 
-// app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
+// Routes
+app.use('/api/auth', authRoutes);
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Error handling
-// app.use(errorHandler);
+app.use(errorHandler);
 
 export default app;
