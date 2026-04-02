@@ -5,7 +5,7 @@ const resend = new Resend(config.resend.apiKey);
 
 export const emailService = {
     sendVerificationEmail: async (to: string, token: string) => {
-        const verificationUrl = `${config.frontendUrl}/verify-email?token=${token}`;
+        const verificationUrl = `${config.frontendUrl}/auth/verify-email?token=${token}`;
         
         const { data, error } = await resend.emails.send({
             from: config.resend.fromEmail,
