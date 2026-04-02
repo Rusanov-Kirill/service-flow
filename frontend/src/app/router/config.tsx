@@ -3,6 +3,8 @@ export const ROUTES = {
     AUTH: {
         LOGIN: '/auth/login',
         REGISTER: '/auth/register',
+        VERIFY_EMAIL_PENDING: '/auth/verify-email-pending',
+        VERIFY_EMAIL: '/auth/verify-email'
     },
     NOT_FOUND: '*',
 } as const;
