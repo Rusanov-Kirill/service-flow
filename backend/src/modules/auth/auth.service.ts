@@ -1,5 +1,7 @@
+import { randomBytes } from 'crypto';
 import { hashPassword, comparePassword } from '../../shared/utils/bcrypt';
 import { generateAccessToken, generateRefreshToken } from '../../shared/utils/jwt';
+import { emailService } from '../../shared/utils/email.service';
 import { authRepository } from './auth.repository';
 import { AuthResponse } from './auth.types';
 import { RegisterInput, LoginInput } from './auth.validation';
@@ -18,6 +20,16 @@ export const authService = {
             passwordHash,
             firstName: input.firstName,
             lastName: input.lastName
+        });
+
+        const verificationToken = randomBytes(32).toString('hex');
+        const verificationExpiresAt = new Date();
+        verificationExpiresAt.setHours(verificationExpiresAt.getHours() + 24);
+
+        await authRepository.updateVerificationToken(user.id, verificationToken, verificationExpiresAt);
+
+        emailService.sendVerificationEmail(user.email, verificationToken).catch(err => {
+            console.error('Failed to send verification email:', err);
         });
 
         const payload = { userId: user.id, email: user.email };
@@ -112,5 +124,30 @@ export const authService = {
 
     logout: async (refreshToken: string): Promise<void> => {
         await authRepository.deleteSession(refreshToken);
+    },
+
+    verifyEmail: async (token: string): Promise<void> => {
+        const user = await authRepository.verifyEmail(token);
+        if (!user) {
+            throw new Error('Invalid or expired verification token');
+        }
+    },
+
+    resendVerification: async (email: string): Promise<void> => {
+        const user = await authRepository.findByEmail(email);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        if (user.emailVerified) {
+            throw new Error('Email already verified');
+        }
+
+        const verificationToken = randomBytes(32).toString('hex');
+        const expiresAt = new Date();
+        expiresAt.setHours(expiresAt.getHours() + 24);
+
+        await authRepository.updateVerificationToken(user.id, verificationToken, expiresAt);
+        await emailService.sendVerificationEmail(user.email, verificationToken);
     }
 };
