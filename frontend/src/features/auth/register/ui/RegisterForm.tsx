@@ -71,7 +71,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [serverError, setServerError] = useState<string | null>(null);
+    const [_, setServerError] = useState<string | null>(null);
 
     const methods = useForm<RegisterFormData>({
         resolver: zodResolver(registerSchema),
