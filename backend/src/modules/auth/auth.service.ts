@@ -126,11 +126,37 @@ export const authService = {
         await authRepository.deleteSession(refreshToken);
     },
 
-    verifyEmail: async (token: string): Promise<void> => {
+    verifyEmail: async (token: string): Promise<AuthResponse> => {
         const user = await authRepository.verifyEmail(token);
+
         if (!user) {
             throw new Error('Invalid or expired verification token');
         }
+
+        const payload = { userId: user.id, email: user.email };
+        const accessToken = generateAccessToken(payload);
+        const refreshToken = generateRefreshToken(payload);
+
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 7);
+
+        await authRepository.createSession({
+            userId: user.id,
+            refreshToken,
+            expiresAt
+        });
+
+        return {
+            accessToken,
+            refreshToken,
+            user: {
+                id: user.id,
+                email: user.email,
+                firstName: user.firstName ?? '',
+                lastName: user.lastName ?? '',
+                emailVerified: user.emailVerified
+            }
+        };
     },
 
     resendVerification: async (email: string): Promise<void> => {

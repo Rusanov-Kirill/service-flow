@@ -134,13 +134,24 @@ export const authController = {
                 return;
             }
 
-            await authService.verifyEmail(token);
+            const result = await authService.verifyEmail(token);
 
-            res.json({ success: true, message: 'Email verified successfully' });
-            // res.redirect(`${config.frontendUrl}/login?verified=true`);
+            res.cookie('refreshToken', result.refreshToken, {
+                httpOnly: true,
+                secure: process.env['NODE_ENV'] === 'production',
+                sameSite: 'strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+
+            res.json({
+                success: true,
+                data: {
+                    accessToken: result.accessToken,
+                    user: result.user
+                }
+            });
         } catch (error: any) {
             res.status(400).json({ success: false, error: error.message });
-            // res.redirect(`${config.frontendUrl}/login?verified=false&error=${error.message}`);
         }
     },
 
