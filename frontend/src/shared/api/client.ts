@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+import { authApi } from './authApi';
+
+import { useAuthStore } from '@app/store/authStore';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const apiClient = axios.create({
@@ -11,20 +15,53 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('accessToken');
+    const token = useAuthStore.getState().accessToken;
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
 });
 
+let isRefreshing = false;
+
 apiClient.interceptors.response.use(
     (response) => response,
-    (error) => {
-        if (error.response?.status === 401) {
-            // TODO: позже добавим refresh логику
-            console.log('Не авторизован');
+    async (error) => {
+        const originalRequest = error.config;
+
+        if (
+            error.response?.status === 401 &&
+            !originalRequest._retry &&
+            !originalRequest.url?.includes('/auth/refresh')
+        ) {
+            originalRequest._retry = true;
+
+            if (!isRefreshing) {
+                isRefreshing = true;
+
+                try {
+                    console.log('[REFRESH TRY]');
+                    const response = await authApi.refresh();
+
+                    const { accessToken, user } = response.data.data;
+
+                    useAuthStore.getState().setAuth(accessToken, user);
+                } catch (e) {
+                    useAuthStore.getState().logout();
+                    return Promise.reject(e);
+                } finally {
+                    isRefreshing = false;
+                }
+            }
+
+            const token = useAuthStore.getState().accessToken;
+
+            if (token) {
+                originalRequest.headers.Authorization = `Bearer ${token}`;
+                return apiClient(originalRequest);
+            }
         }
+
         return Promise.reject(error);
     }
 );
