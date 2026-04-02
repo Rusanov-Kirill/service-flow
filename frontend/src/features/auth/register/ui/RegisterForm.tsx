@@ -1,7 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo, useState } from 'react';
 import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
+import { ROUTES } from '@/app/router/config';
+import { authApi } from '@/shared/api/authApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import ProgressBar from '@/shared/ui/ProgressBar';
@@ -9,7 +12,7 @@ import ProgressBar from '@/shared/ui/ProgressBar';
 import { registerSchema } from '../model/RegisterForm.types';
 import type { RegisterFormData } from '../model/RegisterForm.types';
 
-import styles from './RegisterForm.module.scss';
+import styles from '../../shared-styles/AuthForms.module.scss';
 
 const Step1 = () => {
     const { register, formState: { errors } } = useFormContext<RegisterFormData>();
@@ -65,7 +68,10 @@ const Step3 = () => {
 };
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [serverError, setServerError] = useState<string | null>(null);
 
     const methods = useForm<RegisterFormData>({
         resolver: zodResolver(registerSchema),
@@ -97,9 +103,21 @@ const RegisterForm = () => {
         setStep(step - 1);
     };
 
-    const onSubmit = (data: RegisterFormData) => {
-        console.log('Регистрация:', data);
-        // TODO: отправка на сервер
+    const onSubmit = async (data: RegisterFormData) => {
+        setIsLoading(true);
+        setServerError(null);
+
+        try {
+            const response = await authApi.register(data);
+
+            if (response.data.success) {
+                navigate(ROUTES.AUTH.VERIFY_EMAIL_PENDING, { state: { email: data.email } });
+            }
+        } catch (error: any) {
+            setServerError(error.response?.data?.error || 'Ошибка регистрации');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleConfirm = async () => {
@@ -146,7 +164,7 @@ const RegisterForm = () => {
                             onClick={handleConfirm}
                             variant="primary"
                         >
-                            Подтвердить
+                            {isLoading ? 'Подтверждение...' : 'Подтвердить'}
                         </Button>
                     ) : (
                         <Button type="button" onClick={onNext} variant="primary">
