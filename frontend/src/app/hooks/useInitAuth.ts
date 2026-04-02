@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useAuthStore } from '@app/store/authStore';
+
+import { useAuthStore } from '@/app/store/authStore';
 import { authApi } from '@/shared/api/authApi';
 
 export const useInitAuth = () => {
@@ -26,5 +27,5 @@ export const useInitAuth = () => {
         };
 
         init();
-    }, []);
+    }, [setAuth, logout, setInitialized]);
 };

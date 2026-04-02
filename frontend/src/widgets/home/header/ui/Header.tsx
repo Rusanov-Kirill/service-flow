@@ -3,9 +3,9 @@ import { useContext, useState } from 'react';
 import { HomePageSectionRefsContext } from '@/pages/home/context';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
+import { useRedirect } from '@/shared/utils/useRedirect';
 import Button from '@shared/ui/Button';
 import Logo from '@shared/ui/Logo';
-import { useRedirect } from '@/shared/utils/useRedirect';
 
 import styles from './Header.module.scss';
 

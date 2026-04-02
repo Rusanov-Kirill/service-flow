@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { authApi } from './authApi';
-
 import { useAuthStore } from '@app/store/authStore';
+
+import { authApi } from './authApi';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -40,7 +40,6 @@ apiClient.interceptors.response.use(
                 isRefreshing = true;
 
                 try {
-                    console.log('[REFRESH TRY]');
                     const response = await authApi.refresh();
 
                     const { accessToken, user } = response.data.data;

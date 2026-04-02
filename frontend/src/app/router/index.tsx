@@ -1,7 +1,8 @@
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import GuestRoute from './GuestRoute';
+
 import { ROUTES } from './config';
+import GuestRoute from './GuestRoute';
 
 const HomePage = lazy(() => import('@/pages/home'));
 const AuthPage = lazy(() => import('@/pages/auth'));

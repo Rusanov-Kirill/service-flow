@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '@/app/router/config';
 
 export const useRedirect = () => {
