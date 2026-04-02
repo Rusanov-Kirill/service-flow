@@ -57,5 +57,29 @@ export const authRepository = {
         await prisma.session.deleteMany({
             where: { userId: userId }
         });
-    }
+    },
+
+    updateVerificationToken: async (userId: string, token: string, expiresAt: Date) => {
+        return prisma.user.update({
+            where: { id: userId },
+            data: {
+                verificationToken: token,
+                verificationExpires: expiresAt
+            }
+        });
+    },
+
+    verifyEmail: async (token: string): Promise<User | null> => {
+        return prisma.user.update({
+            where: {
+                verificationToken: token,
+                verificationExpires: { gt: new Date() }
+            },
+            data: {
+                emailVerified: true,
+                verificationToken: null,
+                verificationExpires: null
+            }
+        });
+    },
 };
