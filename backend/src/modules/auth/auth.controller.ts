@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+// import { config } from '../../shared/config'
 import { authService } from './auth.service';
 import { registerSchema, loginSchema } from './auth.validation';
 
@@ -62,7 +63,7 @@ export const authController = {
             if (error.name === 'ZodError') {
                 res.status(400).json({
                     success: false,
-                    error: error.errors[0].message
+                    error: error?.errors[0]?.message
                 });
                 return;
             }
@@ -122,6 +123,39 @@ export const authController = {
             });
         } catch (error: any) {
             res.status(500).json({ success: false, error: error.message });
+        }
+    },
+
+    verifyEmail: async (req: Request, res: Response) => {
+        try {
+            const { token } = req.query;
+            if (!token || typeof token !== 'string') {
+                res.status(400).json({ success: false, error: 'Token required' });
+                return;
+            }
+
+            await authService.verifyEmail(token);
+
+            res.json({ success: true, message: 'Email verified successfully' });
+            // res.redirect(`${config.frontendUrl}/login?verified=true`);
+        } catch (error: any) {
+            res.status(400).json({ success: false, error: error.message });
+            // res.redirect(`${config.frontendUrl}/login?verified=false&error=${error.message}`);
+        }
+    },
+
+    resendVerification: async (req: Request, res: Response) => {
+        try {
+            const { email } = req.body;
+            if (!email) {
+                res.status(400).json({ success: false, error: 'Email required' });
+                return;
+            }
+
+            await authService.resendVerification(email);
+            res.json({ success: true, message: 'Verification email sent' });
+        } catch (error: any) {
+            res.status(400).json({ success: false, error: error.message });
         }
     }
 };
