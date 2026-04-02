@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthStore } from '@app/store/authStore';
+import { useAuthStore } from '@/app/store/authStore';
 import { authApi } from '@/shared/api/authApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
@@ -40,8 +41,10 @@ const LoginForm = () => {
                 setAuth(response.data.data.accessToken, response.data.data.user);
                 navigate('/dashboard');
             }
-        } catch (error: any) {
+        } catch (err) {
+            const error = err as AxiosError<{ error: string }>;
             const message = error.response?.data?.error;
+
             if (message === 'Please verify your email first') {
                 setServerError('Подтвердите email перед входом. Проверьте почту.');
             } else {

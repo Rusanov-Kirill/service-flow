@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { AxiosError } from 'axios';
 import { useMemo, useState } from 'react';
 import { useForm, FormProvider, useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -9,10 +10,9 @@ import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import ProgressBar from '@/shared/ui/ProgressBar';
 
+import styles from '../../shared-styles/AuthForms.module.scss';
 import { registerSchema } from '../model/RegisterForm.types';
 import type { RegisterFormData } from '../model/RegisterForm.types';
-
-import styles from '../../shared-styles/AuthForms.module.scss';
 
 const Step1 = () => {
     const { register, formState: { errors } } = useFormContext<RegisterFormData>();
@@ -113,7 +113,8 @@ const RegisterForm = () => {
             if (response.data.success) {
                 navigate(ROUTES.AUTH.VERIFY_EMAIL_PENDING, { state: { email: data.email } });
             }
-        } catch (error: any) {
+        } catch (err) {
+            const error = err as AxiosError<{ error: string }>;
             setServerError(error.response?.data?.error || 'Ошибка регистрации');
         } finally {
             setIsLoading(false);

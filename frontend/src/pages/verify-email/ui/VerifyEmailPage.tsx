@@ -1,6 +1,9 @@
+import type { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+
 import { apiClient } from '@/shared/api/client';
+
 import styles from './VerifyEmailPage.module.scss';
 
 const VerifyEmailPage = () => {
@@ -12,24 +15,22 @@ const VerifyEmailPage = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!token) {
-      setStatus('error');
-      setError('Токен не найден');
-      return;
-    }
-
     const verify = async () => {
-      try {
-        // Здесь мы просто вызываем API verifyEmail
-        await apiClient.get(`/auth/verify-email?token=${token}`);
+      if (!token) {
+        setStatus('error');
+        setError('Токен не найден');
+        return;
+      }
 
+      try {
+        await apiClient.get(`/auth/verify-email?token=${token}`);
         setStatus('success');
 
-        // Редирект на страницу входа через 1.5 секунды
         setTimeout(() => navigate('/login?verified=true'), 1500);
-      } catch (err: any) {
+      } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
         setStatus('error');
-        setError(err.response?.data?.error || 'Ошибка подтверждения');
+        setError(error.response?.data?.error || 'Ошибка подтверждения');
       }
     };
 
