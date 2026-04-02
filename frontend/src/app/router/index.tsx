@@ -1,22 +1,44 @@
 import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+import GuestRoute from './GuestRoute';
 import { ROUTES } from './config';
 
 const HomePage = lazy(() => import('@/pages/home'));
 const AuthPage = lazy(() => import('@/pages/auth'));
+const VerifyEmailPendingPage = lazy(() => import('@/pages/verify-email-pending'));
+const VerifyEmailPage = lazy(() => import('@/pages/verify-email'));
+
 
 export const router = createBrowserRouter([
     {
         path: ROUTES.HOME,
-        element: <HomePage />,
+        element: (
+            <HomePage />
+        ),
     },
     {
         path: ROUTES.AUTH.LOGIN,
-        element: <AuthPage variant="login" />,
+        element: (
+            <GuestRoute>
+                <AuthPage variant="login" />
+            </GuestRoute>
+        ),
     },
     {
         path: ROUTES.AUTH.REGISTER,
-        element: <AuthPage variant="register" />,
+        element: (
+            <GuestRoute>
+                <AuthPage variant="register" />
+            </GuestRoute>
+        ),
+    },
+    {
+        path: ROUTES.AUTH.VERIFY_EMAIL_PENDING,
+        element: <VerifyEmailPendingPage />,
+    },
+    {
+        path: ROUTES.AUTH.VERIFY_EMAIL,
+        element: <VerifyEmailPage />,
     },
     {
         path: ROUTES.NOT_FOUND,
