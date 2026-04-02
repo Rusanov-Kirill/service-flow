@@ -29,7 +29,6 @@
     "noUncheckedIndexedAccess": true,
 
     /* Paths & Aliases */
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
