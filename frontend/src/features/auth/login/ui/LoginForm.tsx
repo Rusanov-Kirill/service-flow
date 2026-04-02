@@ -1,17 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
+import { useAuthStore } from '@app/store/authStore';
+import { authApi } from '@/shared/api/authApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import { useRedirect } from '@/shared/utils/useRedirect';
 
-import styles from '../../register/ui/RegisterForm.module.scss';
+import styles from '../../shared-styles/AuthForms.module.scss';
 import { loginSchema } from '../model/LoginForm.types';
 import type { LoginFormData } from '../model/LoginForm.types';
 
 const LoginForm = () => {
+    const navigate = useNavigate();
+    const setAuth = useAuthStore((state) => state.setAuth);
+    const [isLoading, setIsLoading] = useState(false);
+    const [_, setServerError] = useState<string | null>(null);
+
     const { redirectToRegister } = useRedirect();
-    const { register, handleSubmit, formState: { errors }, trigger } = useForm<LoginFormData>({
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         mode: "onBlur",
         defaultValues: {
@@ -21,10 +30,25 @@ const LoginForm = () => {
     });
 
     const onSubmit = async (data: LoginFormData) => {
-        const isValid = await trigger();
-        if (isValid) {
-            console.log('Логин:', data);
-            // TODO: отправка на сервер
+        setIsLoading(true);
+        setServerError(null);
+
+        try {
+            const response = await authApi.login(data);
+
+            if (response.data.success) {
+                setAuth(response.data.data.accessToken, response.data.data.user);
+                navigate('/dashboard');
+            }
+        } catch (error: any) {
+            const message = error.response?.data?.error;
+            if (message === 'Please verify your email first') {
+                setServerError('Подтвердите email перед входом. Проверьте почту.');
+            } else {
+                setServerError('Неверный email или пароль');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -54,7 +78,7 @@ const LoginForm = () => {
 
             <div className={styles['nav-button-wrapper']}>
                 <Button type="submit" variant="primary">
-                    Подтвердить
+                    {isLoading ? 'Вход...' : 'Войти'}
                 </Button>
             </div>
 
@@ -64,7 +88,7 @@ const LoginForm = () => {
                     className={styles['auth-link']}
                     onClick={redirectToRegister}
                 >
-                   Регистрация
+                    Регистрация
                 </Button>
             </div>
         </form>
