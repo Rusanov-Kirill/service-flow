@@ -11,13 +11,19 @@ export const useInitAuth = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const response = await authApi.refresh();
+                const refreshResponse = await authApi.refresh();
 
-                if (response.data.success) {
-                    setAuth(
-                        response.data.data.accessToken,
-                        response.data.data.user
-                    );
+                if (refreshResponse.data.success) {
+                    const accessToken = refreshResponse.data.data.accessToken;
+
+                    const meResponse = await authApi.meWithToken(accessToken);
+
+                    if (meResponse.data.success) {
+                        setAuth(
+                            accessToken,
+                            meResponse.data.data
+                        );
+                    }
                 }
             } catch {
                 logout();
