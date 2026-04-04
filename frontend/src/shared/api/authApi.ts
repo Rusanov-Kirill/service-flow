@@ -45,5 +45,11 @@ export const authApi = {
 
     refresh: () => {
         return apiClient.post('/auth/refresh');
+    },
+
+    meWithToken: (token: string) => {
+        return apiClient.get('/auth/me', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
     }
 };
