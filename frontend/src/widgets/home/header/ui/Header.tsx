@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/app/store/authStore';
 import { HomePageSectionRefsContext } from '@/pages/home/context';
@@ -10,7 +11,6 @@ import Logo from '@shared/ui/Logo';
 
 import HeaderSkeleton from './components/HeaderSkeleton';
 import styles from './Header.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const navigate = useNavigate();
