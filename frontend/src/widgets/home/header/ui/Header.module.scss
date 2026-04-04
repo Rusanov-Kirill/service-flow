@@ -1,3 +1,5 @@
+$spacing-2xs: $spacing-xs - 4px;
+
 .header {
     padding: $spacing-lg 0 $spacing-md;
     border-bottom: 1px solid $border-light;
@@ -62,6 +64,63 @@
         .auth-buttons {
             display: flex;
             gap: $spacing-md;
+
+            .avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: $radius-round;
+                will-change: transform, box-shadow;
+                background: linear-gradient(135deg, $primary, darken($primary, 10%));
+                color: $white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                font-size: $font-size-sm;
+                cursor: pointer;
+                user-select: none;
+                transition: transform $duration-fast, box-shadow $duration-fast;
+
+                @media (hover: hover) and (pointer: fine) {
+                    &:hover {
+                        transform: scale(1.05);
+                        box-shadow: 0 4px 12px rgba($primary, 0.3);
+                    }
+                }
+            }
+
+            .user-menu {
+                display: flex;
+                align-items: center;
+                gap: $spacing-sm;
+                white-space: nowrap;
+
+                .my-profile {
+                    background: none;
+                    border: none;
+                    padding: $spacing-xs $spacing-sm;
+                    font-size: $font-size-sm;
+                    font-weight: 600;
+                    color: $primary;
+                    cursor: pointer;
+                    text-decoration: none;
+                    display: inline-block;
+                    transition: opacity $duration-fast ease;
+
+                    &:hover {
+                        text-decoration: underline;
+                        opacity: 0.8;
+                    }
+
+                    &:active {
+                        opacity: 0.6;
+                    }
+                }
+
+                .logout {
+                    color: $text-primary;
+                }
+            }
         }
     }
 
@@ -78,6 +137,14 @@
             .auth-buttons {
                 button {
                     font-size: $font-size-xs;
+                }
+
+                .user-menu {
+                    gap: $spacing-xs;
+
+                    .my-profile {
+                        padding: $spacing-2xs $spacing-2xs;
+                    }
                 }
             }
         }
@@ -105,6 +172,21 @@
                 button {
                     padding: $spacing-sm $spacing-md;
                     font-size: $font-size-3xs;
+                }
+
+                .user-menu {
+                    gap: $spacing-xs;
+
+                    .my-profile {
+                        font-size: $font-size-3xs;
+                        padding: $spacing-xs;
+                    }
+
+                    .avatar {
+                        width: 32px;
+                        height: 32px;
+                        font-size: $font-size-xs;
+                    }
                 }
             }
         }
@@ -184,6 +266,24 @@
                     padding: $spacing-sm $spacing-sm;
                     font-size: $font-size-2xs;
                 }
+
+                .user-menu {
+                    gap: $spacing-xs;
+
+                    .my-profile {
+                        padding: $spacing-2xs;
+
+                        &:last-child {
+                            display: none;
+                        }
+                    }
+
+                    .avatar {
+                        width: 32px;
+                        height: 32px;
+                        font-size: $font-size-2xs;
+                    }
+                }
             }
         }
     }
@@ -199,12 +299,27 @@
                         display: none;
                     }
                 }
+
+                .user-menu {
+                    gap: $spacing-2xs;
+
+                    .my-profile {
+                        font-size: $font-size-2xs;
+                    }
+
+                    .avatar {
+                        width: 26px;
+                        height: 26px;
+                        font-size: $font-size-3xs;
+                    }
+                }
             }
         }
     }
 
     @media (max-width: 370px) {
         .wrapper {
+            padding: 0 $spacing-md;
             flex-wrap: nowrap;
 
             .auth-buttons {
@@ -214,5 +329,200 @@
                 }
             }
         }
+    }
+}
+
+.skeleton {
+    padding: $spacing-lg 0 $spacing-md;
+    border-bottom: 1px solid $border-light;
+    background-color: $white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    .wrapper {
+        @include wrapper;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-skeleton {
+        width: 150px;
+        height: 40px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: $radius-sm;
+    }
+
+    .nav-skeleton {
+        display: flex;
+        gap: $spacing-2xl;
+        margin-left: $spacing-2xl;
+
+        @media (max-width: 1023px) and (min-width: 768px) {
+            gap: $spacing-sm;
+            margin-left: $spacing-lg;
+        }
+
+        @media (max-width: 767px) {
+            display: none;
+        }
+
+        @media (max-width: 1300px) and (min-width: 1024px) {
+            gap: $spacing-lg;
+            margin-left: $spacing-xl;
+        }
+    }
+
+    .nav-item {
+        width: 80px;
+        height: 24px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: $radius-sm;
+
+        @media (max-width: 1023px) and (min-width: 768px) {
+            width: 60px;
+            height: 20px;
+        }
+    }
+
+    .auth-skeleton {
+        display: flex;
+        gap: $spacing-md;
+
+        @media (max-width: 1023px) and (min-width: 768px) {
+            gap: $spacing-xs;
+        }
+
+        @media (max-width: 767px) {
+            display: none;
+        }
+    }
+
+    .auth-button {
+        width: 90px;
+        height: 40px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: $radius-sm;
+
+        @media (max-width: 1023px) and (min-width: 768px) {
+            width: 70px;
+            height: 32px;
+        }
+
+        @media (max-width: 1300px) and (min-width: 1024px) {
+            width: 80px;
+            height: 36px;
+        }
+    }
+
+    .burger-skeleton {
+        display: none;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: $radius-sm;
+
+        @media (max-width: 767px) {
+            display: block;
+            order: 3;
+        }
+    }
+
+    // Планшетная версия (768px - 1023px)
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .wrapper {
+            padding: 0 $spacing-lg;
+            
+            .logo-skeleton {
+                width: 120px;
+                height: 32px;
+            }
+        }
+    }
+
+    // Мобильная версия (до 767px)
+    @media (max-width: 767px) {
+        .wrapper {
+            justify-content: flex-start;
+            gap: $spacing-md;
+            padding: 0 $spacing-md;
+
+            .logo-skeleton {
+                order: 1;
+                width: 120px;
+                height: 32px;
+            }
+
+            .burger-skeleton {
+                order: 3;
+            }
+
+            .auth-skeleton {
+                display: flex;
+                order: 2;
+                margin-left: auto;
+                gap: $spacing-xs;
+
+                .auth-button {
+                    width: 60px;
+                    height: 32px;
+
+                    &:first-child {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+
+    // Маленькие мобильные (до 529px)
+    @media (max-width: 529px) {
+        .wrapper {
+            gap: $spacing-xs;
+            padding: 0 $spacing-lg;
+
+            .auth-skeleton {
+                .auth-button {
+                    &:first-child {
+                        display: none;
+                    }
+                    
+                    width: 70px;
+                }
+            }
+        }
+    }
+
+    // Очень маленькие экраны (до 370px)
+    @media (max-width: 370px) {
+        .wrapper {
+            padding: 0 $spacing-md;
+            
+            .auth-skeleton {
+                .auth-button {
+                    width: 60px;
+                    height: 28px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
     }
 }
