@@ -40,6 +40,12 @@ export const authRepository = {
         });
     },
 
+    getUserById: async (id: string): Promise<User | null> => {
+        return prisma.user.findUnique({
+            where: { id }
+        });
+    },
+
     findSessionByRefreshToken: async (refreshToken: string): Promise<SessionWithUser | null> => {
         return prisma.session.findUnique({
             where: { refreshToken: refreshToken },
