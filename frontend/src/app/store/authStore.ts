@@ -1,12 +1,6 @@
 import { create } from 'zustand';
 
-interface User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    emailVerified: boolean;
-}
+import type { User } from '@/entities/user';
 
 interface AuthStore {
     accessToken: string | null;
