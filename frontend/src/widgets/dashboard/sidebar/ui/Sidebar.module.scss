@@ -1,0 +1,45 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: $spacing-lg;
+    background: $white;
+    border-right: 1px solid $border-light;
+
+    .wrapper {
+        .nav {
+            display: flex;
+            flex-direction: column;
+            margin-top: $spacing-lg;
+            gap: $spacing-md;
+
+            .link {
+                text-decoration: none;
+                font-size: $font-size-sm;
+                color: $nav-text-primary;
+                transition: color $duration-fast;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+
+        .active {
+            font-weight: 600;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: -10px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 4px;
+                height: 70%;
+                background: $primary;
+                border-radius: $radius-sm;
+            }
+        }
+    }
+}
