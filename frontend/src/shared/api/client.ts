@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useAuthStore } from '@app/store/authStore';
+import { useAuthStore } from '@/app/store/useAuthStore';
 
 import { authApi } from './authApi';
 

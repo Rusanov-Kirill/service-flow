@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useAuthStore } from '@/app/store/authStore';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import { authApi } from '@/shared/api/authApi';
 
 export const useInitAuth = () => {

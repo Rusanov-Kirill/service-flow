@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthStore } from '@/app/store/authStore';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import { authApi } from '@/shared/api/authApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';

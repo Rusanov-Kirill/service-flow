@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthStore } from '@/app/store/authStore';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import { HomePageSectionRefsContext } from '@/pages/home/context';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
