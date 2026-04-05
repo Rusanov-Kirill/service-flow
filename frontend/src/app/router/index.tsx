@@ -8,6 +8,7 @@ const HomePage = lazy(() => import('@/pages/home'));
 const AuthPage = lazy(() => import('@/pages/auth'));
 const VerifyEmailPendingPage = lazy(() => import('@/pages/verify-email-pending'));
 const VerifyEmailPage = lazy(() => import('@/pages/verify-email'));
+const DashboardPage = lazy(() => import('@/pages/dashboard'));
 
 
 export const router = createBrowserRouter([
@@ -44,5 +45,9 @@ export const router = createBrowserRouter([
     {
         path: ROUTES.NOT_FOUND,
         element: <Navigate to={ROUTES.HOME} replace />,
+    },
+    {
+        path: ROUTES.DASHBOARD,
+        element: <DashboardPage />,
     },
 ]);
