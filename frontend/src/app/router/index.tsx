@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
         element: <Navigate to={ROUTES.LANDING} replace />,
     },
     {
-        path: ROUTES.DASHBOARD,
+        path: ROUTES.HOME.DASHBOARD,
         element: <DashboardPage />,
     },
 ]);

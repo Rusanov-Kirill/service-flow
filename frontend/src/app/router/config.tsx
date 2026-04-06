@@ -6,7 +6,9 @@ export const ROUTES = {
         VERIFY_EMAIL_PENDING: '/auth/verify-email-pending',
         VERIFY_EMAIL: '/auth/verify-email'
     },
-    DASHBOARD: '/dashboard',
+    HOME: {
+        DASHBOARD: '/home/dashboard',
+    },
     NOT_FOUND: '*',
 } as const;
 

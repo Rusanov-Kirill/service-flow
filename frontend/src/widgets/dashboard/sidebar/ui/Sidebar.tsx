@@ -18,16 +18,16 @@ const Sidebar = () => {
                 <Logo type="primary" />
 
                 <nav className={styles.nav}>
-                    <NavLink to="/profile" className={getLinkClass}>
+                    <NavLink to="/home/profile" className={getLinkClass}>
                         Мой профиль
                     </NavLink>
-                    <NavLink to="/companies" className={getLinkClass}>
+                    <NavLink to="/home/companies" className={getLinkClass}>
                         Мои компании
                     </NavLink>
-                    <NavLink to="/dashboard" className={getLinkClass}>
+                    <NavLink to="/home/dashboard" className={getLinkClass}>
                         Доска предложений
                     </NavLink>
-                    <NavLink to="/settings" className={getLinkClass}>
+                    <NavLink to="/home/settings" className={getLinkClass}>
                         Настройки
                     </NavLink>
                 </nav>
