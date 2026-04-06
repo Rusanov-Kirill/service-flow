@@ -1,0 +1,19 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+
+import { useUIStore } from '@/app/store/useUIStore';
+import Button from '@/shared/ui/Button';
+
+import styles from './BurgerButton.module.scss';
+
+const BurgerButton = () => {
+  const { toggleSidebar } = useUIStore()
+
+  return (
+    <Button onClick={toggleSidebar} className={styles['slider-button']}>
+      <FontAwesomeIcon icon={faAngleRight} />
+    </Button>
+  )
+}
+
+export default BurgerButton;
