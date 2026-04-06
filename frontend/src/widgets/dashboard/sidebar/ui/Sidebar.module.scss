@@ -1,12 +1,21 @@
 .sidebar {
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: $spacing-lg;
     background: $white;
+    height: 100vh;
     border-right: 1px solid $border-light;
 
+    transition: transform $duration-base ease;
+
     .wrapper {
+        [class*="_logo"] {
+            font-size: $font-size-1-8xl;
+        }
+
         .nav {
             display: flex;
             flex-direction: column;
@@ -41,5 +50,60 @@
                 border-radius: $radius-sm;
             }
         }
+    }
+
+    @media (max-width: 1300px) {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 260px;
+        z-index: 100;
+
+        transform: translateX(-100%);
+    }
+
+    @media (max-width: 529px) {
+        padding: $spacing-md;
+        width: 220px;
+
+
+        .wrapper {
+            padding: $spacing-sm;
+        }
+
+        .nav {
+            gap: $spacing-sm;
+
+            .link {
+                font-size: $font-size-2xs;
+            }
+        }
+    }
+}
+
+.open {
+    @media (max-width: 1300px) {
+        transform: translateX(0);
+        box-shadow: $shadow-lg;
+    }
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 50;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $duration-base;
+
+    &.visible {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    @media (min-width: 1300px) {
+        display: none;
     }
 }
