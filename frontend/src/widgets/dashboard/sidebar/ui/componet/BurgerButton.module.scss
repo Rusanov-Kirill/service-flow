@@ -1,0 +1,26 @@
+.slider-button {
+    display: inline-block;
+    padding: $spacing-sm $spacing-md;
+    background: $white;
+    color: $text-primary;
+    border-radius: $radius-lg - 2px;
+    font-size: $font-size-md;
+    text-decoration: none;
+    transition: all $duration-fast cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: 1px solid $border;
+    will-change: transform, background-color, box-shadow, border-color;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+
+    &:hover {
+        border: 1px solid $primary;
+        color: $primary;
+        box-shadow: $shadow-primary-hover;
+    }
+
+    @media (max-width: 529px) {
+        padding: $spacing-xs $spacing-sm;
+    }
+}
