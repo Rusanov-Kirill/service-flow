@@ -1,0 +1,125 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    height: 100%;
+
+    &:first-child {
+        flex-shrink: 0;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        background: $white;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+        box-shadow: $shadow-sm;
+        border: 1px solid $border-light;
+
+        .tabs {
+            display: flex;
+            align-items: center;
+            gap: $spacing-lg;
+            border-bottom: 1px solid $border-light;
+            margin-bottom: $spacing-lg;
+            padding-bottom: $spacing-sm;
+
+            button {
+                position: relative;
+                background: none;
+                border: none;
+                padding: $spacing-xs 0;
+
+                font-size: $font-size-sm;
+                color: $text-secondary;
+                cursor: pointer;
+
+                transition: all $duration-fast;
+
+                &:hover {
+                    color: $text-primary;
+                }
+            }
+
+            .activeTab {
+                color: $primary;
+                font-weight: 500;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -$spacing-sm;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background: $primary;
+                    border-radius: $radius-sm;
+                }
+            }
+        }
+
+        .tabContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn $duration-base ease;
+        }
+
+        .placeholder {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: $font-size-md;
+            color: $text-secondary;
+        }
+    }
+
+    @media (max-width: 529px) {
+        gap: $spacing-md;
+
+        .content {
+            padding: $spacing-md;
+            border-radius: $radius-md;
+
+            .tabs {
+                gap: $spacing-sm;
+                justify-content: space-between;
+                white-space: nowrap;
+
+                button {
+                    font-size: $font-size-xs;
+                    padding: $spacing-xs 0;
+                    flex-shrink: 0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 370px) {
+        .content {
+            .tabs {
+                gap: $spacing-xs;
+
+                button {
+                    font-size: $font-size-2xs;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
