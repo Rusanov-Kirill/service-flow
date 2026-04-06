@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { ROUTES } from './config';
 import GuestRoute from './GuestRoute';
 
-const HomePage = lazy(() => import('@/pages/home'));
+const HomePage = lazy(() => import('@/pages/landing'));
 const AuthPage = lazy(() => import('@/pages/auth'));
 const VerifyEmailPendingPage = lazy(() => import('@/pages/verify-email-pending'));
 const VerifyEmailPage = lazy(() => import('@/pages/verify-email'));
@@ -13,7 +13,7 @@ const DashboardPage = lazy(() => import('@/pages/dashboard'));
 
 export const router = createBrowserRouter([
     {
-        path: ROUTES.HOME,
+        path: ROUTES.LANDING,
         element: (
             <HomePage />
         ),
@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
     },
     {
         path: ROUTES.NOT_FOUND,
-        element: <Navigate to={ROUTES.HOME} replace />,
+        element: <Navigate to={ROUTES.LANDING} replace />,
     },
     {
         path: ROUTES.DASHBOARD,
