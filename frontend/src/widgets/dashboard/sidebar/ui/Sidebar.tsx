@@ -1,11 +1,11 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 
-import { useUIStore } from '@/app/store/useUIStore'
-import Button from '@/shared/ui/Button'
-import Logo from '@/shared/ui/Logo'
-import { useLogout } from '@/shared/utils/useLogout'
+import { useUIStore } from '@/app/store/useUIStore';
+import Button from '@/shared/ui/Button';
+import Logo from '@/shared/ui/Logo';
+import { useLogout } from '@/shared/utils/useLogout';
 
-import styles from './Sidebar.module.scss'
+import styles from './Sidebar.module.scss';
 
 const Sidebar = () => {
     const logout = useLogout();
@@ -43,7 +43,7 @@ const Sidebar = () => {
                 onClick={closeSidebar}
             />
         </>
-    )
-}
+    );
+};
 
 export default Sidebar;

@@ -1,11 +1,11 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 interface UIState {
   isSidebarOpen: boolean
   openSidebar: () => void
   closeSidebar: () => void
   toggleSidebar: () => void
-}
+};
 
 export const useUIStore = create<UIState>((set) => ({
   isSidebarOpen: false,
@@ -13,4 +13,4 @@ export const useUIStore = create<UIState>((set) => ({
   closeSidebar: () => set({ isSidebarOpen: false }),
   toggleSidebar: () =>
     set((s) => ({ isSidebarOpen: !s.isSidebarOpen })),
-}))
+}));

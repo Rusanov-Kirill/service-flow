@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
-import CompanySearch from '@/features/company-search';
 import { useCompanyStore } from '@/app/store/useCompanyStore';
+import CompanySearch from '@/features/company-search';
 
-import styles from './DashboardMain.module.scss';
 import OverviewTab from './components/OverviewTab/OverviewTab';
+import styles from './DashboardMain.module.scss';
 
 type Tab = 'overview' | 'services' | 'finance' | 'bookings';
 
 const DashboardMain = () => {
   const { selectedCompany } = useCompanyStore();
-  const [activeTab, setActiveTab] = useState<Tab>('overview')
+  const [activeTab, setActiveTab] = useState<Tab>('overview');
 
   return (
     <div className={styles.wrapper}>

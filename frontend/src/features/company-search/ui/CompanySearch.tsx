@@ -1,5 +1,5 @@
-import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useRef } from 'react';
 
 import { useCompanyStore } from '@/app/store/useCompanyStore';
@@ -77,8 +77,8 @@ const CompanySearch = () => {
                     value={query}
                     onFocus={() => setIsOpen(true)}
                     onChange={(e) => {
-                        setQuery(e.target.value)
-                        setIsOpen(true)
+                        setQuery(e.target.value);
+                        setIsOpen(true);
                     }}
                 />
 
@@ -100,9 +100,9 @@ const CompanySearch = () => {
                             <div
                                 key={c.id}
                                 onClick={() => {
-                                    setSelectedCompany(c)
-                                    setQuery(c.name)
-                                    setIsOpen(false)
+                                    setSelectedCompany(c);
+                                    setQuery(c.name);
+                                    setIsOpen(false);
                                 }}
                                 className={styles.item}
                             >
@@ -117,7 +117,7 @@ const CompanySearch = () => {
                 </div>
             )}
         </div>
-    )
+    );
 };
 
 export default CompanySearch;
