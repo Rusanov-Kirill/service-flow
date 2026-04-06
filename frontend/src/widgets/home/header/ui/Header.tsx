@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
-import { HomePageSectionRefsContext } from '@/pages/home/context';
+import { LandingPageSectionRefsContext } from '@/pages/landing/context';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
 import { useLogout } from '@/shared/utils/useLogout';
@@ -16,7 +16,7 @@ const Header = () => {
     const { redirectToLogin, redirectToRegister } = useRedirect();
     const { accessToken, user, isInitialized } = useAuthStore();
     const logout = useLogout();
-    const refs = useContext(HomePageSectionRefsContext);
+    const refs = useContext(LandingPageSectionRefsContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleScrollValues = () => {
