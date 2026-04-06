@@ -93,7 +93,7 @@ const CompanySearch = () => {
                     }
                 >
                     {mode === 'name' ? 'Название' : 'Теги'}
-                    <FontAwesomeIcon icon={faArrowRightArrowLeft} className={styles.icon} />
+                    <FontAwesomeIcon icon={faArrowRightArrowLeft} className={`${styles.icon} ${mode === 'tags' ? styles.rotated : ''}`} />
                 </Button>
             </div>
 

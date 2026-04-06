@@ -65,11 +65,17 @@ $spacing-3xs: $spacing-2xs - 2px;
                 padding-left: $spacing-xs;
                 font-size: $font-size-3xs;
                 color: $text-secondary;
-                transition: transform $duration-fast;
+                transition: transform $duration-base cubic-bezier(0.4, 0, 0.2, 1);
 
                 &:hover {
                     color: $primary;
                 }
+            }
+
+            .rotated {
+                transform: rotate(180deg);
+                padding-left: 0;
+                padding-right: $spacing-xs;
             }
 
         }
