@@ -1,0 +1,97 @@
+.company {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .header {
+        display: flex;
+        gap: $spacing-md;
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: $radius-md;
+            object-fit: cover;
+        }
+
+        h2 {
+            line-height: .9;
+            margin-bottom: $spacing-xs;
+        }
+
+        .slug {
+            font-size: $font-size-xs;
+            color: $gray-muted;
+        }
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+
+        h4 {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            background: $bg-light-blue;
+            color: $primary;
+            padding: 4px 10px;
+            border-radius: $radius-sm;
+            font-size: $font-size-xs;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: $spacing-md;
+        }
+
+        .label {
+            font-size: $font-size-xs;
+            color: $gray-muted;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .header {
+            h2 {
+                font-size: $font-size-2xl;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        gap: $spacing-md;
+
+        .header {
+            gap: $spacing-sm;
+
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            h2 {
+                font-size: $font-size-xl;
+            }
+        }
+
+        .section {
+            gap: $spacing-xs;
+
+            .grid {
+                gap: $spacing-sm;
+            }
+        }
+    }
+}
