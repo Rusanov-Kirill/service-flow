@@ -129,4 +129,8 @@ $spacing-3xs: $spacing-2xs - 2px;
             font-weight: 500;
         }
     }
+
+    @media (max-width: 1023px) {
+        max-width: 100%;
+    }
 }
