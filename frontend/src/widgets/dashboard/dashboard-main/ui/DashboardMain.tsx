@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { useCompanyStore } from '@/app/store/useCompanyStore';
 import CompanySearch from '@/features/company-search';
+import { mockCompanies } from '@/features/company-search/ui/mock';
+import PopularCompanies from '@/widgets/dashboard/popular-companies';
 
 import OverviewTab from './components/OverviewTab/OverviewTab';
 import styles from './DashboardMain.module.scss';
@@ -9,15 +11,17 @@ import styles from './DashboardMain.module.scss';
 type Tab = 'overview' | 'services' | 'finance' | 'bookings';
 
 const DashboardMain = () => {
-  const { selectedCompany } = useCompanyStore();
+  const { slug } = useParams<{ slug?: string }>()
   const [activeTab, setActiveTab] = useState<Tab>('overview');
+
+  const company = mockCompanies.find(c => c.slug === slug);
 
   return (
     <div className={styles.wrapper}>
       <CompanySearch />
 
       <div className={styles.content}>
-        {selectedCompany ? (
+        {company ? (
           <>
             <div className={styles.tabs}>
               <button
@@ -51,7 +55,7 @@ const DashboardMain = () => {
 
             <div className={styles.tabContent}>
               {activeTab === 'overview' && (
-                <OverviewTab selectedCompany={selectedCompany} />
+                <OverviewTab selectedCompany={company} />
               )}
 
               {activeTab === 'services' && (
@@ -68,9 +72,7 @@ const DashboardMain = () => {
             </div>
           </>
         ) : (
-          <div className={styles.placeholder}>
-            Выберите компанию, чтобы увидеть информацию
-          </div>
+          <PopularCompanies />
         )}
       </div>
     </div>
