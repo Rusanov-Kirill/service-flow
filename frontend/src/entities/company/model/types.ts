@@ -10,4 +10,23 @@ export interface Company {
   address?: string
   logo?: string
   phone?: string
+  email?: string              
+  website?: string            
+  isActive: boolean          
+  ownerId: string             
+  members?: CompanyMember[]
+};
+
+export interface CompanyMember {
+  id: string
+  userId: string
+  companyId: string
+  role: 'owner' | 'admin' | 'manager' | 'staff'
+  permissions: string[]        
+  user?: {
+    firstName: string
+    lastName: string
+    email: string
+    avatar?: string
+  }
 };
