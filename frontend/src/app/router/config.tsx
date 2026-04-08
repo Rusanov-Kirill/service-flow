@@ -8,6 +8,7 @@ export const ROUTES = {
     },
     HOME: {
         DASHBOARD: '/home/dashboard',
+        COMPANY_DASHBOARD: '/home/dashboard/:slug',
     },
     NOT_FOUND: '*',
 } as const;

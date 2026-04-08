@@ -50,4 +50,8 @@ export const router = createBrowserRouter([
         path: ROUTES.HOME.DASHBOARD,
         element: <DashboardPage />,
     },
+    {
+        path: ROUTES.HOME.COMPANY_DASHBOARD,
+        element: <DashboardPage />
+    },
 ]);
