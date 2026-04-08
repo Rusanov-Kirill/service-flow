@@ -5,6 +5,7 @@ export interface Company {
   description: string
   tags: string[]
   timezone: string
+  city: string
   currency: string
   address?: string
   logo?: string
