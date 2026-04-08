@@ -10,6 +10,11 @@ interface OverviewTabProps {
 const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
     if (!selectedCompany) return null;
 
+    const hasAddress = !!selectedCompany.address;
+    const hasPhone = !!selectedCompany.phone;
+    const hasEmail = !!selectedCompany.email;
+    const hasContacts = hasPhone || hasEmail;
+
     return (
         <div className={styles.company}>
             <div className={styles.header}>
@@ -32,16 +37,18 @@ const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
                 <p>{selectedCompany.description}</p>
             </div>
 
-            <div className={styles.section}>
-                <h4>Теги</h4>
-                <div className={styles.tags}>
-                    {selectedCompany.tags.map((tag) => (
-                        <span key={tag} className={styles.tag}>
-                            {tag}
-                        </span>
-                    ))}
+            {selectedCompany.tags.length > 0 && (
+                <div className={styles.section}>
+                    <h4>Теги</h4>
+                    <div className={styles.tags}>
+                        {selectedCompany.tags.map((tag) => (
+                            <span key={tag} className={styles.tag}>
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
             <div className={styles.section}>
                 <h4>Бизнес-информация</h4>
@@ -58,19 +65,33 @@ const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
                 </div>
             </div>
 
-            <div className={styles.section}>
-                <h4>Адрес</h4>
-                {selectedCompany.address && (
+            {hasAddress && (
+                <div className={styles.section}>
+                    <h4>Адрес</h4>
                     <p>{selectedCompany.address}</p>
-                )}
-            </div>
+                </div>
+            )}
 
-            <div className={styles.section}>
-                <h4>Контакты</h4>
-                {selectedCompany.phone && (
-                    <p>📞 {selectedCompany.phone}</p>
-                )}
-            </div>
+            {hasContacts && (
+                <div className={styles.section}>
+                    <h4>Контакты</h4>
+                    <div className={styles.grid}>
+                        {hasPhone && (
+                            <div>
+                                <span className={styles.label}>Номер телефона</span>
+                                <p>📞 {selectedCompany.phone}</p>
+                            </div>
+                        )}
+
+                        {hasEmail && (
+                            <div>
+                                <span className={styles.label}>Корпоративная почта</span>
+                                <p>{selectedCompany.email}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
