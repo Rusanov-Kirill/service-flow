@@ -1,7 +1,7 @@
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
@@ -18,13 +18,27 @@ const CompanySearch = () => {
     const [mode, setMode] = useState<SearchMode>('name');
     const [isOpen, setIsOpen] = useState(false);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { slug } = useParams<{ slug?: string }>();
 
     const debouncedQuery = useDebounce(query, 500);
 
     const ref = useRef<HTMLDivElement>(null);
 
     useClickOutside(ref, () => setIsOpen(false));
+
+    useEffect(() => {
+        if (!slug) {
+            setQuery('');
+            return;
+        }
+
+        const company = mockCompanies.find((c) => c.slug === slug);
+
+        if (company && company.name !== query) {
+            setQuery(company.name);
+        }
+    }, [slug]);
 
     const filtered = mockCompanies.filter((c) => {
         if (!debouncedQuery) return false;
