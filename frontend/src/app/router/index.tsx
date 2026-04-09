@@ -9,6 +9,8 @@ const AuthPage = lazy(() => import('@/pages/auth'));
 const VerifyEmailPendingPage = lazy(() => import('@/pages/verify-email-pending'));
 const VerifyEmailPage = lazy(() => import('@/pages/verify-email'));
 const DashboardPage = lazy(() => import('@/pages/dashboard'));
+const DashboardMain = lazy(() => import('@/widgets/dashboard/dashboard-main'));
+const Profile = lazy(() => import('@/widgets/dashboard/profile'));
 
 
 export const router = createBrowserRouter([
@@ -47,11 +49,25 @@ export const router = createBrowserRouter([
         element: <Navigate to={ROUTES.LANDING} replace />,
     },
     {
-        path: ROUTES.HOME.DASHBOARD,
+        path: ROUTES.HOME.ROOT,
         element: <DashboardPage />,
-    },
-    {
-        path: ROUTES.HOME.COMPANY_DASHBOARD,
-        element: <DashboardPage />
+        children: [
+            {
+                index: true,
+                element: <Navigate to={ROUTES.HOME.DASHBOARD} replace />
+            },
+            {
+                path: ROUTES.HOME.DASHBOARD,
+                element: <DashboardMain />,
+            },
+            {
+                path: ROUTES.HOME.COMPANY_DASHBOARD,
+                element: <DashboardMain />,
+            },
+            {
+                path: ROUTES.HOME.MY_PROFILE,
+                element: <Profile />,
+            },
+        ],
     },
 ]);

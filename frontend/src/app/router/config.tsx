@@ -7,8 +7,11 @@ export const ROUTES = {
         VERIFY_EMAIL: '/auth/verify-email'
     },
     HOME: {
-        DASHBOARD: '/home/dashboard',
-        COMPANY_DASHBOARD: '/home/dashboard/:slug',
+        ROOT: '/home',
+
+        DASHBOARD: 'dashboard',
+        COMPANY_DASHBOARD: 'dashboard/:slug',
+        MY_PROFILE: 'profile',
     },
     NOT_FOUND: '*',
 } as const;
