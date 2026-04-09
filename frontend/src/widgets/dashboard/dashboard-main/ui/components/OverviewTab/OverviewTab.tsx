@@ -1,5 +1,5 @@
 import type { Company } from '@/entities/company';
-import CompanyLogo from '@/shared/ui/CompanyLogo';
+import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 
 import styles from './OverviewTab.module.scss';
 
@@ -18,10 +18,11 @@ const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
     return (
         <div className={styles.company}>
             <div className={styles.header}>
-                <CompanyLogo
+                <PlaceholderLogo
                     src={selectedCompany.logo}
                     alt={selectedCompany.name}
                     className={styles.logo}
+                    variant='company'
                 />
 
                 <div>
