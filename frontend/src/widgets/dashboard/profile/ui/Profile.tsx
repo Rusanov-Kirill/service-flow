@@ -9,6 +9,7 @@ const mockUser = {
   email: 'user@mail.com',
   firstName: 'Иван',
   lastName: 'Иванов',
+  emailVerified: false,
   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsWnOH5VcpJMtinN689lmKB0ebMS_ttbvS3Q&s',
   phoneNumber: '+7 (547) 123-45-67',
   lastLogin: '2026-04-08',
@@ -58,7 +59,15 @@ const Profile = () => {
         <div className={styles.grid}>
           <div className={styles.item}>
             <span className={styles.label}>Электронная почта</span>
-            <p>{mockUser.email}</p>
+            <p className={styles.emailRow}>
+              {mockUser.email}
+
+              {!mockUser.emailVerified && (
+                <span className={styles.unverified}>
+                  Не подтверждена
+                </span>
+              )}
+            </p>
           </div>
 
           <div className={styles.item}>
