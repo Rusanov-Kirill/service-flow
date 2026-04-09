@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
+enum UserRole {
   user
   admin
   owner
@@ -32,14 +32,17 @@ model User {
   verificationToken   String?   @unique @map("verification_token")
   verificationExpires DateTime? @map("verification_expires")
   
-  role        Role     @default(user)
-  isActive    Boolean  @default(true) @map("is_active")
+  role        UserRole   @default(user)
+  isActive    Boolean    @default(true) @map("is_active")
   
   lastLogin   DateTime? @map("last_login")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  sessions    Session[]
+  sessions       Session[]
+  ownedCompanies Company[]  @relation("UserCompanies")
+  companyMembers CompanyMember[]
+  customers      Customer[]
 
   @@unique([provider, providerId])  
   @@map("users")
@@ -55,4 +58,125 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("sessions")
+}
+
+model Company {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String   @default("")
+  tags        String[] 
+  timezone    String   @default("UTC+3")
+  city        String
+  currency    String   @default("RUB")
+  address     String?
+  logo        String?
+  phone       String?
+  email       String?
+  website     String?
+  isActive    Boolean  @default(true) @map("is_active")
+  ownerId     String   @map("owner_id")
+  
+  owner       User     @relation("UserCompanies", fields: [ownerId], references: [id], onDelete: Cascade)
+  members     CompanyMember[]
+  customers   Customer[]
+  services    Service[]
+  bookings    Booking[]
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("companies")
+}
+
+model CompanyMember {
+  id          String         @id @default(uuid())
+  userId      String         @map("user_id")
+  companyId   String         @map("company_id")
+  role        MemberRole     @default(member)
+  permissions String[] 
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, companyId])
+  @@map("company_members")
+}
+
+model Customer {
+  id          String   @id @default(uuid())
+  userId      String?  @map("user_id")  
+  companyId   String   @map("company_id")
+  firstName   String   @map("first_name")
+  lastName    String   @map("last_name")
+  email       String
+  phone       String?
+  
+  totalBookings Int     @default(0) @map("total_bookings")
+  
+  user        User?    @relation(fields: [userId], references: [id])
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  bookings    Booking[]
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, companyId])
+  @@map("customers")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  companyId   String   @map("company_id")
+  name        String
+  description String?
+  duration    Int     
+  price       Decimal
+  currency    String   @default("RUB")
+  isActive    Boolean  @default(true) @map("is_active")
+  
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  bookings    Booking[]
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Booking {
+  id          String        @id @default(uuid())
+  companyId   String        @map("company_id")
+  customerId  String        @map("customer_id")
+  serviceId   String        @map("service_id")
+  date        DateTime 
+  status      BookingStatus @default(pending)
+  totalPrice  Decimal?      @map("total_price")
+  
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer    Customer @relation(fields: [customerId], references: [id])
+  service     Service  @relation(fields: [serviceId], references: [id])
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("bookings")
+}
+
+enum MemberRole {
+  owner
+  admin
+  manager
+  member
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  completed
+  cancelled
+  no_show
 }
