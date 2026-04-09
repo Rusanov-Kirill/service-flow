@@ -15,7 +15,7 @@ const GuestRoute = ({ children }: Props) => {
     }
 
     if (accessToken) {
-        return <Navigate to={ROUTES.HOME.DASHBOARD} replace />;
+        return <Navigate to={ROUTES.HOME.ROOT} replace />;
     }
 
     return children;
