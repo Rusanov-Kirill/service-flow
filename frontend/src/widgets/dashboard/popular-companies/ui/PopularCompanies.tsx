@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { mockCompanies } from '@/features/company-search/ui/mock';
-import CompanyLogo from '@/shared/ui/CompanyLogo';
+import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 
 import styles from './PopularCompanies.module.scss';
 
@@ -20,10 +20,11 @@ const PopularCompanies = () => {
             onClick={() => navigate(`/home/dashboard/${c.slug}`)}
           >
             <div className={styles.header}>
-              <CompanyLogo
+              <PlaceholderLogo
                 src={c.logo}
                 alt={c.name}
                 className={styles.logo}
+                variant='company'
               />
 
               <div className={styles.info}>
