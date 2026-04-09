@@ -11,7 +11,7 @@ import styles from './DashboardMain.module.scss';
 type Tab = 'overview' | 'services' | 'finance' | 'bookings';
 
 const DashboardMain = () => {
-  const { slug } = useParams<{ slug?: string }>()
+  const { slug } = useParams<{ slug?: string }>();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
 
   const company = mockCompanies.find(c => c.slug === slug);

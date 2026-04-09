@@ -22,7 +22,7 @@ const PlaceholderLogo = ({ src, alt, className, variant = 'company' }: Placehold
                 target.src = placeholder;
             }}
         />
-    )
-}
+    );
+};
 
 export default PlaceholderLogo;

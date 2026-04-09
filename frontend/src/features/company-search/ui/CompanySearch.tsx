@@ -8,8 +8,8 @@ import InputField from '@/shared/ui/InputField';
 import { useClickOutside } from '@/shared/utils/useClickOutside';
 import { useDebounce } from '@/shared/utils/useDebounce';
 
-import { mockCompanies } from './mock';
 import styles from './CompanySearch.module.scss';
+import { mockCompanies } from './mock';
 
 type SearchMode = 'name' | 'tags';
 
@@ -28,17 +28,21 @@ const CompanySearch = () => {
     useClickOutside(ref, () => setIsOpen(false));
 
     useEffect(() => {
-        if (!slug) {
-            setQuery('');
-            return;
-        }
+        const handleName = async () => {
+            if (!slug) {
+                setQuery('');
+                return;
+            }
 
-        const company = mockCompanies.find((c) => c.slug === slug);
+            const company = mockCompanies.find((c) => c.slug === slug);
 
-        if (company && company.name !== query) {
-            setQuery(company.name);
-        }
-    }, [slug]);
+            if (company && company.name !== query) {
+                setQuery(company.name);
+            }
+        };
+
+        handleName();
+    }, [slug, query]);
 
     const filtered = mockCompanies.filter((c) => {
         if (!debouncedQuery) return false;
