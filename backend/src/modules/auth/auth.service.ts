@@ -53,7 +53,11 @@ export const authService = {
                 email: user.email,
                 firstName: user.firstName ?? '',
                 lastName: user.lastName ?? '',
-                emailVerified: user.emailVerified
+                emailVerified: user.emailVerified,
+                avatar: user.avatar ?? '',
+                phoneNumber: user.phoneNumber ?? '',
+                lastLogin: user.lastLogin,
+                createdAt: user.createdAt
             }
         };
     },
@@ -76,6 +80,8 @@ export const authService = {
         if (!user.emailVerified) {
             throw new Error('Please verify your email first');
         }
+
+        await authRepository.updateLastLogin(user.id);
 
         const payload = { userId: user.id, email: user.email };
         const accessToken = generateAccessToken(payload);
@@ -100,7 +106,11 @@ export const authService = {
                 email: user.email,
                 firstName: user.firstName ?? '',
                 lastName: user.lastName ?? '',
-                emailVerified: user.emailVerified
+                emailVerified: user.emailVerified,
+                avatar: user.avatar ?? '',
+                phoneNumber: user.phoneNumber ?? '',
+                lastLogin: user.lastLogin,
+                createdAt: user.createdAt
             }
         };
     },
@@ -154,7 +164,11 @@ export const authService = {
                 email: user.email,
                 firstName: user.firstName ?? '',
                 lastName: user.lastName ?? '',
-                emailVerified: user.emailVerified
+                emailVerified: user.emailVerified,
+                avatar: user.avatar ?? '',
+                phoneNumber: user.phoneNumber ?? '',
+                lastLogin: user.lastLogin,
+                createdAt: user.createdAt
             }
         };
     },
