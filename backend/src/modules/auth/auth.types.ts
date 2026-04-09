@@ -12,5 +12,9 @@ export interface AuthResponse {
         firstName: string;
         lastName: string;
         emailVerified: boolean;
+        avatar?: string,
+        phoneNumber?: string,
+        lastLogin: Date | null;
+        createdAt: Date
     };
 }
