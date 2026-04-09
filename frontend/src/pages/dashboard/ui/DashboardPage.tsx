@@ -1,5 +1,6 @@
+import { Outlet } from 'react-router-dom';
+
 import BurgerButton from '@/shared/ui/BurgerButton';
-import DashboardMain from '@/widgets/dashboard/dashboard-main';
 import Sidebar from '@widgets/dashboard/sidebar';
 
 import styles from './DashboardPage.module.scss';
@@ -14,7 +15,7 @@ const DashboardPage = () => {
             <Sidebar />
 
             <div className={styles.main}>
-                <DashboardMain />
+                <Outlet />
             </div>
         </div>
 
