@@ -20,7 +20,8 @@ model User {
   passwordHash String?  @map("password_hash")  
   firstName    String?  @map("first_name")     
   lastName     String?  @map("last_name")      
-  avatar       String?                          
+  avatar       String?  
+  phoneNumber  String?  @map("phone_number")                        
   
   provider     String?   
   providerId   String?   @map("provider_id")   
