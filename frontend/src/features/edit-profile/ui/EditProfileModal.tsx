@@ -12,8 +12,8 @@ interface EditProfileModalProps {
   user: {
     firstName: string;
     lastName: string;
-    avatar: string;
-    phoneNumber: string;
+    avatar?: string;
+    phoneNumber?: string;
   };
   onClose: () => void;
 };
@@ -57,7 +57,7 @@ const EditProfileModal = ({ user, onClose }: EditProfileModalProps) => {
           <input name="firstName" placeholder={user.firstName} onChange={handleChange} />
           <input name="lastName" placeholder={user.lastName} onChange={handleChange} />
           <input name="avatar" placeholder="Ссылка на аватар" onChange={handleChange} />
-          <input name="phoneNumber" placeholder={user.phoneNumber} onChange={handleChange} />
+          <input name="phoneNumber" placeholder={user.phoneNumber || '+7 (xxx) xxx-xx-xx'} onChange={handleChange} />
         </div>
 
         <div className={styles.actions}>
