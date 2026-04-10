@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 // import path from 'path';
 
 import authRoutes from './modules/auth/auth.routes';
+import userRoutes from './modules/user/user.routes';
 
 import { config } from './shared/config';
  import { errorHandler } from './shared/middleware/error.middleware';
@@ -23,7 +24,7 @@ app.use(helmet());
 app.use(
     cors({
         origin: [config.frontendUrl].filter(Boolean) as string[],
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
         credentials: true,
         optionsSuccessStatus: 200
@@ -40,6 +41,7 @@ if (config.nodeEnv === 'development') {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Health check
 app.get('/health', (_, res) => {
