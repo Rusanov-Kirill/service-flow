@@ -90,7 +90,7 @@
             gap: $spacing-xs;
 
             .grid {
-                gap: $spacing-sm;
+                grid-template-columns: 1fr;
             }
         }
     }
