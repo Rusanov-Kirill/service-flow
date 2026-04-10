@@ -9,7 +9,7 @@ export interface User {
     phoneNumber?: string;
     emailVerified: boolean;
     role?: 'user' | 'admin' | 'owner';
-    companies: Company[]
+    companies?: Company[]
     isActive?: boolean;
     lastLogin?: string;
     createdAt?: string;
