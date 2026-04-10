@@ -37,7 +37,6 @@ const Profile = () => {
 
       {isOpen && (
         <EditProfileModal
-          user={user}
           onClose={() => setIsOpen(false)}
         />
       )}
