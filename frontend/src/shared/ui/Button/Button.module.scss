@@ -23,6 +23,10 @@
       transform: translateY(-2px) translateZ(0);
       box-shadow: $shadow-primary-hover;
     }
+
+    &:disabled {
+      background-color: rgba($primary, 0.5);
+    }
   }
 
   &-secondary {
