@@ -14,6 +14,12 @@ const Sidebar = () => {
     const getLinkClass = ({ isActive }: { isActive: boolean }) =>
         isActive ? `${styles.link} ${styles.active}` : styles.link;
 
+    const handleLinkClick = () => {
+        if (isSidebarOpen) {
+            closeSidebar();
+        }
+    };
+
     return (
         <>
             <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
@@ -21,16 +27,16 @@ const Sidebar = () => {
                     <Logo type="primary" />
 
                     <nav className={styles.nav}>
-                        <NavLink to="/home/profile" className={getLinkClass}>
+                        <NavLink to="/home/profile" className={getLinkClass} onClick={handleLinkClick}>
                             Мой профиль
                         </NavLink>
-                        <NavLink to="/home/companies" className={getLinkClass}>
+                        <NavLink to="/home/companies" className={getLinkClass} onClick={handleLinkClick}>
                             Мои компании
                         </NavLink>
-                        <NavLink to="/home/dashboard" className={getLinkClass}>
+                        <NavLink to="/home/dashboard" className={getLinkClass} onClick={handleLinkClick}>
                             Доска предложений
                         </NavLink>
-                        <NavLink to="/home/settings" className={getLinkClass}>
+                        <NavLink to="/home/settings" className={getLinkClass} onClick={handleLinkClick}>
                             Настройки
                         </NavLink>
                     </nav>
