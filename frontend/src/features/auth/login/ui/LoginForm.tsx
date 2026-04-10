@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
 import { authApi } from '@/shared/api/authApi';
@@ -15,7 +14,6 @@ import { loginSchema } from '../model/LoginForm.types';
 import type { LoginFormData } from '../model/LoginForm.types';
 
 const LoginForm = () => {
-    const navigate = useNavigate();
     const setAuth = useAuthStore((state) => state.setAuth);
     const [isLoading, setIsLoading] = useState(false);
     const [_, setServerError] = useState<string | null>(null);
@@ -39,7 +37,6 @@ const LoginForm = () => {
 
             if (response.data.success) {
                 setAuth(response.data.data.accessToken, response.data.data.user);
-                navigate('/dashboard');
             }
         } catch (err) {
             const error = err as AxiosError<{ error: string }>;
