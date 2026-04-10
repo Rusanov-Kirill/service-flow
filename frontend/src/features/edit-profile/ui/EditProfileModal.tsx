@@ -1,80 +1,127 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
-import styles from './EditProfileModal.module.scss';
+import { useAuthStore } from '@/app/store/useAuthStore';
+import { authApi } from '@/shared/api/authApi';
+import FormField from '@/shared/ui/auth/FormField';
+import Button from '@/shared/ui/Button';
+import Notification from '@/shared/ui/Notification';
 
-type FormState = {
-  firstName: string;
-  lastName: string;
-  avatar: string;
-  phoneNumber: string;
-};
+import styles from './EditProfileModal.module.scss';
+import { editProfileSchema, type EditProfileFormData } from '../model/EditProfileModal.types';
 
 interface EditProfileModalProps {
-  user: {
-    firstName: string;
-    lastName: string;
-    avatar?: string;
-    phoneNumber?: string;
-  };
   onClose: () => void;
 };
 
-const EditProfileModal = ({ user, onClose }: EditProfileModalProps) => {
-  const [form, setForm] = useState<FormState>({
-    firstName: '',
-    lastName: '',
-    avatar: '',
-    phoneNumber: '',
+const EditProfileModal = ({ onClose }: EditProfileModalProps) => {
+  const { user, setAuth } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const { register, handleSubmit, formState: { errors, isDirty } } = useForm<EditProfileFormData>({
+    resolver: zodResolver(editProfileSchema),
+    mode: "onBlur",
+    defaultValues: {
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      phoneNumber: user?.phoneNumber || '',
+      avatar: user?.avatar || '',
+    }
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const onSubmit = async (data: EditProfileFormData) => {
+    setIsLoading(true);
+    setServerError(null);
 
-  const isDirty = Object.values(form).some((v) => v.trim() !== '');
+    try {
+      const response = await authApi.updateProfile(data);
 
-  const handleSubmit = () => {
-    console.log('Новые данные:', form);
-    onClose();
-  };
-
-  const handleOverlayClick = () => {
-    onClose();
-  };
-
-  const handleModalClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+      if (response.data.success) {
+        setAuth(
+          useAuthStore.getState().accessToken!,
+          response.data.data.user
+        );
+        onClose();
+      }
+    } catch (err) {
+      const error = err as AxiosError<{ error: string }>;
+      setServerError(error.response?.data?.error || 'Ошибка обновления профиля');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.modal} onClick={handleModalClick}>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
         <h3>Редактировать профиль</h3>
 
-        <div className={styles.form}>
-          <input name="firstName" placeholder={user.firstName} onChange={handleChange} />
-          <input name="lastName" placeholder={user.lastName} onChange={handleChange} />
-          <input name="avatar" placeholder="Ссылка на аватар" onChange={handleChange} />
-          <input name="phoneNumber" placeholder={user.phoneNumber || '+7 (xxx) xxx-xx-xx'} onChange={handleChange} />
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+          <FormField
+            label="Имя"
+            id="firstName"
+            placeholder="Иван"
+            error={errors.firstName?.message}
+            {...register('firstName')}
+          />
 
-        <div className={styles.actions}>
-          <button onClick={onClose} className={styles.cancel}>
-            Отмена
-          </button>
+          <FormField
+            label="Фамилия"
+            id="lastName"
+            placeholder="Иванов"
+            error={errors.lastName?.message}
+            {...register('lastName')}
+          />
 
-          <button
-            onClick={handleSubmit}
-            disabled={!isDirty}
-            className={`${styles.submit} ${isDirty ? styles.active : ''}`}
-          >
-            Сохранить
-          </button>
-        </div>
+          <FormField
+            label="Телефон"
+            id="phoneNumber"
+            type="tel"
+            placeholder="+7 (xxx) xxx-xx-xx"
+            error={errors.phoneNumber?.message}
+            {...register('phoneNumber')}
+          />
+
+          <FormField
+            label="Аватар (URL)"
+            id="avatar"
+            type="url"
+            placeholder="https://example.com/avatar.jpg"
+            error={errors.avatar?.message}
+            {...register('avatar')}
+          />
+
+          <div className={styles.actions}>
+            <Button
+              type="button"
+              onClick={onClose}
+              variant="secondary"
+            >
+              Отмена
+            </Button>
+
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={isLoading || !isDirty}
+            >
+              {isLoading ? 'Сохранение...' : 'Сохранить'}
+            </Button>
+          </div>
+        </form>
       </div>
+
+      {serverError && (
+        <Notification
+          type="error"
+          message={serverError}
+          onClose={() => setServerError(null)}
+          position="top"
+        />
+      )}
     </div>
   );
 };

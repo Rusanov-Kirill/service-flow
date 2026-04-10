@@ -11,114 +11,70 @@
     z-index: 1000;
 
     animation: fadeIn $duration-fast ease;
-}
 
-.modal {
-    width: 100%;
-    max-width: 420px;
-
-    background: $white;
-    border-radius: $radius-lg;
-    padding: $spacing-lg;
-
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-
-    box-shadow: $shadow-lg;
-    border: 1px solid $border-light;
-
-    animation: scaleIn $duration-fast ease;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-sm;
-
-    input {
-        padding: $spacing-sm;
-        border-radius: $radius-sm;
-        border: 1px solid $border;
-
-        font-size: $font-size-sm;
-        font-family: $font-family;
-        color: $text-primary;
-
-        background: $bg-lighter;
-
-        transition: all $duration-fast;
-
-        &::placeholder {
-            color: $gray-muted;
-        }
-
-        &:focus {
-            outline: none;
-            border-color: $primary;
-            box-shadow: 0 0 0 2px $primary-25;
-            background: $white;
-        }
-    }
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: $spacing-sm;
-    margin-top: $spacing-sm;
-}
-
-.cancel {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-
-    font-size: $font-size-sm;
-    color: $text-secondary;
-
-    transition: color $duration-fast;
-
-    &:hover {
-        color: $text-primary;
-    }
-}
-
-.submit {
-    padding: $spacing-xs $spacing-md;
-
-    border-radius: $radius-sm;
-    border: none;
-
-    font-size: $font-size-sm;
-    font-weight: 500;
-
-    background: $gray-muted;
-    color: $white;
-
-    cursor: not-allowed;
-    transition: all $duration-fast;
-
-    &.active {
-        background: $primary;
-        cursor: pointer;
-
-        &:hover {
-            background: $primary-dark;
-            box-shadow: $shadow-primary;
-        }
-
-        &:active {
-            transform: scale(0.97);
-        }
-    }
-}
-
-@media (max-width: 768px) {
     .modal {
-        max-width: 100%;
-        border-radius: $radius-md;
-        padding: $spacing-md;
+        width: 100%;
+        max-width: 420px;
+
+        background: $white;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+
+        box-shadow: $shadow-lg;
+        border: 1px solid $border-light;
+
+        animation: scaleIn $duration-fast ease;
+
+        h3 {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+            letter-spacing: -0.02em;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+
+            [class^="_field"] {
+                margin-top: $spacing-xs;
+            }
+
+            .actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: $spacing-sm;
+                margin-top: $spacing-sm;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .modal {
+            max-width: 100%;
+            border-radius: $radius-md;
+            padding: $spacing-md;
+        }
+    }
+
+    @media (max-width: 529px) {
+        .modal {
+            h3 {
+                font-size: $font-size-lg;
+            }
+
+            .form {
+                .actions {
+                    justify-content: space-between;
+                }
+            }
+        }
     }
 }
 
