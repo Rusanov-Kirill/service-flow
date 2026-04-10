@@ -1,6 +1,8 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
+import { ROUTES } from '@/app/router/config';
 import { LandingPageSectionRefsContext } from '@/pages/landing/context';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
@@ -18,6 +20,11 @@ const Header = () => {
     const logout = useLogout();
     const refs = useContext(LandingPageSectionRefsContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const handleNavigateToProfile = () => {
+        navigate(ROUTES.HOME.ROOT);
+    }
 
     const handleScrollValues = () => {
         refs?.platformValuesRef?.current?.scrollIntoView();
@@ -76,13 +83,17 @@ const Header = () => {
                                     || 'U'}
                             </div>
 
-                            <Button className={styles['my-profile']}>
+                            <Button
+                                className={styles['my-profile']}
+                                onClick={handleNavigateToProfile}
+                            >
                                 Мой профиль
                             </Button>
 
                             <Button
                                 className={`${styles['my-profile']} ${styles.logout}`}
-                                onClick={logout}>
+                                onClick={logout}
+                            >
                                 Выйти
                             </Button>
                         </div>
