@@ -26,6 +26,13 @@ export interface AuthResponse {
     };
 }
 
+export interface UpdateProfileData {
+    firstName?: string;
+    lastName?: string;
+    phoneNumber?: string;
+    avatar?: string;
+}
+
 export const authApi = {
     register: (data: RegisterData) => {
         return apiClient.post<AuthResponse>('/auth/register', data);
@@ -51,5 +58,9 @@ export const authApi = {
         return apiClient.get('/auth/me', {
             headers: { Authorization: `Bearer ${token}` }
         });
-    }
+    },
+
+    updateProfile: (data: UpdateProfileData) => {
+        return apiClient.patch('/users/profile', data);
+    },
 };
