@@ -12,6 +12,7 @@ const DashboardPage = lazy(() => import('@/pages/dashboard'));
 const DashboardMain = lazy(() => import('@/widgets/dashboard/dashboard-main'));
 const Profile = lazy(() => import('@/widgets/dashboard/profile'));
 const Companies = lazy(() => import('@/widgets/dashboard/companies'));
+const CreateCompany = lazy(() => import('@/features/create-company'));
 
 
 export const router = createBrowserRouter([
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
             {
                 path: ROUTES.HOME.MY_COMPANIES,
                 element: <Companies />,
+            },
+            {
+                path: ROUTES.HOME.CREATE_COMPANY,
+                element: <CreateCompany />,
             }
         ],
     },
