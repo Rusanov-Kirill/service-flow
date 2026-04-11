@@ -1,0 +1,105 @@
+.createCompanyPage {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    background: $white;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-sm;
+    border: 1px solid $border-light;
+
+    .header {
+        h2 {
+            font-size: $font-size-2xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xl;
+    }
+
+    .formGrid {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xl;
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md; 
+
+        h4 {
+        font-size: $font-size-lg;
+        font-weight: 700; 
+        color: $primary; 
+        margin-bottom: 0;
+        padding-bottom: $spacing-xs;
+        border-bottom: 2px solid $primary-light;
+        letter-spacing: -0.01em;
+        text-transform: uppercase; 
+        font-size: $font-size-sm; 
+    }
+
+        > :first-child {
+            margin-top: $spacing-lg; 
+        }
+        
+        > div:first-of-type {
+            margin-top: $spacing-lg;
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: $spacing-md;
+        padding-top: $spacing-md;
+        border-top: 1px solid $border-light;
+
+        button {
+            min-width: 140px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .actions {
+            justify-content: space-between;
+        }
+    }
+
+    @media (max-width: 529px) {
+        padding: $spacing-md;
+
+        .section {
+            h4 {
+                font-size: $font-size-md; 
+                padding-bottom: $spacing-xs;
+            }
+        }
+
+        .actions {
+            button {
+                min-width: 120px;
+            }
+        }
+    }
+}
