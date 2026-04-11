@@ -1,0 +1,247 @@
+.companiesPage {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    background: $white;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-sm;
+    border: 1px solid $border-light;
+
+    min-height: calc(100vh - 2 * $spacing-lg);
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-md;
+        flex-wrap: wrap;
+
+        h2 {
+            font-size: $font-size-2xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+        }
+
+        .createBtn {
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            background: $primary;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+
+            &:hover {
+                background: $primary-dark;
+            }
+
+            &:active {
+                transform: scale(0.97);
+            }
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    .empty {
+        padding: $spacing-3xl;
+        text-align: center;
+        font-size: $font-size-md;
+        color: $gray-muted;
+        border: 1px dashed $border-light;
+        border-radius: $radius-md;
+        background: $bg-light;
+    }
+
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    .companyCard {
+        background: $white;
+        border: 1px solid $border;
+        border-radius: $radius-md;
+        transition: all $duration-fast;
+
+        &:hover {
+            border-color: $primary;
+            box-shadow: $shadow-sm;
+        }
+
+        .cardContent {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: $spacing-md;
+            gap: $spacing-md;
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: $spacing-md;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: $radius-md;
+            object-fit: cover;
+            background: $bg-light-blue;
+            flex-shrink: 0;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-2xs;
+            min-width: 0;
+            flex: 1;
+
+            .name {
+                font-size: $font-size-lg;
+                font-weight: 600;
+                color: $text-primary;
+                margin: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .slug {
+                font-size: $font-size-xs;
+                color: $gray-muted;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .meta {
+                font-size: $font-size-3xs;
+                color: $gray-muted;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            flex-shrink: 0;
+
+            .openBtn {
+                background: transparent;
+                border: none;
+                color: $primary;
+                cursor: pointer;
+                font-size: $font-size-xs;
+                padding: 6px 12px;
+                border-radius: 6px;
+                transition: all $duration-fast;
+                white-space: nowrap;
+
+                &:hover {
+                    background: rgba($primary, 0.1);
+                    text-decoration: underline;
+                }
+            }
+
+            .settingsBtn {
+                padding: 6px 12px;
+                font-size: $font-size-xs;
+                border-radius: 6px;
+                border: 1px solid $border;
+                background: $white;
+                cursor: pointer;
+                transition: all $duration-fast;
+                white-space: nowrap;
+
+                &:hover {
+                    background: $bg-light;
+                    border-color: $gray-muted;
+                }
+
+                &:active {
+                    transform: scale(0.97);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: stretch;
+
+            .createBtn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .companyCard {
+            .cardContent {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .left {
+                width: 100%;
+            }
+
+            .actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        padding: $spacing-md;
+
+        .companyCard {
+            .logo {
+                width: 55px;
+                height: 55px;
+            }
+
+            .info {
+                .name {
+                    font-size: $font-size-md;
+                }
+            }
+
+            .actions {
+                justify-content: space-between;
+
+                .openBtn,
+                .settingsBtn {
+                    padding: 4px 10px;
+                    font-size: $font-size-3xs;
+                }
+            }
+        }
+    }
+}
