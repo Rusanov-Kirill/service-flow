@@ -1,0 +1,137 @@
+.selectField {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    width: 100%;
+    position: relative;
+
+    .label {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $text-primary;
+        line-height: 1.5;
+
+        .required {
+            color: $error;
+            margin-left: $spacing-2xs;
+        }
+    }
+
+    .selectWrapper {
+        position: relative;
+        min-height: 42px;
+        padding: $spacing-sm $spacing-xl $spacing-sm $spacing-sm;
+        background-color: $white;
+        border: 1px solid $border-color;
+        border-radius: $radius-sm;
+        cursor: pointer;
+        transition: all $duration-fast ease;
+
+        &:hover:not(.disabled) {
+            border-color: $border-hover;
+        }
+
+        &.open {
+            border-color: $primary;
+            box-shadow: 0 0 0 3px $primary-25;
+        }
+
+        &.error {
+            border-color: $error;
+            
+            &.open {
+                box-shadow: 0 0 0 3px $error-light;
+            }
+        }
+
+        .selectedValue {
+            font-size: $font-size-sm;
+            color: $text-primary;
+            line-height: 1.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .arrow {
+            position: absolute;
+            right: $spacing-sm;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: $placeholder-color;
+            transition: transform $duration-fast ease;
+
+            &.rotated {
+                transform: translateY(-50%) rotate(180deg);
+            }
+        }
+    }
+
+    .dropdown {
+        position: absolute;
+        top: calc(100% + $spacing-2xs);
+        left: 0;
+        right: 0;
+        background-color: $white;
+        border: 1px solid $border-color;
+        border-radius: $radius-sm;
+        box-shadow: $shadow-dropdown;
+        z-index: 1000;
+        max-height: 240px;
+        overflow: hidden;
+
+        .optionsList {
+            overflow-y: auto;
+            max-height: 240px;
+
+            .option {
+                padding: $spacing-sm $spacing-sm;
+                cursor: pointer;
+                transition: background-color $duration-fast ease;
+                display: flex;
+                align-items: center;
+
+                &:hover {
+                    background-color: $option-hover;
+                }
+
+                &.selected {
+                    background-color: $option-selected-bg;
+                    color: $primary;
+                    font-weight: 500;
+                }
+
+                span {
+                    font-size: $font-size-sm;
+                    color: inherit;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        .noOptions {
+            padding: $spacing-lg $spacing-sm;
+            text-align: center;
+            font-size: $font-size-sm;
+            color: $placeholder-color;
+        }
+    }
+
+    .errorMessage {
+        font-size: $font-size-xs;
+        color: $error;
+        line-height: 1.4;
+    }
+
+    &.disabled {
+        opacity: 0.6;
+        
+        .selectWrapper {
+            cursor: not-allowed;
+            background-color: $disabled-bg;
+        }
+    }
+}
