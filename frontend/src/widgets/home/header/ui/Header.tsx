@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthStore } from '@/app/store/useAuthStore';
 import { ROUTES } from '@/app/router/config';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import { LandingPageSectionRefsContext } from '@/pages/landing/context';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
@@ -24,7 +24,7 @@ const Header = () => {
 
     const handleNavigateToProfile = () => {
         navigate(ROUTES.HOME.ROOT);
-    }
+    };
 
     const handleScrollValues = () => {
         refs?.platformValuesRef?.current?.scrollIntoView();

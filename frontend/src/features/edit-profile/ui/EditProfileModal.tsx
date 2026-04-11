@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
-import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
 import { authApi } from '@/shared/api/authApi';
@@ -9,8 +9,9 @@ import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import Notification from '@/shared/ui/Notification';
 
-import styles from './EditProfileModal.module.scss';
 import { editProfileSchema, type EditProfileFormData } from '../model/EditProfileModal.types';
+
+import styles from './EditProfileModal.module.scss';
 
 interface EditProfileModalProps {
   onClose: () => void;
