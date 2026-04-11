@@ -1,5 +1,6 @@
 // Цвета
 $primary: #6B4EFF;
+$primary-light: #E8E3FF;
 $primary-25: rgba($primary, 0.25);
 $primary-dark: #5842d4;
 $primary-darker: #4A3A9E;
@@ -22,6 +23,16 @@ $black: #0A0F1C;
 $red: #FF5F5F;
 $yellow: #FFBD2E;
 $green: #28C840;
+$error: #EF4444;
+$error-light: rgba(239, 68, 68, 0.1);
+$tag-bg: #F3F4F6;
+$tag-hover: #E5E7EB;
+$option-hover: #F9FAFB;
+$option-selected-bg: #F3F4F6;
+$placeholder-color: #9CA3AF;
+$border-color: #E5E7EB;
+$border-hover: #9CA3AF;
+$disabled-bg: #F9FAFB;
 
 // Отступы
 $spacing-2xs: 4px;
@@ -48,6 +59,7 @@ $shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
 $shadow-lg: 0 20px 35px -10px rgba(107, 78, 255, 0.15);
 $shadow-primary: 0 8px 16px -6px rgba(107, 78, 255, 0.3);
 $shadow-primary-hover: 0 12px 20px -8px rgba(107, 78, 255, 0.4);
+$shadow-dropdown: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
 // Шрифты
 $font-family: 'Inter', sans-serif;
