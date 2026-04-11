@@ -12,6 +12,7 @@ export const ROUTES = {
         DASHBOARD: 'dashboard',
         COMPANY_DASHBOARD: 'dashboard/:slug',
         MY_PROFILE: 'profile',
+        MY_COMPANIES: 'companies'
     },
     NOT_FOUND: '*',
 } as const;

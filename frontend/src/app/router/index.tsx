@@ -11,6 +11,7 @@ const VerifyEmailPage = lazy(() => import('@/pages/verify-email'));
 const DashboardPage = lazy(() => import('@/pages/dashboard'));
 const DashboardMain = lazy(() => import('@/widgets/dashboard/dashboard-main'));
 const Profile = lazy(() => import('@/widgets/dashboard/profile'));
+const Companies = lazy(() => import('@/widgets/dashboard/companies'));
 
 
 export const router = createBrowserRouter([
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
                 path: ROUTES.HOME.MY_PROFILE,
                 element: <Profile />,
             },
+            {
+                path: ROUTES.HOME.MY_COMPANIES,
+                element: <Companies />,
+            }
         ],
     },
 ]);
