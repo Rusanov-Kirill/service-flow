@@ -45,26 +45,74 @@
     .section {
         display: flex;
         flex-direction: column;
-        gap: $spacing-md; 
+        gap: $spacing-md;
+
+        .sectionHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: $spacing-xs;
+            border-bottom: 2px solid $primary-light;
+
+            h4 {
+                font-size: $font-size-sm;
+                font-weight: 700;
+                color: $primary;
+                margin-bottom: 0;
+                letter-spacing: -0.01em;
+                text-transform: uppercase;
+            }
+        }
 
         h4 {
-        font-size: $font-size-lg;
-        font-weight: 700; 
-        color: $primary; 
-        margin-bottom: 0;
-        padding-bottom: $spacing-xs;
-        border-bottom: 2px solid $primary-light;
-        letter-spacing: -0.01em;
-        text-transform: uppercase; 
-        font-size: $font-size-sm; 
-    }
+            font-size: $font-size-sm;
+            font-weight: 700;
+            color: $primary;
+            margin-bottom: 0;
+            padding-bottom: $spacing-xs;
+            border-bottom: 2px solid $primary-light;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
 
         > :first-child {
-            margin-top: $spacing-lg; 
+            margin-top: $spacing-lg;
         }
         
         > div:first-of-type {
             margin-top: $spacing-lg;
+        }
+
+        .servicesList {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+            margin-top: $spacing-xs;
+        }
+
+        .emptyServices {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: $spacing-3xl $spacing-lg;
+            background: $bg-light;
+            border: 1px dashed $border;
+            border-radius: $radius-md;
+            text-align: center;
+            gap: $spacing-xs;
+
+            p {
+                font-size: $font-size-sm;
+                font-weight: 500;
+                color: $text-secondary;
+                margin: 0;
+            }
+
+            span {
+                font-size: $font-size-xs;
+                color: $gray-muted;
+            }
         }
     }
 
@@ -90,8 +138,14 @@
         padding: $spacing-md;
 
         .section {
+            .sectionHeader {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: $spacing-sm;
+            }
+
             h4 {
-                font-size: $font-size-md; 
+                font-size: $font-size-md;
                 padding-bottom: $spacing-xs;
             }
         }
