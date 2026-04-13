@@ -1,0 +1,75 @@
+.serviceCard {
+    background: $bg-light;
+    border: 1px solid $border-light;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    transition: all $duration-fast ease;
+
+    &:hover {
+        border-color: $border;
+        box-shadow: $shadow-sm;
+    }
+
+    .serviceInfo {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .serviceHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h5 {
+                font-size: $font-size-md;
+                font-weight: 600;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            .removeBtn {
+                background: none;
+                border: none;
+                font-size: $font-size-xl;
+                color: $gray-muted;
+                cursor: pointer;
+                padding: 0;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: $radius-sm;
+                transition: all $duration-fast ease;
+
+                &:hover {
+                    color: $red;
+                    background-color: rgba($red, 0.1);
+                }
+            }
+        }
+
+        .description {
+            font-size: $font-size-xs;
+            color: $text-secondary;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .serviceMeta {
+            display: flex;
+            gap: $spacing-md;
+            margin-top: $spacing-xs;
+            font-size: $font-size-xs;
+
+            .duration {
+                color: $text-secondary;
+            }
+
+            .price {
+                font-weight: 600;
+                color: $primary;
+            }
+        }
+    }
+}
