@@ -1,0 +1,128 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 28, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-md;
+    z-index: 1000;
+    animation: fadeIn $duration-fast ease;
+
+    .modal {
+        width: 100%;
+        max-width: 500px;
+        max-height: 90vh;
+        background: $white;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        box-shadow: $shadow-lg;
+        border: 1px solid $border-light;
+        animation: scaleIn $duration-fast ease;
+
+        h3 {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+            letter-spacing: -0.02em;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            overflow: hidden;
+
+            .formContent {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-sm;
+                max-height: calc(90vh - 180px);
+                overflow-y: auto;
+                padding-right: $spacing-xs;
+
+                &::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: $border-light;
+                    border-radius: $radius-sm;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: $border;
+                    border-radius: $radius-sm;
+
+                    &:hover {
+                        background: $gray-muted;
+                    }
+                }
+
+                [class^="_field"] {
+                    margin-top: $spacing-lg;
+                }
+
+                [class^="_selectField"] {
+                    margin-top: $spacing-lg;
+                }
+            }
+
+            .actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: $spacing-sm;
+                padding-top: $spacing-sm;
+                border-top: 1px solid $border-light;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .modal {
+            max-width: 100%;
+            border-radius: $radius-md;
+            padding: $spacing-md;
+        }
+    }
+
+    @media (max-width: 529px) {
+        .modal {
+            h3 {
+                font-size: $font-size-lg;
+            }
+
+            .form {
+                .actions {
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
