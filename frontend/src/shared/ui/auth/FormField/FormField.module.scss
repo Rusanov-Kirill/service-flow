@@ -10,6 +10,11 @@ $spacing-2xs: $spacing-xs - 4px;
         font-weight: 600;
         color: $text-primary;
         margin-bottom: $spacing-xs;
+
+        .required {
+            color: $error;
+            margin-left: $spacing-2xs;
+        }
     }
 
     .input {
@@ -20,7 +25,7 @@ $spacing-2xs: $spacing-xs - 4px;
         transition: all $duration-fast;
 
         &::placeholder {
-            color: rgba($text-secondary, 0.5)
+            color: rgba($text-secondary, 0.5);
         }
 
         &:focus {
