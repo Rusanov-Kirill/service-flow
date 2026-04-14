@@ -8,7 +8,9 @@ import cookieParser from 'cookie-parser';
 
 import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
-
+import serviceRoutes from './modules/service/service.routes';
+import companyRoutes from './modules/company/company.routes';
+ 
 import { config } from './shared/config';
  import { errorHandler } from './shared/middleware/error.middleware';
 
@@ -42,6 +44,8 @@ if (config.nodeEnv === 'development') {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/companies', companyRoutes);
 
 // Health check
 app.get('/health', (_, res) => {
