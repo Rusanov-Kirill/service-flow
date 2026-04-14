@@ -42,7 +42,7 @@ const CompanySearch = () => {
         };
 
         handleName();
-    }, [slug, query]);
+    }, [slug]);
 
     const filtered = mockCompanies.filter((c) => {
         if (!debouncedQuery) return false;
