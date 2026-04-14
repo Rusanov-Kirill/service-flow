@@ -1,1 +1,3 @@
-export type { Service } from './model/types';
+export { useServicesStore } from './store/useServicesStore';
+
+export type { Service, ClientService } from './model/types';
