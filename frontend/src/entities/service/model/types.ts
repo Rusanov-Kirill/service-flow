@@ -1,8 +1,7 @@
 import type { CurrenciesType } from "@/shared/utils/selectorValues";
 
-export interface Service {
+export interface ClientService {
     id: string;
-    companyId: string;
     name: string;
     description?: string;
     duration: number;
@@ -11,4 +10,8 @@ export interface Service {
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date | null;
+}
+
+export interface Service extends ClientService {
+    companyId: string;
 }
