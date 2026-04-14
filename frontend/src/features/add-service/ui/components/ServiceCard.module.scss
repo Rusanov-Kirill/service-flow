@@ -19,12 +19,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: $spacing-sm;
 
             h5 {
                 font-size: $font-size-md;
                 font-weight: 600;
                 color: $text-primary;
                 margin: 0;
+
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-break: break-word;
+                flex: 1;
             }
 
             .removeBtn {
@@ -41,6 +50,7 @@
                 justify-content: center;
                 border-radius: $radius-sm;
                 transition: all $duration-fast ease;
+                flex-shrink: 0;
 
                 &:hover {
                     color: $red;
@@ -54,6 +64,13 @@
             color: $text-secondary;
             line-height: 1.4;
             margin: 0;
+            
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
         }
 
         .serviceMeta {
@@ -63,7 +80,15 @@
             font-size: $font-size-xs;
 
             .duration {
+                display: flex;
+                align-items: center;
+                gap: $spacing-2xs;
                 color: $text-secondary;
+                line-height: 1;
+
+                .icon {
+                    font-size: $font-size-sm;
+                }
             }
 
             .price {

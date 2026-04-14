@@ -1,9 +1,11 @@
-import type { Service } from '../../modal/AddServiceModal.types';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { ClientService } from '@/entities/service';
 
 import styles from './ServiceCard.module.scss';
 
 interface ServiceCardProps {
-    service: Service;
+    service: ClientService;
     onRemove: (id: string) => void;
 }
 
@@ -61,7 +63,10 @@ const ServiceCard = ({ service, onRemove }: ServiceCardProps) => {
                     <p className={styles.description}>{service.description}</p>
                 )}
                 <div className={styles.serviceMeta}>
-                    <span className={styles.duration}>⏱ {formatDuration(service.duration)}</span>
+                    <span className={styles.duration}>
+                        <FontAwesomeIcon icon={faClock} className={styles.icon} />
+                        {formatDuration(service.duration)}
+                    </span>
                     <span className={styles.price}>
                         {service.price.toLocaleString()} {service.currency}
                     </span>
