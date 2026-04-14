@@ -8,7 +8,7 @@ interface SelectOption {
 
 interface SelectProps {
     label: string;
-    options: string[] | SelectOption[];
+    options: readonly SelectOption[] | string[];
     value: string;
     onChange: (value: string) => void;
     error?: string;
