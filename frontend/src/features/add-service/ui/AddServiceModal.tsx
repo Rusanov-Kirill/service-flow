@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+import { useServicesStore } from '@/entities/service';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import Select from '@/shared/ui/Select';
@@ -12,10 +13,11 @@ import styles from './AddServiceModal.module.scss';
 
 interface AddServiceModalProps {
     onClose: () => void;
-    onAdd: (service: ServiceFormData) => void;
 }
 
-const AddServiceModal = ({ onClose, onAdd }: AddServiceModalProps) => {
+const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
+    const addService = useServicesStore((state) => state.addService);
+    
     const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm<ServiceFormData>({
         resolver: zodResolver(serviceSchema),
         mode: "onBlur",
@@ -29,7 +31,14 @@ const AddServiceModal = ({ onClose, onAdd }: AddServiceModalProps) => {
     });
 
     const onSubmit = (data: ServiceFormData) => {
-        onAdd(data);
+        addService({
+            name: data.name,
+            description: data.description,
+            duration: data.duration,
+            price: data.price,
+            currency: data.currency as any, 
+            isActive: true,
+        });
         reset();
         onClose();
     };
