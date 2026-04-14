@@ -2,7 +2,7 @@ export interface Company {
   id: string
   name: string
   slug: string
-  description: string
+  description?: string
   tags: string[]
   timezone: string
   city: string
