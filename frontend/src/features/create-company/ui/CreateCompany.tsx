@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { useServicesStore } from '@/entities/service';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import AddServiceModal from '@/features/add-service';
-import { type Service, type ServiceFormData } from '@/features/add-service/modal/AddServiceModal.types';
 import ServiceCard from '@/features/add-service/ui/components/ServiceCard';
+import { companyApi } from '@/shared/api/companyApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import Select from '@/shared/ui/Select';
@@ -16,12 +18,14 @@ import { TIMEZONES, CURRENCIES, TAGS_OPTIONS } from '@/shared/utils/selectorValu
 
 import styles from './CreateCompany.module.scss';
 
-
 const CreateCompany = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
-    const [services, setServices] = useState<Service[]>([]);
+    const [error, setError] = useState<string | null>(null);
+
+    const { services, removeService, clearServices } = useServicesStore();
+    const { user } = useAuthStore();
 
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<CreateCompanyFormData>({
         resolver: zodResolver(createCompanySchema),
@@ -44,25 +48,40 @@ const CreateCompany = () => {
 
     const onSubmit = async (data: CreateCompanyFormData) => {
         setIsLoading(true);
+        setError(null);
 
-        console.log('Создание компании:', data);
+        try {
+            if (!user?.id) {
+                throw new Error('Пользователь не авторизован');
+            }
 
-        setTimeout(() => {
-            setIsLoading(false);
+            const requestData = {
+                ...data,
+                ownerId: user.id,
+                services: services.map(service => ({
+                    name: service.name,
+                    description: service.description,
+                    duration: service.duration,
+                    price: service.price,
+                    currency: service.currency,
+                    isActive: true,
+                })),
+            };
+
+            await companyApi.create(requestData);
+
+            clearServices();
             navigate('/home/companies');
-        }, 1000);
-    };
 
-    const handleAddService = (serviceData: ServiceFormData) => {
-        const newService: Service = {
-            ...serviceData,
-            id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
-        };
-        setServices([...services, newService]);
+        } catch (err: any) {
+            setError(err.response?.data?.error || 'Ошибка при создании компании');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleRemoveService = (id: string) => {
-        setServices(services.filter(service => service.id !== id));
+        removeService(id);
     };
 
     return (
@@ -78,6 +97,12 @@ const CreateCompany = () => {
                 </div>
 
                 <div className={styles.content}>
+                    {error && (
+                        <div className={styles.errorAlert}>
+                            {error}
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                         <div className={styles.formGrid}>
                             {/* Основная информация */}
@@ -204,6 +229,7 @@ const CreateCompany = () => {
                                     {...register('logo')}
                                 />
                             </div>
+
                             {/* Услуги */}
                             <div className={styles.section}>
                                 <h4>Услуги</h4>
@@ -261,10 +287,8 @@ const CreateCompany = () => {
             {isServiceModalOpen && (
                 <AddServiceModal
                     onClose={() => setIsServiceModalOpen(false)}
-                    onAdd={handleAddService}
                 />
-            )
-            }
+            )}
         </>
     );
 };
