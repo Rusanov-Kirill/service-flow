@@ -1,19 +1,69 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { mockCompanies } from '@/features/company-search/ui/mock';
+import { companyApi } from '@/shared/api/companyApi';
+import type { Company } from '@/entities/company';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 
 import styles from './PopularCompanies.module.scss';
 
 const PopularCompanies = () => {
   const navigate = useNavigate();
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        setIsLoading(true);
+        const data = await companyApi.getAll();
+        setCompanies(data);
+        setError(null);
+      } catch (err: any) {
+        console.error('Ошибка загрузки компаний:', err);
+        setError(err.message || 'Не удалось загрузить компании');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className={styles.wrapper}>
+        <h3 className={styles.title}>Популярные компании</h3>
+        <div className={styles.loading}>Загрузка...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.wrapper}>
+        <h3 className={styles.title}>Популярные компании</h3>
+        <div className={styles.error}>{error}</div>
+      </div>
+    );
+  }
+
+  if (companies.length === 0) {
+    return (
+      <div className={styles.wrapper}>
+        <h3 className={styles.title}>Популярные компании</h3>
+        <div className={styles.empty}>Компании не найдены</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>
       <h3 className={styles.title}>Популярные компании</h3>
 
       <div className={styles.list}>
-        {mockCompanies.map((c) => (
+        {companies.map((c) => (
           <div
             key={c.id}
             className={styles.card}

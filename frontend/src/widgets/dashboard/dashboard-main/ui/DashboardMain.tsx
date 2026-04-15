@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import type { Company } from '@/entities/company';
 import CompanySearch from '@/features/company-search';
-import { mockCompanies } from '@/features/company-search/ui/mock';
+import { companyApi } from '@/shared/api/companyApi';
 import PopularCompanies from '@/widgets/dashboard/popular-companies';
 
 import OverviewTab from './components/OverviewTab/OverviewTab';
@@ -13,12 +14,38 @@ type Tab = 'overview' | 'services' | 'finance' | 'bookings';
 const DashboardMain = () => {
   const { slug } = useParams<{ slug?: string }>();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [company, setCompany] = useState<Company | null>(null);
+  const [allCompanies, setAllCompanies] = useState<Company[]>([]);
 
-  const company = mockCompanies.find(c => c.slug === slug);
+  useEffect(() => {
+    const fetchData = async () => {      
+      try {
+        const companies = await companyApi.getAll();
+        setAllCompanies(companies);
+
+        if (slug) {
+          try {
+            const foundCompany = await companyApi.getBySlug(slug);
+            setCompany(foundCompany);
+          } catch (error) {
+            console.error('Компания не найдена:', error);
+            setCompany(null);
+          }
+        } else {
+          setCompany(null);
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки:', error);
+        setCompany(null);
+      }
+    };
+
+    fetchData();
+  }, [slug]); 
 
   return (
     <div className={styles.wrapper}>
-      <CompanySearch />
+      <CompanySearch companies={allCompanies} />
 
       <div className={styles.content}>
         {company ? (

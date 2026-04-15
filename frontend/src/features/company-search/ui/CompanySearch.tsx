@@ -1,31 +1,58 @@
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { companyApi } from '@/shared/api/companyApi';
+import type { Company } from '@/entities/company';
 import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
 import { useClickOutside } from '@/shared/utils/useClickOutside';
 import { useDebounce } from '@/shared/utils/useDebounce';
 
 import styles from './CompanySearch.module.scss';
-import { mockCompanies } from './mock';
 
 type SearchMode = 'name' | 'tags';
 
-const CompanySearch = () => {
+interface CompanySearchProps {
+    companies?: Company[];
+}
+
+const CompanySearch = ({ companies: externalCompanies }: CompanySearchProps) => {
     const [query, setQuery] = useState('');
     const [mode, setMode] = useState<SearchMode>('name');
     const [isOpen, setIsOpen] = useState(false);
+    const [localCompanies, setLocalCompanies] = useState<Company[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const { slug } = useParams<{ slug?: string }>();
 
     const debouncedQuery = useDebounce(query, 500);
-
     const ref = useRef<HTMLDivElement>(null);
 
     useClickOutside(ref, () => setIsOpen(false));
+
+    useEffect(() => {
+        const fetchCompanies = async () => {
+            if (externalCompanies) {
+                setLocalCompanies(externalCompanies);
+                return;
+            }
+
+            setIsLoading(true);
+            try {
+                const allCompanies = await companyApi.getAll();
+                setLocalCompanies(allCompanies);
+            } catch (error) {
+                console.error('Ошибка загрузки компаний:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchCompanies();
+    }, [externalCompanies]);
 
     useEffect(() => {
         const handleName = async () => {
@@ -34,27 +61,49 @@ const CompanySearch = () => {
                 return;
             }
 
-            const company = mockCompanies.find((c) => c.slug === slug);
+            const company = localCompanies.find((c) => c.slug === slug);
 
             if (company && company.name !== query) {
                 setQuery(company.name);
             }
         };
 
-        handleName();
-    }, [slug]);
+        if (localCompanies.length > 0) {
+            handleName();
+        }
+    }, [slug, localCompanies]);
 
-    const filtered = mockCompanies.filter((c) => {
-        if (!debouncedQuery) return false;
+    const filtered = useMemo(() => {
+        if (!debouncedQuery) return [];
+
+        const searchLower = debouncedQuery.toLowerCase();
 
         if (mode === 'name') {
-            return c.name.toLowerCase().includes(debouncedQuery.toLowerCase());
+            return localCompanies.filter((c) =>
+                c.name.toLowerCase().includes(searchLower)
+            );
         }
 
-        return c.tags.some((tag) =>
-            tag.toLowerCase().startsWith(debouncedQuery.toLowerCase())
+        return localCompanies.filter((c) =>
+            c.tags.some((tag) =>
+                tag.toLowerCase().startsWith(searchLower)
+            )
         );
-    });
+    }, [localCompanies, debouncedQuery, mode]);
+
+    if (isLoading && localCompanies.length === 0) {
+        return (
+            <div ref={ref} className={styles.search}>
+                <div className={styles.inputWrapper}>
+                    <InputField
+                        className={styles['company-input']}
+                        placeholder="Загрузка компаний..."
+                        disabled
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div ref={ref} className={styles.search}>
@@ -81,7 +130,10 @@ const CompanySearch = () => {
                     }
                 >
                     {mode === 'name' ? 'Название' : 'Теги'}
-                    <FontAwesomeIcon icon={faArrowRightArrowLeft} className={`${styles.icon} ${mode === 'tags' ? styles.rotated : ''}`} />
+                    <FontAwesomeIcon
+                        icon={faArrowRightArrowLeft}
+                        className={`${styles.icon} ${mode === 'tags' ? styles.rotated : ''}`}
+                    />
                 </Button>
             </div>
 
