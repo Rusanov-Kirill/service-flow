@@ -2,6 +2,7 @@ import { prisma } from '../../shared/database/prisma';
 import { companyRepository } from './company.repository';
 import type { CreateCompanyDto } from './company.types';
 import type { CreateServiceDto } from '../service/service.types';
+import { formatPhone } from '../../shared/utils/formatPhone';
 
 export const companyService = {
     createWithServices: async (
@@ -11,19 +12,52 @@ export const companyService = {
         const user = await prisma.user.findUnique({
             where: { id: companyData.ownerId },
         });
-        
+
         if (!user) {
             throw new Error('Пользователь не найден');
         }
-        
+
         const existingCompany = await prisma.company.findUnique({
             where: { slug: companyData.slug },
         });
-        
+
         if (existingCompany) {
             throw new Error('Компания с таким slug уже существует');
         }
-        
-        return companyRepository.createWithServices(companyData, servicesData);
+
+        const formattedCompanyData = {
+            ...companyData,
+            phone: companyData.phone ? formatPhone(companyData.phone) : companyData.phone,
+        };
+
+        return companyRepository.createWithServices(formattedCompanyData, servicesData);
+    },
+
+    getAll: async () => {
+        return companyRepository.findAll();
+    },
+
+    getByOwnerId: async (ownerId: string) => {
+        return companyRepository.findByOwnerId(ownerId);
+    },
+
+    getById: async (id: string) => {
+        const company = await companyRepository.findById(id);
+
+        if (!company) {
+            throw new Error('Компания не найдена');
+        }
+
+        return company;
+    },
+
+    getBySlug: async (slug: string) => {
+        const company = await companyRepository.findBySlug(slug);
+
+        if (!company) {
+            throw new Error('Компания не найдена');
+        }
+
+        return company;
     },
 };

@@ -26,4 +26,58 @@ export const companyController = {
             return res.status(400).json({ error: error.message });
         }
     },
+
+    getAll: async (_req: Request, res: Response): Promise<Response> => {
+        try {
+            const companies = await companyService.getAll();
+            return res.json(companies);
+        } catch (error: any) {
+            return res.status(400).json({ error: error.message });
+        }
+    },
+
+    getByOwnerId: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { ownerId } = req.params;
+
+            if (!ownerId || typeof ownerId !== 'string') {
+                return res.status(400).json({ error: 'Неверный формат ownerId' });
+            }
+
+            const companies = await companyService.getByOwnerId(ownerId);
+            return res.json(companies);
+        } catch (error: any) {
+            return res.status(400).json({ error: error.message });
+        }
+    },
+
+    getById: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { id } = req.params;
+
+            if (!id || typeof id !== 'string') {
+                return res.status(400).json({ error: 'Неверный формат ownerId' });
+            }
+
+            const company = await companyService.getById(id);
+            return res.json(company);
+        } catch (error: any) {
+            return res.status(404).json({ error: error.message });
+        }
+    },
+
+    getBySlug: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { slug } = req.params;
+
+            if (!slug || typeof slug !== 'string') {
+                return res.status(400).json({ error: 'slug обязателен' });
+            }
+
+            const company = await companyService.getBySlug(slug);
+            return res.json(company);
+        } catch (error: any) {
+            return res.status(404).json({ error: error.message });
+        }
+    },
 };

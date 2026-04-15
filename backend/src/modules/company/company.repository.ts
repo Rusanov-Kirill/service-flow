@@ -26,7 +26,7 @@ export const companyRepository = {
                     isActive: true,
                 },
             });
-            
+
             if (servicesData && servicesData.length > 0) {
                 await tx.service.createMany({
                     data: servicesData.map(service => ({
@@ -35,11 +35,40 @@ export const companyRepository = {
                     })),
                 });
             }
-            
+
             return tx.company.findUnique({
                 where: { id: company.id },
                 include: { services: true },
             });
+        });
+    },
+
+    findById: async (id: string) => {
+        return prisma.company.findUnique({
+            where: { id },
+            include: { services: true },
+        });
+    },
+
+    findAll: async () => {
+        return prisma.company.findMany({
+            orderBy: { createdAt: 'desc' },
+            include: { services: true },
+        });
+    },
+
+    findByOwnerId: async (ownerId: string) => {
+        return prisma.company.findMany({
+            where: { ownerId },
+            orderBy: { createdAt: 'desc' },
+            include: { services: true },
+        });
+    },
+
+    findBySlug: async (slug: string) => {
+        return prisma.company.findUnique({
+            where: { slug },
+            include: { services: true },
         });
     },
 };
