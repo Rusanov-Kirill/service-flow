@@ -11,4 +11,24 @@ export const companyApi = {
         const response = await apiClient.post('/companies', data);
         return response.data;
     },
+
+    getAll: async (): Promise<Company[]> => {
+        const response = await apiClient.get('/companies');
+        return response.data;
+    },
+
+    getByOwnerId: async (ownerId: string): Promise<Company[]> => {
+        const response = await apiClient.get(`/companies/owner/${ownerId}`);
+        return response.data;
+    },
+
+    getById: async (id: string): Promise<Company> => {
+        const response = await apiClient.get(`/companies/${id}`);
+        return response.data;
+    },
+
+    getBySlug: async (slug: string): Promise<Company> => {
+        const response = await apiClient.get(`/companies/slug/${slug}`);
+        return response.data;
+    },
 };
