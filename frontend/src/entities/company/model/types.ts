@@ -1,3 +1,5 @@
+import type { Service } from "@/entities/service"
+
 export interface Company {
   id: string
   name: string
@@ -15,6 +17,7 @@ export interface Company {
   isActive: boolean          
   ownerId: string             
   members?: CompanyMember[]
+  services?: Service[]
 };
 
 export interface CompanyMember {
