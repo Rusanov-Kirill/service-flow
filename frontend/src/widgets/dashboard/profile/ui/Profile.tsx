@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
 import EditProfileModal from '@/features/edit-profile';
@@ -7,8 +8,14 @@ import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 import styles from './Profile.module.scss';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user } = useAuthStore();
+
+  const handleOpenCompany = (slug: string) => {
+    window.scrollTo(0, 0);
+    navigate(`/home/dashboard/${slug}`);
+  }
 
   if (!user) return null;
 
@@ -98,7 +105,7 @@ const Profile = () => {
                     <span className={styles.slug}>@{c.slug}</span>
                   </div>
 
-                  <button className={styles.openBtn}>
+                  <button className={styles.openBtn} onClick={() => handleOpenCompany(c.slug)}>
                     Открыть
                   </button>
                 </div>
