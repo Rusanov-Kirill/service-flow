@@ -4,12 +4,15 @@ import type { ClientService } from '@/entities/service';
 
 import styles from './ServiceCard.module.scss';
 
+type Mode = 'edit' | 'view';
+
 interface ServiceCardProps {
     service: ClientService;
+    mode: Mode;
     onRemove: (id: string) => void;
 }
 
-const ServiceCard = ({ service, onRemove }: ServiceCardProps) => {
+const ServiceCard = ({ service, mode = 'view', onRemove }: ServiceCardProps) => {
     const formatDuration = (minutes: number) => {
         if (minutes < 60) return `${minutes} мин`;
 
@@ -51,13 +54,15 @@ const ServiceCard = ({ service, onRemove }: ServiceCardProps) => {
             <div className={styles.serviceInfo}>
                 <div className={styles.serviceHeader}>
                     <h5>{service.name}</h5>
-                    <button
-                        className={styles.removeBtn}
-                        onClick={() => onRemove(service.id)}
-                        type="button"
-                    >
-                        ×
-                    </button>
+                    {mode === 'edit' ? (
+                        <button
+                            className={styles.removeBtn}
+                            onClick={() => onRemove(service.id)}
+                            type="button"
+                        >
+                            ×
+                        </button>
+                    ) : null}
                 </div>
                 {service.description && (
                     <p className={styles.description}>{service.description}</p>

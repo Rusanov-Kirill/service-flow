@@ -78,13 +78,15 @@
             gap: $spacing-md;
             margin-top: $spacing-xs;
             font-size: $font-size-xs;
+            align-items: center;
 
             .duration {
                 display: flex;
                 align-items: center;
                 gap: $spacing-2xs;
                 color: $text-secondary;
-                line-height: 1;
+                    line-height: 1;
+                font-weight: 600;
 
                 .icon {
                     font-size: $font-size-sm;
@@ -92,8 +94,11 @@
             }
 
             .price {
+                display: flex;
+                align-items: center; 
                 font-weight: 600;
                 color: $primary;
+                line-height: 1;
             }
         }
     }
