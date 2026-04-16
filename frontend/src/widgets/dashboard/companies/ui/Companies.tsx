@@ -1,15 +1,16 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import type { Company } from '@/entities/company';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
-import { mockCompanies } from '@/features/company-search/ui/mock';
 
 import styles from './Companies.module.scss';
 
 const Companies = () => {
   const navigate = useNavigate();
-  const [companies] = useState<Company[]>(mockCompanies);
+
+  const { user } = useAuthStore();
+
+  const companies = user?.companies;
 
   const handleOpenCompany = (slug: string) => {
     navigate(`/home/dashboard/${slug}`);
@@ -35,13 +36,13 @@ const Companies = () => {
       </div>
 
       <div className={styles.content}>
-        {companies.length === 0 ? (
+        {!companies ? (
           <div className={styles.empty}>
             У вас пока нет компаний
           </div>
         ) : (
           <div className={styles.list}>
-            {companies.map((company) => (
+            {companies?.map((company) => (
               <div key={company.id} className={styles.companyCard}>
                 <div className={styles.cardContent}>
                   <div className={styles.left}>
@@ -65,7 +66,7 @@ const Companies = () => {
                   </div>
 
                   <div className={styles.actions}>
-                    <button 
+                    <button
                       className={styles.openBtn}
                       onClick={() => handleOpenCompany(company.slug)}
                     >
