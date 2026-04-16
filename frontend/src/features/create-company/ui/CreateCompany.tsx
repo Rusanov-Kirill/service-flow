@@ -250,6 +250,7 @@ const CreateCompany = () => {
                                             <ServiceCard
                                                 key={service.id}
                                                 service={service}
+                                                mode='edit'
                                                 onRemove={handleRemoveService}
                                             />
                                         ))}
