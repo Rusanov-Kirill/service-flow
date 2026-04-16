@@ -1,0 +1,100 @@
+.servicesTab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
+        padding-bottom: $spacing-sm;
+        border-bottom: 1px solid $border-light;
+
+        h3 {
+            font-size: $font-size-lg;
+            font-weight: 600;
+            color: $text-primary;
+            margin: 0;
+        }
+
+        .count {
+            font-size: $font-size-sm;
+            color: $gray-muted;
+        }
+    }
+
+    .servicesList {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        max-height: 600px;
+        overflow-y: auto;
+        padding-right: $spacing-xs;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $border-light;
+            border-radius: $radius-sm;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $border;
+            border-radius: $radius-sm;
+
+            &:hover {
+                background: $gray-muted;
+            }
+        }
+    }
+
+    @media (max-width: 529px) {
+        gap: $spacing-md;
+
+        .header {
+            h3 {
+                font-size: $font-size-md;
+            }
+
+            .count {
+                font-size: $font-size-xs;
+            }
+        }
+
+        .servicesList {
+            gap: $spacing-sm;
+            max-height: 500px;
+        }
+    }
+}
+
+.empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: $spacing-3xl $spacing-lg;
+    background: $bg-light;
+    border-radius: $radius-lg;
+    gap: $spacing-sm;
+
+    h3 {
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        margin: 0;
+    }
+}
