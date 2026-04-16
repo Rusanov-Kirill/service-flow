@@ -1,3 +1,5 @@
+import type { Company } from "@prisma/client";
+
 export interface UpdateProfileInput {
     firstName?: string;
     lastName?: string;
@@ -17,4 +19,5 @@ export interface UserResponse {
     createdAt: Date;
     updatedAt: Date;
     lastLogin: Date | null,
+    companies?: Company[];
 }

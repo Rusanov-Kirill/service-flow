@@ -9,6 +9,8 @@ export const userService = {
             throw new Error('User not found');
         }
 
+        const ownedCompanies = await userRepository.getUserCompanies(userId);
+
         return {
             id: user.id,
             email: user.email,
@@ -21,6 +23,7 @@ export const userService = {
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
             lastLogin: user.lastLogin,
+            companies: ownedCompanies,
         };
     },
 
@@ -56,6 +59,8 @@ export const userService = {
 
         const updatedUser = await userRepository.update(userId, updateData);
 
+        const ownedCompanies = await userRepository.getUserCompanies(userId);
+
         return {
             id: updatedUser.id,
             email: updatedUser.email,
@@ -68,6 +73,7 @@ export const userService = {
             createdAt: updatedUser.createdAt,
             updatedAt: updatedUser.updatedAt,
             lastLogin: updatedUser.lastLogin,
+            companies: ownedCompanies,
         };
     },
 };

@@ -14,4 +14,16 @@ export const userRepository = {
             data
         });
     },
+
+    getUserCompanies: async (userId: string) => {
+        return prisma.company.findMany({
+            where: { ownerId: userId },
+            orderBy: { createdAt: 'desc' },
+            include: {
+                services: {
+                    where: { isActive: true },
+                },
+            },
+        });
+    },
 }
