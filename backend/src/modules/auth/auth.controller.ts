@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 // import { config } from '../../shared/config'
+import { userRepository } from '../user/user.repository';
 import { authService } from './auth.service';
 import { registerSchema, loginSchema } from './auth.validation';
 
@@ -111,6 +112,8 @@ export const authController = {
                 return;
             }
 
+            const companies = await userRepository.getUserCompanies(user.id);
+
             res.json({
                 success: true,
                 data: {
@@ -122,7 +125,8 @@ export const authController = {
                     avatar: user.avatar,
                     phoneNumber: user.phoneNumber,
                     lastLogin: user.lastLogin,
-                    createdAt: user.createdAt
+                    createdAt: user.createdAt,
+                    companies: companies
                 }
             });
         } catch (error: any) {

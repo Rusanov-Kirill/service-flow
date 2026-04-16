@@ -2,6 +2,7 @@ import { randomBytes } from 'crypto';
 import { hashPassword, comparePassword } from '../../shared/utils/bcrypt';
 import { generateAccessToken, generateRefreshToken } from '../../shared/utils/jwt';
 import { emailService } from '../../shared/utils/email.service';
+import { userRepository } from '../user/user.repository';
 import { authRepository } from './auth.repository';
 import { AuthResponse } from './auth.types';
 import { RegisterInput, LoginInput } from './auth.validation';
@@ -45,6 +46,8 @@ export const authService = {
             expiresAt
         });
 
+        const companies = await userRepository.getUserCompanies(user.id);
+
         return {
             accessToken,
             refreshToken,
@@ -57,7 +60,8 @@ export const authService = {
                 avatar: user.avatar ?? '',
                 phoneNumber: user.phoneNumber ?? '',
                 lastLogin: user.lastLogin,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                companies: companies,
             }
         };
     },
@@ -98,6 +102,8 @@ export const authService = {
             expiresAt
         });
 
+        const companies = await userRepository.getUserCompanies(user.id);
+
         return {
             accessToken,
             refreshToken,
@@ -110,7 +116,8 @@ export const authService = {
                 avatar: user.avatar ?? '',
                 phoneNumber: user.phoneNumber ?? '',
                 lastLogin: user.lastLogin,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                companies: companies
             }
         };
     },
@@ -156,6 +163,8 @@ export const authService = {
             expiresAt
         });
 
+        const companies = await userRepository.getUserCompanies(user.id);
+
         return {
             accessToken,
             refreshToken,
@@ -168,7 +177,8 @@ export const authService = {
                 avatar: user.avatar ?? '',
                 phoneNumber: user.phoneNumber ?? '',
                 lastLogin: user.lastLogin,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                companies: companies
             }
         };
     },
