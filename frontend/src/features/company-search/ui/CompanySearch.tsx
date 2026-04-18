@@ -1,9 +1,8 @@
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, memo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { companyApi } from '@/shared/api/companyApi';
 import type { Company } from '@/entities/company';
 import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
@@ -16,17 +15,18 @@ type SearchMode = 'name' | 'tags';
 
 interface CompanySearchProps {
     companies?: Company[];
+    isLoading: boolean;
 }
 
-const CompanySearch = ({ companies: externalCompanies }: CompanySearchProps) => {
+const CompanySearch = memo(({ companies: externalCompanies, isLoading }: CompanySearchProps) => {
     const [query, setQuery] = useState('');
     const [mode, setMode] = useState<SearchMode>('name');
     const [isOpen, setIsOpen] = useState(false);
-    const [localCompanies, setLocalCompanies] = useState<Company[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const { slug } = useParams<{ slug?: string }>();
+
+    const companies = externalCompanies ?? [];
 
     const debouncedQuery = useDebounce(query, 500);
     const ref = useRef<HTMLDivElement>(null);
@@ -34,44 +34,19 @@ const CompanySearch = ({ companies: externalCompanies }: CompanySearchProps) => 
     useClickOutside(ref, () => setIsOpen(false));
 
     useEffect(() => {
-        const fetchCompanies = async () => {
-            if (externalCompanies) {
-                setLocalCompanies(externalCompanies);
-                return;
-            }
+        if (companies.length === 0) return;
 
-            setIsLoading(true);
-            try {
-                const allCompanies = await companyApi.getAll();
-                setLocalCompanies(allCompanies);
-            } catch (error) {
-                console.error('Ошибка загрузки компаний:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchCompanies();
-    }, [externalCompanies]);
-
-    useEffect(() => {
-        const handleName = async () => {
-            if (!slug) {
-                setQuery('');
-                return;
-            }
-
-            const company = localCompanies.find((c) => c.slug === slug);
-
-            if (company && company.name !== query) {
-                setQuery(company.name);
-            }
-        };
-
-        if (localCompanies.length > 0) {
-            handleName();
+        if (!slug) {
+            setQuery('');
+            return;
         }
-    }, [slug, localCompanies]);
+
+        const company = companies.find((c) => c.slug === slug);
+
+        if (!company) return;
+
+        setQuery((prev) => (prev === company.name ? prev : company.name));
+    }, [slug, companies]);
 
     const filtered = useMemo(() => {
         if (!debouncedQuery) return [];
@@ -79,19 +54,19 @@ const CompanySearch = ({ companies: externalCompanies }: CompanySearchProps) => 
         const searchLower = debouncedQuery.toLowerCase();
 
         if (mode === 'name') {
-            return localCompanies.filter((c) =>
+            return companies.filter((c) =>
                 c.name.toLowerCase().includes(searchLower)
             );
         }
 
-        return localCompanies.filter((c) =>
+        return companies.filter((c) =>
             c.tags.some((tag) =>
                 tag.toLowerCase().startsWith(searchLower)
             )
         );
-    }, [localCompanies, debouncedQuery, mode]);
+    }, [debouncedQuery, mode, companies]);
 
-    if (isLoading && localCompanies.length === 0) {
+    if (isLoading && companies.length === 0) {
         return (
             <div ref={ref} className={styles.search}>
                 <div className={styles.inputWrapper}>
@@ -99,11 +74,12 @@ const CompanySearch = ({ companies: externalCompanies }: CompanySearchProps) => 
                         className={styles['company-input']}
                         placeholder="Загрузка компаний..."
                         disabled
+                        value={query ?? ''}
                     />
                 </div>
             </div>
         );
-    }
+    };
 
     return (
         <div ref={ref} className={styles.search}>
@@ -162,6 +138,8 @@ const CompanySearch = ({ companies: externalCompanies }: CompanySearchProps) => 
             )}
         </div>
     );
-};
+});
+
+CompanySearch.displayName = 'CompanySearch';
 
 export default CompanySearch;
