@@ -1,5 +1,7 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+
+import Loader from '@/shared/ui/Loader';
 
 import { ROUTES } from './config';
 import GuestRoute from './GuestRoute';
@@ -15,18 +17,26 @@ const Companies = lazy(() => import('@/widgets/dashboard/companies'));
 const CreateCompany = lazy(() => import('@/features/create-company'));
 
 
+const LazyRoute = ({ children }: { children: React.ReactNode }) => (
+    <Suspense fallback={<Loader />}>{children}</Suspense>
+);
+
 export const router = createBrowserRouter([
     {
         path: ROUTES.LANDING,
         element: (
-            <HomePage />
+            <LazyRoute>
+                <HomePage />
+            </LazyRoute>
         ),
     },
     {
         path: ROUTES.AUTH.LOGIN,
         element: (
             <GuestRoute>
-                <AuthPage variant="login" />
+                <LazyRoute>
+                    <AuthPage variant="login" />
+                </LazyRoute>
             </GuestRoute>
         ),
     },
@@ -34,17 +44,27 @@ export const router = createBrowserRouter([
         path: ROUTES.AUTH.REGISTER,
         element: (
             <GuestRoute>
-                <AuthPage variant="register" />
+                <LazyRoute>
+                    <AuthPage variant="register" />
+                </LazyRoute>
             </GuestRoute>
         ),
     },
     {
         path: ROUTES.AUTH.VERIFY_EMAIL_PENDING,
-        element: <VerifyEmailPendingPage />,
+        element: (
+            <LazyRoute>
+                <VerifyEmailPendingPage />
+            </LazyRoute>
+        ),
     },
     {
         path: ROUTES.AUTH.VERIFY_EMAIL,
-        element: <VerifyEmailPage />,
+        element: (
+            <LazyRoute>
+                <VerifyEmailPage />
+            </LazyRoute>
+        ),
     },
     {
         path: ROUTES.NOT_FOUND,
@@ -52,32 +72,56 @@ export const router = createBrowserRouter([
     },
     {
         path: ROUTES.HOME.ROOT,
-        element: <DashboardPage />,
+        element: (
+            <LazyRoute>
+                <DashboardPage />
+            </LazyRoute>
+        ),
         children: [
             {
                 index: true,
-                element: <Navigate to={ROUTES.HOME.MY_PROFILE} replace />
+                element: <Navigate to={ROUTES.HOME.MY_PROFILE} replace />,
             },
             {
                 path: ROUTES.HOME.DASHBOARD,
-                element: <DashboardMain />,
+                element: (
+                    <LazyRoute>
+                        <DashboardMain />
+                    </LazyRoute>
+                ),
             },
             {
                 path: ROUTES.HOME.COMPANY_DASHBOARD,
-                element: <DashboardMain />,
+                element: (
+                    <LazyRoute>
+                        <DashboardMain />
+                    </LazyRoute>
+                ),
             },
             {
                 path: ROUTES.HOME.MY_PROFILE,
-                element: <Profile />,
+                element: (
+                    <LazyRoute>
+                        <Profile />
+                    </LazyRoute>
+                ),
             },
             {
                 path: ROUTES.HOME.MY_COMPANIES,
-                element: <Companies />,
+                element: (
+                    <LazyRoute>
+                        <Companies />
+                    </LazyRoute>
+                ),
             },
             {
                 path: ROUTES.HOME.CREATE_COMPANY,
-                element: <CreateCompany />,
-            }
+                element: (
+                    <LazyRoute>
+                        <CreateCompany />
+                    </LazyRoute>
+                ),
+            },
         ],
     },
 ]);
