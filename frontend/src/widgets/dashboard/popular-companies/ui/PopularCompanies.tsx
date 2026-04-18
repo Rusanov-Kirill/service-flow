@@ -10,38 +10,22 @@ import styles from './PopularCompanies.module.scss';
 const PopularCompanies = () => {
   const navigate = useNavigate();
   const [companies, setCompanies] = useState<Company[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        setIsLoading(true);
         const data = await companyApi.getAll();
         setCompanies(data);
         setError(null);
       } catch (err: any) {
         console.error('Ошибка загрузки компаний:', err);
         setError(err.message || 'Не удалось загрузить компании');
-      } finally {
-        setIsLoading(false);
       }
     };
 
     fetchCompanies();
   }, []);
-
-  if (isLoading) {
-    return (
-      <div className={styles.wrapper}>
-        <h3 className={styles.title}>Популярные компании</h3>
-        <div className={styles.loadingContainer}>
-          <div className={styles.spinner}></div>
-          <p>Загрузка компаний...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
