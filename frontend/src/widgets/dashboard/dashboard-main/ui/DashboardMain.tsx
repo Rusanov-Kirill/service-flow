@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
+import { useCompanyStore } from '@/entities/company/store/useCompanyStore';
 import type { Company } from '@/entities/company';
 import CompanySearch from '@/features/company-search';
 import { companyApi } from '@/shared/api/companyApi';
+import Loader from '@/shared/ui/Loader';
 import PopularCompanies from '@/widgets/dashboard/popular-companies';
 
 import OverviewTab from './components/OverviewTab/OverviewTab';
@@ -16,46 +18,43 @@ type Tab = 'overview' | 'services' | 'finance' | 'bookings';
 const DashboardMain = () => {
   const { slug } = useParams<{ slug?: string }>();
   const { user } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const { companies, fetchCompanies, isLoading: isCompaniesLoading } = useCompanyStore();
+
+  const [isCompanyLoading, setIsCompanyLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [company, setCompany] = useState<Company | null>(null);
-  const [allCompanies, setAllCompanies] = useState<Company[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+    fetchCompanies();
+  }, []);
 
+  useEffect(() => {
+    if (!slug) {
+      setCompany(null);
+      return;
+    }
+
+    const fetchCompany = async () => {
+      setIsCompanyLoading(true);
       try {
-        const companies = await companyApi.getAll();
-        setAllCompanies(companies);
-
-        if (slug) {
-          try {
-            const foundCompany = await companyApi.getBySlug(slug);
-            setCompany(foundCompany);
-            setActiveTab('overview');
-          } catch (error) {
-            console.error('Компания не найдена:', error);
-            setCompany(null);
-          }
-        } else {
-          setCompany(null);
-        }
-      } catch (error) {
-        console.error('Ошибка загрузки:', error);
+        const foundCompany = await companyApi.getBySlug(slug);
+        setCompany(foundCompany);
+        setActiveTab('overview');
+      } catch (e) {
+        console.error(e);
         setCompany(null);
       } finally {
-        setIsLoading(false);
+        setIsCompanyLoading(false);
       }
     };
 
-    fetchData();
+    fetchCompany();
   }, [slug]);
 
-  if (isLoading) {
+  if (isCompaniesLoading) {
     return (
       <div className={styles.wrapper}>
-        <CompanySearch companies={[]} />
+        <CompanySearch companies={companies} isLoading={isCompaniesLoading} />
 
         <div className={styles.content}>
           <div className={styles.skeleton}>
@@ -84,15 +83,19 @@ const DashboardMain = () => {
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <div className={styles.wrapper}>
-      <CompanySearch companies={allCompanies} />
+      <CompanySearch companies={companies} isLoading={isCompaniesLoading} />
 
       <div className={styles.content}>
         {company ? (
           <>
+            {isCompanyLoading && (
+              <Loader />
+            )}
+
             <div className={styles.tabs}>
               <button
                 className={activeTab === 'overview' ? styles.activeTab : ''}
