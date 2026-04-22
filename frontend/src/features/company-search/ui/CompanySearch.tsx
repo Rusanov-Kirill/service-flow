@@ -26,7 +26,10 @@ const CompanySearch = memo(({ companies: externalCompanies, isLoading }: Company
     const navigate = useNavigate();
     const { slug } = useParams<{ slug?: string }>();
 
-    const companies = externalCompanies ?? [];
+    const companies = useMemo(
+        () => externalCompanies ?? [],
+        [externalCompanies]
+    );
 
     const debouncedQuery = useDebounce(query, 500);
     const ref = useRef<HTMLDivElement>(null);
@@ -34,18 +37,22 @@ const CompanySearch = memo(({ companies: externalCompanies, isLoading }: Company
     useClickOutside(ref, () => setIsOpen(false));
 
     useEffect(() => {
-        if (companies.length === 0) return;
+        const getCompanies = async () => {
+            if (companies.length === 0) return;
 
-        if (!slug) {
-            setQuery('');
-            return;
-        }
+            if (!slug) {
+                setQuery('');
+                return;
+            }
 
-        const company = companies.find((c) => c.slug === slug);
+            const company = companies.find((c) => c.slug === slug);
 
-        if (!company) return;
+            if (!company) return;
 
-        setQuery((prev) => (prev === company.name ? prev : company.name));
+            setQuery((prev) => (prev === company.name ? prev : company.name));
+        };
+
+        getCompanies();
     }, [slug, companies]);
 
     const filtered = useMemo(() => {

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import { useServicesStore } from '@/entities/service';
 import FormField from '@/shared/ui/auth/FormField';
@@ -17,8 +17,8 @@ interface AddServiceModalProps {
 
 const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
     const addService = useServicesStore((state) => state.addService);
-    
-    const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm<ServiceFormData>({
+
+    const { control, register, handleSubmit, formState: { errors }, setValue, reset } = useForm<ServiceFormData>({
         resolver: zodResolver(serviceSchema),
         mode: "onBlur",
         defaultValues: {
@@ -36,7 +36,7 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
             description: data.description,
             duration: data.duration,
             price: data.price,
-            currency: data.currency as any, 
+            currency: data.currency,
             isActive: true,
         });
         reset();
@@ -77,13 +77,19 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
                             onChange={(e) => setValue('duration', parseInt(e.target.value) || 0, { shouldValidate: true })}
                         />
 
-                        <Select
-                            label="Валюта"
-                            options={CURRENCIES}
-                            value={watch('currency')}
-                            onChange={(value) => setValue('currency', value, { shouldValidate: true })}
-                            placeholder="Выберите валюту"
-                            required
+                        <Controller
+                            name="currency"
+                            control={control}
+                            render={({ field }) => (
+                                <Select
+                                    label="Валюта"
+                                    options={CURRENCIES}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    placeholder="Выберите валюту"
+                                    required
+                                />
+                            )}
                         />
 
                         <FormField

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
+
 import styles from './Select.module.scss';
 
 interface SelectOption {

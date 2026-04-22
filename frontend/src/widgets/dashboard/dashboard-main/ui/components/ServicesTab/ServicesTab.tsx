@@ -1,5 +1,6 @@
 import type { Company } from '@/entities/company';
 import ServiceCard from '@/features/add-service/ui/components/ServiceCard';
+
 import styles from './ServicesTab.module.scss';
 
 interface ServicesTabProps {

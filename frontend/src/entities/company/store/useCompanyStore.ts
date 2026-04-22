@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import type { Company } from '@/entities/company';
 import { companyApi } from '@/shared/api/companyApi';
 
@@ -42,7 +43,7 @@ export const useCompanyStore = create<CompanyStore>((set, get) => ({
                 companies,
                 lastFetched: Date.now(),
             });
-        } catch (e) {
+        } catch {
             set({ error: 'Failed to load companies' });
         } finally {
             set({ isLoading: false });

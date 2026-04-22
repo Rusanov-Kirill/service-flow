@@ -15,7 +15,7 @@ const Profile = () => {
   const handleOpenCompany = (slug: string) => {
     window.scrollTo(0, 0);
     navigate(`/home/dashboard/${slug}`);
-  }
+  };
 
   if (!user) return null;
 

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAuthStore } from '@/app/store/useAuthStore';
-import { useCompanyStore } from '@/entities/company/store/useCompanyStore';
 import type { Company } from '@/entities/company';
+import { useCompanyStore } from '@/entities/company/store/useCompanyStore';
 import CompanySearch from '@/features/company-search';
 import { companyApi } from '@/shared/api/companyApi';
 import Loader from '@/shared/ui/Loader';
@@ -26,7 +26,7 @@ const DashboardMain = () => {
 
   useEffect(() => {
     fetchCompanies();
-  }, []);
+  }, [fetchCompanies]);
 
   useEffect(() => {
     if (!slug) {

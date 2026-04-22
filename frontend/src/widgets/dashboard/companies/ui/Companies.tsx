@@ -17,7 +17,7 @@ const Companies = () => {
   };
 
   const handleCreateCompany = () => {
-    navigate('/home/companies/create')
+    navigate('/home/companies/create');
   };
 
   return (

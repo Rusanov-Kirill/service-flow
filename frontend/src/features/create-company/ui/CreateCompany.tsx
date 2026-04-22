@@ -1,20 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useServicesStore } from '@/entities/service';
 import { useAuthStore } from '@/app/store/useAuthStore';
+import { useServicesStore } from '@/entities/service';
 import AddServiceModal from '@/features/add-service';
 import ServiceCard from '@/features/add-service/ui/components/ServiceCard';
 import { companyApi } from '@/shared/api/companyApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
-import Select from '@/shared/ui/Select';
 import MultiSelect from '@/shared/ui/MultiSelect';
+import Select from '@/shared/ui/Select';
+import { TIMEZONES, CURRENCIES, TAGS_OPTIONS } from '@/shared/utils/selectorValues';
 
 import { createCompanySchema, type CreateCompanyFormData } from '../model/CreateCompany.types';
-import { TIMEZONES, CURRENCIES, TAGS_OPTIONS } from '@/shared/utils/selectorValues';
 
 import styles from './CreateCompany.module.scss';
 
@@ -73,8 +74,14 @@ const CreateCompany = () => {
             clearServices();
             navigate('/home/companies');
 
-        } catch (err: any) {
-            setError(err.response?.data?.error || 'Ошибка при создании компании');
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                setError(err.response?.data?.error ?? 'Ошибка сервера');
+            } else if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Ошибка при создании компании');
+            }
         } finally {
             setIsLoading(false);
         }

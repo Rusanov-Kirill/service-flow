@@ -1,5 +1,6 @@
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import type { ClientService } from '@/entities/service';
 
 import styles from './ServiceCard.module.scss';

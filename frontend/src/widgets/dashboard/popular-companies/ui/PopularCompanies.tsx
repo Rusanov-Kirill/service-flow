@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { companyApi } from '@/shared/api/companyApi';
 import type { Company } from '@/entities/company';
+import { companyApi } from '@/shared/api/companyApi';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 
 import styles from './PopularCompanies.module.scss';
@@ -18,9 +18,13 @@ const PopularCompanies = () => {
         const data = await companyApi.getAll();
         setCompanies(data);
         setError(null);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Ошибка загрузки компаний:', err);
-        setError(err.message || 'Не удалось загрузить компании');
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Не удалось загрузить компании');
+        }
       }
     };
 

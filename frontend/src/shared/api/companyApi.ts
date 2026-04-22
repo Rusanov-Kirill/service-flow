@@ -1,6 +1,7 @@
-import { apiClient } from './client';
 import type { Company } from '@/entities/company';
 import type { ClientService } from '@/entities/service';
+
+import { apiClient } from './client';
 
 export type CreateCompanyRequest = Omit<Company, 'id' | 'createdAt' | 'updatedAt' | 'isActive' | 'members' | 'services'> & {
     services?: Omit<ClientService, 'id' | 'createdAt' | 'updatedAt'>[];

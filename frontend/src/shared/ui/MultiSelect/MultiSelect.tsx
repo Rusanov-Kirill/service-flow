@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
+
 import styles from './MultiSelect.module.scss';
 
 interface MultiSelectProps {
