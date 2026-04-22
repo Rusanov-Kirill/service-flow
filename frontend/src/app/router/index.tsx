@@ -1,10 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-
-import Loader from '@/shared/ui/Loader';
 
 import { ROUTES } from './config';
 import GuestRoute from './GuestRoute';
+import LazyRoute from './LazyRoute';
 
 const HomePage = lazy(() => import('@/pages/landing'));
 const AuthPage = lazy(() => import('@/pages/auth'));
@@ -15,11 +14,6 @@ const DashboardMain = lazy(() => import('@/widgets/dashboard/dashboard-main'));
 const Profile = lazy(() => import('@/widgets/dashboard/profile'));
 const Companies = lazy(() => import('@/widgets/dashboard/companies'));
 const CreateCompany = lazy(() => import('@/features/create-company'));
-
-
-const LazyRoute = ({ children }: { children: React.ReactNode }) => (
-    <Suspense fallback={<Loader />}>{children}</Suspense>
-);
 
 export const router = createBrowserRouter([
     {
