@@ -156,7 +156,7 @@ model Booking {
   startTime   DateTime      @map("start_time")
   endTime     DateTime      @map("end_time")
   status      BookingStatus @default(pending)
-  totalPrice  Decimal?      @map("total_price")
+  totalPrice  Decimal       @map("total_price")
   
   company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   customer    Customer @relation(fields: [customerId], references: [id])
