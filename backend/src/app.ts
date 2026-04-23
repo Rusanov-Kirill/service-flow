@@ -10,9 +10,11 @@ import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
 import serviceRoutes from './modules/service/service.routes';
 import companyRoutes from './modules/company/company.routes';
- 
+import customerRoutes from './modules/customer/customer.routes';
+import bookingRoutes from './modules/bookings/bookings.routes';
+
 import { config } from './shared/config';
- import { errorHandler } from './shared/middleware/error.middleware';
+import { errorHandler } from './shared/middleware/error.middleware';
 
 const app = express();
 
@@ -46,6 +48,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/companies', companyRoutes);
+app.use('/api/customers', customerRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 // Health check
 app.get('/health', (_, res) => {
