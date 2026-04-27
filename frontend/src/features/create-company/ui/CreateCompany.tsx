@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { companyApi } from '@entities/company/api/companyApi';
-import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import { useServicesStore } from '@/entities/service';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import AddServiceModal from '@/features/add-service';
 import ServiceCard from '@/features/add-service/ui/components/ServiceCard';
 import FormField from '@/shared/ui/auth/FormField';
@@ -14,6 +13,7 @@ import Button from '@/shared/ui/Button';
 import MultiSelect from '@/shared/ui/MultiSelect';
 import Select from '@/shared/ui/Select';
 import { TIMEZONES, CURRENCIES, TAGS_OPTIONS } from '@/shared/utils/selectorValues';
+import { companyApi } from '@entities/company/api/companyApi';
 
 import { createCompanySchema, type CreateCompanyFormData } from '../model/CreateCompany.types';
 

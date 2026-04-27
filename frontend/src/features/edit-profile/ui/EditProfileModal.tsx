@@ -3,8 +3,8 @@ import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import { authApi } from '@/entities/user/api/authApi';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import Notification from '@/shared/ui/Notification';

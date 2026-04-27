@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import styles from './ConfirmModal.module.scss';
 
 interface ConfirmModalProps {
@@ -25,9 +26,13 @@ const ConfirmModal = ({
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-        if (isOpen) {
-            setIsAnimating(true);
-        }
+        const setAnimating = async () => {
+            if (isOpen) {
+                setIsAnimating(true);
+            }
+        };
+
+        setAnimating();
     }, [isOpen]);
 
     const handleClose = () => {

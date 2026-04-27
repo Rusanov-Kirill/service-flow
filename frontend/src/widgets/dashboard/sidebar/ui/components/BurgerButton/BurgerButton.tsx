@@ -1,8 +1,8 @@
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useUIStore } from '@/widgets/dashboard/sidebar/store/useUIStore';
 import Button from '@/shared/ui/Button';
+import { useUIStore } from '@/widgets/dashboard/sidebar/store/useUIStore';
 
 import styles from './BurgerButton.module.scss';
 

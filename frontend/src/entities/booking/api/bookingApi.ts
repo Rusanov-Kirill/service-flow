@@ -11,7 +11,7 @@ export const bookingApi = {
     },
 
     update: async (id: string, data: UpdateBookingDto) => {
-        const response = await apiClient.patch(`/bookings/${id}`, data)
+        const response = await apiClient.patch(`/bookings/${id}`, data);
         return response.data;
     },
 

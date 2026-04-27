@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react';
 import { DateTime } from 'luxon';
+import { useState, useMemo } from 'react';
 
-import { useAuthStore } from '@/entities/user/store/useAuthStore';
-import type { Company } from '@/entities/company';
 import { bookingApi } from '@/entities/booking';
+import type { Company } from '@/entities/company';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import ConfirmModal from '@/shared/ui/ConfirmModal';
 import Notification from '@/shared/ui/Notification';
 import { getDaysInMonth, isToday } from '@/shared/utils/dateUtils';
@@ -81,7 +81,6 @@ const BookingsTab = ({ selectedCompany }: BookingsTabProps) => {
             setIsLoading(true);
             try {
                 const slots = await fetchBookedSlots(date, targetServiceId);
-                console.log('Загруженные слоты:', slots);
                 setBookedSlots(slots);
             } catch (err) {
                 console.error('Ошибка загрузки слотов:', err);
@@ -112,13 +111,13 @@ const BookingsTab = ({ selectedCompany }: BookingsTabProps) => {
             setShowTimeSlots(false);
             setSelectedTime(time);
             setShowConfirmModal(true);
-        }, 300)
+        }, 300);
     };
 
     const handleConfirmBooking = async () => {
         if (!selectedTime) return;
 
-        if (!selectedServiceId || !user || !selectedCompany || !selectedService) return;
+        if (!selectedServiceId || !selectedService) return;
 
         const parts = selectedTime.split(':');
         if (parts.length !== 2) {
@@ -190,9 +189,10 @@ const BookingsTab = ({ selectedCompany }: BookingsTabProps) => {
             setSelectedTime(null);
             handleCloseTimeSlots();
 
-        } catch (err: any) {
+        } catch (err) {
             console.error('Ошибка бронирования:', err);
-            setError(err.response?.data?.error || err.message || 'Ошибка при создании бронирования');
+            const errorMessage = err instanceof Error ? err.message : 'Ошибка при создании бронирования';
+            setError(errorMessage); 
             setShowConfirmModal(false);
         } finally {
             setIsLoading(false);
@@ -206,8 +206,9 @@ const BookingsTab = ({ selectedCompany }: BookingsTabProps) => {
         setShowTimeSlots(true);
     };
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const availableTimeSlots = useMemo(() => {
-        if (!selectedService || !selectedCompany) return [];
+        if (!selectedService) return [];
 
         const companyTz = selectedCompany.timezone;
         const nowInCompanyTz = DateTime.now().setZone(companyTz);
@@ -219,8 +220,6 @@ const BookingsTab = ({ selectedCompany }: BookingsTabProps) => {
             },
             { zone: companyTz }
         ).startOf('day');
-
-        console.log('render');
 
         return timeSlots.filter(time => {
             const [hoursStr, minutesStr] = time.split(':');

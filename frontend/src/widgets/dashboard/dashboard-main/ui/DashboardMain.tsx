@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import type { Company } from '@/entities/company';
 import { companyApi } from '@/entities/company/api/companyApi';
 import { useCompanyStore } from '@/entities/company/store/useCompanyStore';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import CompanySearch from '@/features/company-search';
 import Loader from '@/shared/ui/Loader';
 import PopularCompanies from '@/widgets/dashboard/popular-companies';
