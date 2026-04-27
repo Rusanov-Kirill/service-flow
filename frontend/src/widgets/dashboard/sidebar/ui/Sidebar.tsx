@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 
-import { useUIStore } from '@/app/store/useUIStore';
+import { useLogout } from '@/entities/user/hooks/useLogout';
+import { useUIStore } from '@/widgets/dashboard/sidebar/store/useUIStore';
 import Button from '@/shared/ui/Button';
 import Logo from '@/shared/ui/Logo';
-import { useLogout } from '@/shared/utils/useLogout';
 
 import styles from './Sidebar.module.scss';
 

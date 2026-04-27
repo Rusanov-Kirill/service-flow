@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import type { Company } from '@/entities/company';
-import { companyApi } from '@/shared/api/companyApi';
+import { companyApi } from '@entities/company/api/companyApi';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 
 import styles from './PopularCompanies.module.scss';

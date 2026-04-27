@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 
 import type { Company } from '@/entities/company';
-import { companyApi } from '@/shared/api/companyApi';
+
+import { companyApi } from '../api/companyApi';
 
 type CompanyStore = {
     companies: Company[];

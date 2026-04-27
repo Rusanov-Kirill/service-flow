@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthStore } from '@/app/store/useAuthStore';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 
 import styles from './Companies.module.scss';

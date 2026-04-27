@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthStore } from '@/app/store/useAuthStore';
+import { companyApi } from '@entities/company/api/companyApi';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import { useServicesStore } from '@/entities/service';
 import AddServiceModal from '@/features/add-service';
 import ServiceCard from '@/features/add-service/ui/components/ServiceCard';
-import { companyApi } from '@/shared/api/companyApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import MultiSelect from '@/shared/ui/MultiSelect';

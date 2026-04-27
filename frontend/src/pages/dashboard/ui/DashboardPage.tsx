@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import BurgerButton from '@/shared/ui/BurgerButton';
-import Sidebar from '@widgets/dashboard/sidebar';
+import BurgerButton from '@/widgets/dashboard/sidebar/ui/components/BurgerButton';
+import Sidebar from '@/widgets/dashboard/sidebar';
 
 import styles from './DashboardPage.module.scss';
 

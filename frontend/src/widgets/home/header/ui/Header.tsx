@@ -2,11 +2,11 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@/app/router/config';
-import { useAuthStore } from '@/app/store/useAuthStore';
+import { useLogout } from '@/entities/user/hooks/useLogout';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import { LandingPageSectionRefsContext } from '@/pages/landing/context';
 import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
 import { MenuIcon } from '@/shared/ui/icons/MenuIcon';
-import { useLogout } from '@/shared/utils/useLogout';
 import { useRedirect } from '@/shared/utils/useRedirect';
 import Button from '@shared/ui/Button';
 import Logo from '@shared/ui/Logo';

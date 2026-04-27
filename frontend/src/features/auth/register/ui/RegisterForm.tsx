@@ -5,7 +5,7 @@ import { useForm, FormProvider, useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@/app/router/config';
-import { authApi } from '@/shared/api/authApi';
+import { authApi } from '@/entities/user/api/authApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import ProgressBar from '@/shared/ui/ProgressBar';
