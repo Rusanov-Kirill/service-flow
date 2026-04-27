@@ -1,5 +1,4 @@
 import { CreateBookingDto, UpdateBookingDto } from './bookings.types';
-
 import { prisma } from '../../shared/database/prisma';
 
 export const bookingsRepository = {
@@ -38,6 +37,31 @@ export const bookingsRepository = {
     findById: async (id: string) => {
         return prisma.booking.findUnique({
             where: { id },
+        });
+    },
+
+    getBookedSlots: async (
+        companyId: string,
+        start: Date,
+        end: Date,
+        serviceId?: string
+    ) => {
+        return prisma.booking.findMany({
+            where: {
+                companyId,
+                ...(serviceId && { serviceId }),
+                startTime: {
+                    gte: start,
+                    lte: end,
+                },
+                status: {
+                    notIn: ['cancelled', 'completed'],
+                },
+            },
+            select: {
+                startTime: true,
+                endTime: true, 
+            },
         });
     },
 };

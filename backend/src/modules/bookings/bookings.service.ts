@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 import { bookingsRepository } from './bookings.repository';
 import type { CreateBookingInput, UpdateBookingDto } from './bookings.validation';
 
@@ -50,5 +52,48 @@ export const bookingsService = {
         }
 
         return bookingsRepository.update(id, data);
+    },
+
+    getBookedSlots: async (companyId: string, date: string, serviceId?: string) => {
+        const company = await companyRepository.findById(companyId);
+        if (!company) throw new Error('Компания не найдена');
+
+        const tz = company.timezone;
+        const targetDate = DateTime.fromISO(date, { zone: tz }).startOf('day');
+        const startUtc = targetDate.toUTC();
+        const endUtc = targetDate.endOf('day').toUTC();
+
+        const bookings = await bookingsRepository.getBookedSlots(
+            companyId,
+            startUtc.toJSDate(),
+            endUtc.toJSDate(),
+            serviceId
+        );
+
+        const DAY_END_HOUR = 20;
+        const DAY_END_MINUTE = 0;
+
+        const bookedSlotsList: string[] = [];
+
+        for (const booking of bookings) {
+            const startLocal = DateTime.fromJSDate(booking.startTime, { zone: 'utc' }).setZone(tz);
+            let endLocal = DateTime.fromJSDate(booking.endTime, { zone: 'utc' }).setZone(tz);
+
+            const endOfDay = targetDate.set({ hour: DAY_END_HOUR, minute: DAY_END_MINUTE });
+
+            if (endLocal > endOfDay) endLocal = endOfDay;
+
+            if (startLocal.equals(endLocal)) {
+                bookedSlotsList.push(startLocal.toFormat('HH:mm'));
+            } else {
+                let current = startLocal;
+                while (current <= endLocal) {
+                    bookedSlotsList.push(current.toFormat('HH:mm'));
+                    current = current.plus({ minutes: 30 });
+                }
+            }
+        }
+
+        return [...new Set(bookedSlotsList)];
     },
 };

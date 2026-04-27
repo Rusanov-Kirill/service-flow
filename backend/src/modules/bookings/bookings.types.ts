@@ -14,3 +14,12 @@ export interface UpdateBookingDto {
     status?: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     totalPrice?: number;
 }
+
+export interface GetBookedSlotsQuery {
+    date: string;
+    serviceId?: string;
+}
+
+export interface BookedSlot {
+    startTime: string;
+}

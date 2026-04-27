@@ -33,5 +33,11 @@ export const bookingIdSchema = z.object({
     id: z.string().uuid('Неверный формат ID'),
 });
 
+export const getBookedSlotsSchema = z.object({
+    companyId: z.string().uuid('Неверный формат companyId'),
+    date: z.string().datetime({ message: 'Неверный формат даты' }),
+    serviceId: z.string().uuid('Неверный формат serviceId').optional(),
+});
+
 export type CreateBookingInput = z.infer<typeof createBookingSchema>;
 export type UpdateBookingDto = z.infer<typeof updateBookingSchema>;

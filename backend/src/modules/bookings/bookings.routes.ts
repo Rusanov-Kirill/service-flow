@@ -5,5 +5,6 @@ const router = Router();
 
 router.post('/', bookingsController.create);
 router.patch('/:id', bookingsController.update);
+router.get('/:companyId/booked-slots', bookingsController.getBookedSlots);
 
 export default router;
