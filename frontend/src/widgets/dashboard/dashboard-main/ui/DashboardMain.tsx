@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAuthStore } from '@/app/store/useAuthStore';
+import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import type { Company } from '@/entities/company';
+import { companyApi } from '@/entities/company/api/companyApi';
 import { useCompanyStore } from '@/entities/company/store/useCompanyStore';
 import CompanySearch from '@/features/company-search';
-import { companyApi } from '@/shared/api/companyApi';
 import Loader from '@/shared/ui/Loader';
 import PopularCompanies from '@/widgets/dashboard/popular-companies';
 
+import BookingsTab from './components/BookingsTab/BookingsTab';
 import OverviewTab from './components/OverviewTab/OverviewTab';
 import ServicesTab from './components/ServicesTab/ServicesTab';
 import styles from './DashboardMain.module.scss';
@@ -142,7 +143,7 @@ const DashboardMain = () => {
               )}
 
               {activeTab === 'bookings' && (
-                <div>Бронирования</div>
+                <BookingsTab selectedCompany={company} />
               )}
             </div>
           </>
