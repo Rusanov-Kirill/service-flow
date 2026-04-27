@@ -1,5 +1,6 @@
 import type { Company } from '@/entities/company';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
+import { TIMEZONES } from '@/shared/utils/selectorValues';
 
 import styles from './OverviewTab.module.scss';
 
@@ -56,7 +57,7 @@ const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
                 <div className={styles.grid}>
                     <div>
                         <span className={styles.label}>Часовой пояс</span>
-                        <p>{selectedCompany.timezone} ({selectedCompany.city})</p>
+                        <p>{selectedCompany.timezone && TIMEZONES.find(tz => tz.value === selectedCompany.timezone)?.label || selectedCompany.city}</p>
                     </div>
 
                     <div>
