@@ -1,0 +1,234 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+
+    &.overlayEnter {
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    &.overlayExit {
+        animation: fadeOut 0.3s ease forwards;
+    }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: $spacing-lg;
+
+    &.modalEnter {
+        animation: modalScaleIn 0.3s ease forwards;
+    }
+
+    &.modalExit {
+        animation: modalScaleOut 0.3s ease forwards;
+    }
+
+    .modalContent {
+        background: $white;
+        border-radius: $radius-lg;
+        max-width: 400px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: $shadow-lg;
+
+        .modalHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: $spacing-lg;
+            border-bottom: 1px solid $border;
+
+            h3 {
+                font-size: $font-size-md;
+                font-weight: 600;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            .closeBtn {
+                background: none;
+                border: none;
+                font-size: $font-size-2xl;
+                cursor: pointer;
+                color: $gray-muted;
+                transition: all $duration-fast;
+                line-height: 1;
+                padding: 0;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: $radius-sm;
+
+                &:hover {
+                    background: $bg-light;
+                    color: $red;
+                }
+            }
+        }
+
+        .modalBody {
+            padding: $spacing-lg;
+
+            p {
+                font-size: $font-size-sm;
+                color: $text-secondary;
+                margin: 0;
+                line-height: 1.5;
+            }
+        }
+
+        .modalFooter {
+            display: flex;
+            justify-content: flex-end;
+            gap: $spacing-sm;
+            padding: $spacing-lg;
+            border-top: 1px solid $border;
+
+            .cancelBtn {
+                padding: $spacing-sm $spacing-lg;
+                background: $white;
+                border: 1px solid $border;
+                border-radius: $radius-md;
+                font-size: $font-size-sm;
+                color: $text-secondary;
+                cursor: pointer;
+                transition: all $duration-fast;
+
+                &:hover:not(:disabled) {
+                    border-color: $gray-muted;
+                    color: $text-primary;
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+
+            .confirmBtn {
+                padding: $spacing-sm $spacing-lg;
+                background: $primary;
+                border: none;
+                border-radius: $radius-md;
+                font-size: $font-size-sm;
+                color: $white;
+                cursor: pointer;
+                transition: all $duration-fast;
+
+                &:hover:not(:disabled) {
+                    background: $primary-dark;
+                    transform: translateY(-1px);
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes modalScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes modalScaleOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+// Адаптация под мобильные устройства
+@media (max-width: 768px) {
+    .modal {
+        padding: $spacing-md;
+
+        .modalContent {
+            max-width: 90%;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        .modalContent {
+            .modalHeader {
+                padding: $spacing-md;
+
+                h3 {
+                    font-size: $font-size-sm;
+                }
+            }
+
+            .modalBody {
+                padding: $spacing-md;
+
+                p {
+                    font-size: $font-size-xs;
+                }
+            }
+
+            .modalFooter {
+                padding: $spacing-md;
+                flex-direction: column-reverse;
+
+                .cancelBtn,
+                .confirmBtn {
+                    width: 100%;
+                    padding: $spacing-sm;
+                }
+            }
+        }
+    }
+}
