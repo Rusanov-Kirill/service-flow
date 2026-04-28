@@ -1,5 +1,5 @@
 export interface CreateServiceDto {
-    companyId: string;
+    companyId?: string;
     name: string;
     description?: string;
     duration: number;
