@@ -24,6 +24,14 @@ export const companyRepository = {
                     website: companyData.website,
                     ownerId: companyData.ownerId,
                     isActive: true,
+                    bookingLeadDays: companyData.bookingLeadDays,
+                    workScheduleType: companyData.workScheduleType,
+                    defaultStartTime: companyData.defaultStartTime,
+                    defaultEndTime: companyData.defaultEndTime,
+                    customWorkDays: companyData.customWorkDays as any,
+                    holidays: companyData.holidays,
+                    autoConfirmBooking: companyData.autoConfirmBooking,
+                    paymentMethods: companyData.paymentMethods,
                 },
             });
 
