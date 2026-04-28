@@ -59,7 +59,6 @@ const DashboardMain = () => {
 
         <div className={styles.content}>
           <div className={styles.skeleton}>
-            {/* Скелетон PopularCompanies */}
             <div className={styles.skeletonTitle}>  </div>
             <div className={styles.skeletonGrid}>
               {[1, 2, 3, 4, 5, 6].map((i) => (
