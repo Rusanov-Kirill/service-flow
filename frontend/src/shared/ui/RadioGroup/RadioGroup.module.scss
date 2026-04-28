@@ -1,0 +1,71 @@
+.radioGroup {
+    display: flex;
+    flex-direction: column;
+    margin-top: $spacing-xl;
+
+    .label {
+        font-size: $font-size-xs;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
+
+        .required {
+            color: $error;
+            margin-left: $spacing-2xs;
+        }
+    }
+
+    .options {
+        display: flex;
+        gap: $spacing-lg;
+
+        .radioLabel {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            font-size: $font-size-xs;
+
+            input[type="radio"] {
+                cursor: pointer;
+                width: 16px;
+                height: 16px;
+                margin: 0;
+            }
+
+            span {
+                color: $text-primary;
+            }
+        }
+    }
+
+    .error {
+        font-size: $font-size-3xs;
+        color: $error;
+        margin-top: $spacing-2xs;
+        margin-left: $spacing-2xs;
+    }
+
+    @media (min-height: 1025px) {
+        .label {
+            font-size: $font-size-md;
+        }
+
+        .options {
+            .radioLabel {
+                font-size: $font-size-md;
+            }
+        }
+
+        .error {
+            font-size: $font-size-xs;
+        }
+    }
+
+    @media (max-width: 529px) {
+        .options {
+            flex-direction: column;
+            gap: $spacing-sm;
+        }
+    }
+}
