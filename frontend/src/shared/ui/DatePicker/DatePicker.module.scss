@@ -1,0 +1,101 @@
+.datePicker {
+    display: flex;
+    flex-direction: column;
+    margin-top: $spacing-xl;
+    width: 100%;
+
+    .label {
+        font-size: $font-size-xs;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
+
+        .required {
+            color: $error;
+            margin-left: $spacing-2xs;
+        }
+    }
+
+    .datesList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-sm;
+
+        .dateItem {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            background: $bg-light;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $radius-sm;
+            font-size: $font-size-3xs;
+
+            .removeDate {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: $font-size-md;
+                color: $gray-muted;
+                padding: 0;
+                line-height: 1;
+
+                &:hover {
+                    color: $error;
+                }
+            }
+        }
+    }
+
+    .inputWrapper {
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .input {
+        width: 100%;
+        padding: $spacing-sm $spacing-md;
+        border: 1px solid $border;
+        border-radius: $radius-sm;
+        font-size: $font-size-xs;
+        transition: all $duration-fast;
+        background: $white;
+        cursor: pointer;
+
+        &::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+
+        &.inputError {
+            border-color: $error;
+        }
+    }
+
+    .error {
+        font-size: $font-size-3xs;
+        color: $error;
+        margin-top: $spacing-2xs;
+        margin-left: $spacing-2xs;
+    }
+
+    @media (min-height: 1025px) {
+        .label {
+            font-size: $font-size-md;
+        }
+
+        .input {
+            font-size: $font-size-md;
+        }
+
+        .error {
+            font-size: $font-size-xs;
+        }
+    }
+}
