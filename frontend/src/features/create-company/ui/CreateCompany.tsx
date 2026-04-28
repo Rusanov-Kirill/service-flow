@@ -4,18 +4,19 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import type { WorkScheduleType, PaymentMethod } from '@/entities/company/model/types';
 import { useServicesStore } from '@/entities/service';
 import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import AddServiceModal from '@/features/add-service';
 import ServiceCard from '@/features/add-service/ui/components/ServiceCard';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
-import MultiSelect from '@/shared/ui/MultiSelect';
-import Select from '@/shared/ui/Select';
-import TimePicker from '@/shared/ui/TimePicker';
-import RadioGroup from '@/shared/ui/RadioGroup';
 import DatePicker from '@/shared/ui/DatePicker';
 import CustomWorkDays from '@/shared/ui/CustomWorkDays';
+import MultiSelect from '@/shared/ui/MultiSelect';
+import RadioGroup from '@/shared/ui/RadioGroup';
+import Select from '@/shared/ui/Select';
+import TimePicker from '@/shared/ui/TimePicker';
 import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
 import { companyApi } from '@entities/company/api/companyApi';
 
@@ -59,7 +60,7 @@ const CreateCompany = () => {
         }
     });
 
-    const watchWorkScheduleType = watch('workScheduleType')
+    const watchWorkScheduleType = watch('workScheduleType');
 
     const onSubmit = async (data: CreateCompanyFormData) => {
         setIsLoading(true);
@@ -301,7 +302,7 @@ const CreateCompany = () => {
                                     label="Тип рабочей недели"
                                     options={SCHEDULE_TYPES}
                                     value={watch('workScheduleType')}
-                                    onChange={(value) => setValue('workScheduleType', value as any, { shouldValidate: true })}
+                                    onChange={(value) => setValue('workScheduleType', value as WorkScheduleType, { shouldValidate: true })}
                                     error={errors.workScheduleType?.message}
                                     required
                                     placeholder="Выберите график работы"
@@ -354,7 +355,7 @@ const CreateCompany = () => {
                                     label="Способы оплаты"
                                     options={PAYMENT_METHODS}
                                     value={watch('paymentMethods')}
-                                    onChange={(value) => setValue('paymentMethods', value as any, { shouldValidate: true })}
+                                    onChange={(value) => setValue('paymentMethods', value as PaymentMethod, { shouldValidate: true })}
                                     error={errors.paymentMethods?.message}
                                     required
                                     placeholder="Выберите способы оплаты"

@@ -48,5 +48,5 @@ export interface CustomWorkDay {
   endTime: string
 };
 
-type WorkScheduleType = 'FIVE_TWO' | 'EVERY_DAY' | 'CUSTOM';
-type PaymentMethod = 'CASH' | 'PREPAYMENT' | 'BOTH';
+export type WorkScheduleType = 'FIVE_TWO' | 'EVERY_DAY' | 'CUSTOM';
+export type PaymentMethod = 'CASH' | 'PREPAYMENT' | 'BOTH';
