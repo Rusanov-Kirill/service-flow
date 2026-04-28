@@ -42,7 +42,7 @@ export interface CompanyMember {
   }
 };
 
-interface CustomWorkDay {
+export interface CustomWorkDay {
   dayOfWeek: number
   startTime: string
   endTime: string
