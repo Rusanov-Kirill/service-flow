@@ -91,7 +91,7 @@
         > :first-child {
             margin-top: $spacing-lg;
         }
-        
+
         > div:first-of-type {
             margin-top: $spacing-lg;
         }
@@ -100,7 +100,7 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: $spacing-xs;
-            
+
             button {
                 min-width: auto;
                 padding: $spacing-xs $spacing-md;
@@ -176,7 +176,7 @@
 
             .servicesHeader {
                 justify-content: stretch;
-                
+
                 button {
                     width: 100%;
                 }
@@ -196,6 +196,7 @@
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

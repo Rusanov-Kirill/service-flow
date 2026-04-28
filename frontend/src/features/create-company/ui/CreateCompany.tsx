@@ -12,7 +12,11 @@ import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import MultiSelect from '@/shared/ui/MultiSelect';
 import Select from '@/shared/ui/Select';
-import { TIMEZONES, CURRENCIES, TAGS_OPTIONS } from '@/shared/utils/selectorValues';
+import TimePicker from '@/shared/ui/TimePicker';
+import RadioGroup from '@/shared/ui/RadioGroup';
+import DatePicker from '@/shared/ui/DatePicker';
+import CustomWorkDays from '@/shared/ui/CustomWorkDays';
+import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
 import { companyApi } from '@entities/company/api/companyApi';
 
 import { createCompanySchema, type CreateCompanyFormData } from '../model/CreateCompany.types';
@@ -26,7 +30,7 @@ const CreateCompany = () => {
     const [error, setError] = useState<string | null>(null);
 
     const { services, removeService, clearServices } = useServicesStore();
-    const { user } = useAuthStore();
+    const { user } = useAuthStore();;
 
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<CreateCompanyFormData>({
         resolver: zodResolver(createCompanySchema),
@@ -36,7 +40,7 @@ const CreateCompany = () => {
             slug: '',
             description: '',
             tags: [],
-            timezone: 'UTC+3',
+            timezone: 'Europe/Moscow',
             city: '',
             currency: 'RUB',
             address: '',
@@ -44,8 +48,18 @@ const CreateCompany = () => {
             phone: '',
             email: '',
             website: '',
+            bookingLeadDays: 30,
+            workScheduleType: 'EVERY_DAY',
+            defaultStartTime: '09:00',
+            defaultEndTime: '18:00',
+            customWorkDays: [],
+            holidays: [],
+            autoConfirmBooking: false,
+            paymentMethods: 'BOTH',
         }
     });
+
+    const watchWorkScheduleType = watch('workScheduleType')
 
     const onSubmit = async (data: CreateCompanyFormData) => {
         setIsLoading(true);
@@ -268,6 +282,83 @@ const CreateCompany = () => {
                                         <span>Нажмите "Добавить услугу", чтобы создать первую услугу</span>
                                     </div>
                                 )}
+                            </div>
+                            {/* Настройки бронирования */}
+                            <div className={styles.section}>
+                                <h4>Настройки бронирования</h4>
+
+                                <FormField
+                                    label="Максимальный срок бронирования (дней)"
+                                    id="bookingLeadDays"
+                                    type="number"
+                                    placeholder="30"
+                                    required
+                                    error={errors.bookingLeadDays?.message}
+                                    {...register('bookingLeadDays', { valueAsNumber: true })}
+                                />
+
+                                <Select
+                                    label="Тип рабочей недели"
+                                    options={SCHEDULE_TYPES}
+                                    value={watch('workScheduleType')}
+                                    onChange={(value) => setValue('workScheduleType', value as any, { shouldValidate: true })}
+                                    error={errors.workScheduleType?.message}
+                                    required
+                                    placeholder="Выберите график работы"
+                                />
+
+                                <TimePicker
+                                    label="Начало рабочего дня"
+                                    value={watch('defaultStartTime')}
+                                    onChange={(value) => setValue('defaultStartTime', value, { shouldValidate: true })}
+                                    error={errors.defaultStartTime?.message}
+                                    required
+                                />
+
+                                <TimePicker
+                                    label="Конец рабочего дня"
+                                    value={watch('defaultEndTime')}
+                                    onChange={(value) => setValue('defaultEndTime', value, { shouldValidate: true })}
+                                    error={errors.defaultEndTime?.message}
+                                    required
+                                />
+
+                                {watchWorkScheduleType === 'CUSTOM' && (
+                                    <CustomWorkDays
+                                        value={watch('customWorkDays') || []}
+                                        onChange={(value) => setValue('customWorkDays', value, { shouldValidate: true })}
+                                        error={errors.customWorkDays?.message}
+                                    />
+                                )}
+
+                                <DatePicker
+                                    label="Праздничные (нерабочие) дни"
+                                    value={watch('holidays')}
+                                    onChange={(value) => setValue('holidays', value, { shouldValidate: true })}
+                                    error={errors.holidays?.message}
+                                />
+
+                                <RadioGroup
+                                    label="Подтверждение бронирования"
+                                    options={[
+                                        { value: true, label: 'Автоматически' },
+                                        { value: false, label: 'Вручную' }
+                                    ]}
+                                    value={watch('autoConfirmBooking')}
+                                    onChange={(value) => setValue('autoConfirmBooking', value, { shouldValidate: true })}
+                                    error={errors.autoConfirmBooking?.message}
+                                    required
+                                />
+
+                                <Select
+                                    label="Способы оплаты"
+                                    options={PAYMENT_METHODS}
+                                    value={watch('paymentMethods')}
+                                    onChange={(value) => setValue('paymentMethods', value as any, { shouldValidate: true })}
+                                    error={errors.paymentMethods?.message}
+                                    required
+                                    placeholder="Выберите способы оплаты"
+                                />
                             </div>
                         </div>
 
