@@ -12,12 +12,20 @@ export interface Company {
   address?: string
   logo?: string
   phone?: string
-  email?: string              
-  website?: string            
-  isActive: boolean          
-  ownerId: string             
+  email?: string
+  website?: string
+  isActive: boolean
+  ownerId: string
   members?: CompanyMember[]
   services?: Service[]
+  bookingLeadDays: number
+  workScheduleType: WorkScheduleType
+  defaultStartTime: string
+  defaultEndTime: string
+  customWorkDays?: CustomWorkDay[]
+  holidays: Date[]
+  autoConfirmBooking: boolean
+  paymentMethods: PaymentMethod
 };
 
 export interface CompanyMember {
@@ -25,7 +33,7 @@ export interface CompanyMember {
   userId: string
   companyId: string
   role: 'owner' | 'admin' | 'manager' | 'staff'
-  permissions: string[]        
+  permissions: string[]
   user?: {
     firstName: string
     lastName: string
@@ -33,3 +41,12 @@ export interface CompanyMember {
     avatar?: string
   }
 };
+
+interface CustomWorkDay {
+  dayOfWeek: number
+  startTime: string
+  endTime: string
+};
+
+type WorkScheduleType = 'FIVE_TWO' | 'EVERY_DAY' | 'CUSTOM';
+type PaymentMethod = 'CASH' | 'PREPAYMENT' | 'BOTH';
