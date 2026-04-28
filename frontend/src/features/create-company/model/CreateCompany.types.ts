@@ -1,5 +1,13 @@
 import { z } from 'zod';
 
+const customWorkDaySchema = z.object({
+    dayOfWeek: z.number().min(1).max(7, 'День недели должен быть от 1 (пн) до 7 (вс)'),
+    startTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
+    endTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
+}).refine(data => data.startTime < data.endTime, {
+    message: 'Время начала должно быть меньше времени окончания',
+});
+
 export const createCompanySchema = z.object({
     name: z.string().min(2, 'Название компании должно содержать минимум 2 символа'),
     slug: z.string()
@@ -15,6 +23,27 @@ export const createCompanySchema = z.object({
     phone: z.string().optional(),
     email: z.string().email('Неверный формат email'),
     website: z.string().url('Неверный URL').optional().or(z.literal('')),
+    bookingLeadDays: z.number()
+        .int('Значение должно быть целым числом')
+        .min(1, 'Минимум 1 день')
+        .max(365, 'Максимум 365 дней'),
+    workScheduleType: z.enum(['FIVE_TWO', 'EVERY_DAY', 'CUSTOM']),
+    defaultStartTime: z.string()
+        .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
+    defaultEndTime: z.string()
+        .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
+    customWorkDays: z.array(customWorkDaySchema).optional(),
+    holidays: z.array(z.date()),
+    autoConfirmBooking: z.boolean(),
+    paymentMethods: z.enum(['CASH', 'PREPAYMENT', 'BOTH']),
+}).refine(data => {
+    if (data.workScheduleType === 'CUSTOM' && (!data.customWorkDays || data.customWorkDays.length === 0)) {
+        return false;
+    }
+    return true;
+}, {
+    message: 'При выборе пользовательского графика необходимо указать хотя бы один день с особым расписанием',
+    path: ['customWorkDays'],
 });
 
 export type CreateCompanyFormData = z.infer<typeof createCompanySchema>;
