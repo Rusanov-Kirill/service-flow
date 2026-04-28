@@ -77,7 +77,17 @@ model Company {
   website     String?
   isActive    Boolean  @default(true) @map("is_active")
   ownerId     String   @map("owner_id")
-  
+
+  bookingLeadDays      Int                @default(30)
+  workScheduleType     WorkScheduleType   @default(EVERY_DAY)
+  defaultStartTime     String             @default("09:00")
+  defaultEndTime       String             @default("18:00")   
+  customWorkDays       Json?              // Массив объектов: [{ dayOfWeek: 1, startTime: "09:00", endTime: "18:00" }, ...]
+                                          // dayOfWeek: 1=пн, 2=вт, ..., 7=вс
+  holidays             DateTime[]         @default([])
+  autoConfirmBooking   Boolean            @default(false) 
+  paymentMethods       PaymentMethod      @default(BOTH)         
+
   owner       User     @relation("UserCompanies", fields: [ownerId], references: [id], onDelete: Cascade)
   members     CompanyMember[]
   customers   Customer[]
@@ -180,4 +190,16 @@ enum BookingStatus {
   confirmed
   completed
   cancelled
+}
+
+enum WorkScheduleType {
+  FIVE_TWO     
+  EVERY_DAY    
+  CUSTOM       
+}
+
+enum PaymentMethod {
+  CASH
+  PREPAYMENT
+  BOTH
 }
