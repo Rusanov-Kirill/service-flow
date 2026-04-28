@@ -1,5 +1,7 @@
 import { useRef } from 'react';
+
 import type { CustomWorkDay } from '@/entities/company/model/types';
+
 import styles from './CustomWorkDays.module.scss';
 
 interface CustomWorkDaysProps {

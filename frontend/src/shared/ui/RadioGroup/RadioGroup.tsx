@@ -1,15 +1,15 @@
 import styles from './RadioGroup.module.scss';
 
 interface RadioOption {
-    value: string | boolean;
+    value: boolean;
     label: string;
 }
 
 interface RadioGroupProps {
     label: string;
     options: RadioOption[];
-    value: string | boolean;
-    onChange: (value: any) => void;
+    value: boolean;
+    onChange: (value: boolean) => void;
     error?: string;
     required?: boolean;
 }
