@@ -26,6 +26,18 @@ export const TIMEZONES = [
     { value: 'Pacific/Auckland', label: 'UTC+12 (Окленд, Камчатка)' },
 ];
 
+export const SCHEDULE_TYPES = [
+    { value: 'EVERY_DAY', label: 'Каждый день' },
+    { value: 'FIVE_TWO', label: '5/2 (Выходные - Суббота и Воскресенье)' },
+    { value: 'CUSTOM', label: 'Свой график' }
+];
+
+export const PAYMENT_METHODS = [
+    { value: 'CASH', label: 'Наличные' },
+    { value: 'PREPAYMENT', label: 'Предоплата' },
+    { value: 'BOTH', label: 'Наличные и предоплата' }
+];
+
 export const CURRENCIES = [
     { value: 'RUB', label: 'RUB - Российский рубль' },
     { value: 'USD', label: 'USD - Доллар США' },
