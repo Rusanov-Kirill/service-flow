@@ -5,6 +5,10 @@ const customWorkDaySchema = z.object({
     dayOfWeek: z.number().min(1).max(7, 'День недели должен быть от 1 (пн) до 7 (вс)'),
     startTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
     endTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
+    slotInterval: z.number()
+        .int('Интервал должен быть целым числом')
+        .min(5, 'Минимальный интервал 5 минут')
+        .max(1440, 'Максимальный интервал 1440 минут'),
 }).refine(data => data.startTime < data.endTime, {
     message: 'Время начала должно быть меньше времени окончания',
 });
@@ -31,6 +35,10 @@ export const createCompanySchema = z.object({
         .min(1, 'Минимум 1 день')
         .max(365, 'Максимум 365 дней'),
     workScheduleType: z.enum(['FIVE_TWO', 'EVERY_DAY', 'CUSTOM']),
+    slotInterval: z.number()
+        .int('Интервал должен быть целым числом')
+        .min(5, 'Минимальный интервал 5 минут')
+        .max(1440, 'Максимальный интервал 1440 минут'),
     defaultStartTime: z.string()
         .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
     defaultEndTime: z.string()

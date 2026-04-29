@@ -26,6 +26,7 @@ export const companyRepository = {
                     isActive: true,
                     bookingLeadDays: companyData.bookingLeadDays,
                     workScheduleType: companyData.workScheduleType,
+                    slotInterval: companyData.slotInterval,
                     defaultStartTime: companyData.defaultStartTime,
                     defaultEndTime: companyData.defaultEndTime,
                     customWorkDays: companyData.customWorkDays as any,

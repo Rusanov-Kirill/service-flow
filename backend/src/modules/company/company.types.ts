@@ -14,6 +14,7 @@ export interface CreateCompanyDto {
     ownerId: string;
     bookingLeadDays: number;
     workScheduleType: WorkScheduleType;
+    slotInterval: number;
     defaultStartTime: string;
     defaultEndTime: string;
     customWorkDays?: CustomWorkDay[];
@@ -29,4 +30,5 @@ interface CustomWorkDay {
     dayOfWeek: number; 
     startTime: string; 
     endTime: string;   
+    slotInterval: number;
 }

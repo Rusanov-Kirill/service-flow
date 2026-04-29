@@ -80,9 +80,10 @@ model Company {
 
   bookingLeadDays      Int                @default(30)
   workScheduleType     WorkScheduleType   @default(EVERY_DAY)
+  slotInterval         Int                @default(30)
   defaultStartTime     String             @default("09:00")
   defaultEndTime       String             @default("18:00")   
-  customWorkDays       Json?              // Массив объектов: [{ dayOfWeek: 1, startTime: "09:00", endTime: "18:00" }, ...]
+  customWorkDays       Json?              // Массив объектов: [{ dayOfWeek: 1, slotInterval: 30, startTime: "09:00", endTime: "18:00" }, ...]
                                           // dayOfWeek: 1=пн, 2=вт, ..., 7=вс
   holidays             DateTime[]         @default([])
   autoConfirmBooking   Boolean            @default(false) 
