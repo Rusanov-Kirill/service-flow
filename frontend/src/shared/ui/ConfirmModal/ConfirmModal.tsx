@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import styles from './ConfirmModal.module.scss';
 
 interface ConfirmModalProps {
@@ -11,6 +10,7 @@ interface ConfirmModalProps {
     onConfirm: () => void;
     onCancel: () => void;
     isLoading?: boolean;
+    children?: React.ReactNode; // добавляем
 }
 
 const ConfirmModal = ({
@@ -22,17 +22,14 @@ const ConfirmModal = ({
     onConfirm,
     onCancel,
     isLoading = false,
+    children,
 }: ConfirmModalProps) => {
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-        const setAnimating = async () => {
-            if (isOpen) {
-                setIsAnimating(true);
-            }
-        };
-
-        setAnimating();
+        if (isOpen) {
+            setIsAnimating(true);
+        }
     }, [isOpen]);
 
     const handleClose = () => {
@@ -62,6 +59,7 @@ const ConfirmModal = ({
                     </div>
                     <div className={styles.modalBody}>
                         <p>{message}</p>
+                        {children && <div className={styles.modalExtra}>{children}</div>}
                     </div>
                     <div className={styles.modalFooter}>
                         <button
