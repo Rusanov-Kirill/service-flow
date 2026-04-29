@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import styles from './ConfirmModal.module.scss';
 
 interface ConfirmModalProps {
@@ -10,7 +11,7 @@ interface ConfirmModalProps {
     onConfirm: () => void;
     onCancel: () => void;
     isLoading?: boolean;
-    children?: React.ReactNode; // добавляем
+    children?: React.ReactNode; 
 }
 
 const ConfirmModal = ({
@@ -28,6 +29,7 @@ const ConfirmModal = ({
 
     useEffect(() => {
         if (isOpen) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsAnimating(true);
         }
     }, [isOpen]);

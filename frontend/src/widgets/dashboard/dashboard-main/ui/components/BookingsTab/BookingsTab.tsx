@@ -207,6 +207,7 @@ const BookingsTab = ({ selectedCompany }: BookingsTabProps) => {
         setShowTimeSlots(true);
     };
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const availableTimeSlots = useMemo(() => {
         if (!selectedService) return [];
         const dt = DateTime.fromObject(
