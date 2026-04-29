@@ -1,5 +1,4 @@
-import { forwardRef, useRef } from 'react';
-
+import { forwardRef, useRef, useState } from 'react';
 import styles from './DatePicker.module.scss';
 
 interface DatePickerProps {
@@ -17,15 +16,21 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({
     error,
     required,
 }, ref) => {
+    const [tempDate, setTempDate] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleAddDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value) {
-            const newDate = new Date(e.target.value);
-            if (!value.some(d => d.toDateString() === newDate.toDateString())) {
+    const handleAddDate = () => {
+        if (tempDate) {
+            const newDate = new Date(tempDate);
+            const exists = value.some(d => 
+                d.getFullYear() === newDate.getFullYear() &&
+                d.getMonth() === newDate.getMonth() &&
+                d.getDate() === newDate.getDate()
+            );
+            if (!exists) {
                 onChange([...value, newDate]);
             }
-            e.target.value = '';
+            setTempDate('');
         }
     };
 
@@ -35,7 +40,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({
         onChange(newDates);
     };
 
-    const handleClick = () => {
+    const handleInputClick = () => {
         if (inputRef.current) {
             inputRef.current.showPicker?.();
             inputRef.current.focus();
@@ -62,16 +67,27 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({
                     </div>
                 ))}
             </div>
-            <div className={styles.inputWrapper} onClick={handleClick}>
-                <input
-                    ref={(node) => {
-                        if (typeof ref === 'function') ref(node);
-                        if (node) inputRef.current = node;
-                    }}
-                    type="date"
-                    className={`${styles.input} ${error ? styles.inputError : ''}`}
-                    onChange={handleAddDate}
-                />
+            <div className={styles.inputRow}>
+                <div className={styles.inputWrapper} onClick={handleInputClick}>
+                    <input
+                        ref={(node) => {
+                            if (typeof ref === 'function') ref(node);
+                            if (node) inputRef.current = node;
+                        }}
+                        type="date"
+                        className={`${styles.input} ${error ? styles.inputError : ''}`}
+                        value={tempDate}
+                        onChange={(e) => setTempDate(e.target.value)}
+                    />
+                </div>
+                <button
+                    type="button"
+                    onClick={handleAddDate}
+                    className={styles.addButton}
+                    disabled={!tempDate}
+                >
+                    Добавить
+                </button>
             </div>
             {error && <span className={styles.error}>{error}</span>}
         </div>

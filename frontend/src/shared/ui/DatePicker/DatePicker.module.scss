@@ -47,9 +47,16 @@
         }
     }
 
-    .inputWrapper {
-        cursor: pointer;
+    .inputRow {
+        display: flex;
+        gap: $spacing-sm;
+        align-items: center;
         width: 100%;
+    }
+
+    .inputWrapper {
+        flex: 1;
+        cursor: pointer;
     }
 
     .input {
@@ -78,6 +85,27 @@
         }
     }
 
+    .addButton {
+        padding: $spacing-sm $spacing-md;
+        background: $primary;
+        color: white;
+        border: none;
+        border-radius: $radius-sm;
+        font-size: $font-size-xs;
+        cursor: pointer;
+        transition: background $duration-fast;
+        white-space: nowrap;
+
+        &:hover:not(:disabled) {
+            background: $primary-dark;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
     .error {
         font-size: $font-size-3xs;
         color: $error;
@@ -92,6 +120,11 @@
 
         .input {
             font-size: $font-size-md;
+        }
+
+        .addButton {
+            font-size: $font-size-md;
+            padding: $spacing-sm $spacing-lg;
         }
 
         .error {
