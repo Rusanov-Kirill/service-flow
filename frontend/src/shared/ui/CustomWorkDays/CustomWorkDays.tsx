@@ -23,6 +23,7 @@ const weekDays = [
 const CustomWorkDays = ({ value, onChange, error }: CustomWorkDaysProps) => {
     const startTimeRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
     const endTimeRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
+    const intervalRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
 
     const handleDayToggle = (day: number) => {
         const dayExists = value.some(d => d.dayOfWeek === day);
@@ -30,13 +31,20 @@ const CustomWorkDays = ({ value, onChange, error }: CustomWorkDaysProps) => {
         if (dayExists) {
             onChange(value.filter(d => d.dayOfWeek !== day));
         } else {
-            onChange([...value, { dayOfWeek: day, startTime: '09:00', endTime: '18:00' }]);
+            onChange([...value, { dayOfWeek: day, startTime: '09:00', endTime: '18:00', slotInterval: 30 }]);
         }
     };
 
     const handleTimeChange = (day: number, field: 'startTime' | 'endTime', newTime: string) => {
         const updated = value.map(d =>
             d.dayOfWeek === day ? { ...d, [field]: newTime } : d
+        );
+        onChange(updated);
+    };
+
+    const handleIntervalChange = (day: number, newInterval: number) => {
+        const updated = value.map(d =>
+            d.dayOfWeek === day ? { ...d, slotInterval: newInterval } : d
         );
         onChange(updated);
     };
@@ -68,37 +76,54 @@ const CustomWorkDays = ({ value, onChange, error }: CustomWorkDaysProps) => {
                                 {day.label}
                             </button>
                             {isActive && (
-                                <div className={styles.dayTimes}>
-                                    <div 
-                                        className={styles.timeWrapper} 
-                                        onClick={() => handleStartTimeClick(day.value)}
-                                    >
+                                <>
+                                    <div className={styles.dayTimes}>
+                                        <div 
+                                            className={styles.timeWrapper} 
+                                            onClick={() => handleStartTimeClick(day.value)}
+                                        >
+                                            <input
+                                                ref={(el) => {
+                                                    if (el) startTimeRefs.current[day.value] = el;
+                                                }}
+                                                type="time"
+                                                value={customDay.startTime}
+                                                onChange={(e) => handleTimeChange(day.value, 'startTime', e.target.value)}
+                                                className={styles.timeInput}
+                                            />
+                                        </div>
+                                        <span className={styles.separator}>—</span>
+                                        <div 
+                                            className={styles.timeWrapper} 
+                                            onClick={() => handleEndTimeClick(day.value)}
+                                        >
+                                            <input
+                                                ref={(el) => {
+                                                    if (el) endTimeRefs.current[day.value] = el;
+                                                }}
+                                                type="time"
+                                                value={customDay.endTime}
+                                                onChange={(e) => handleTimeChange(day.value, 'endTime', e.target.value)}
+                                                className={styles.timeInput}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className={styles.intervalWrapper}>
+                                        <label className={styles.intervalLabel}>Интервал (мин)</label>
                                         <input
                                             ref={(el) => {
-                                                if (el) startTimeRefs.current[day.value] = el;
+                                                if (el) intervalRefs.current[day.value] = el;
                                             }}
-                                            type="time"
-                                            value={customDay.startTime}
-                                            onChange={(e) => handleTimeChange(day.value, 'startTime', e.target.value)}
-                                            className={styles.timeInput}
+                                            type="number"
+                                            min={15}
+                                            max={120}
+                                            step={15}
+                                            value={customDay.slotInterval || 30}
+                                            onChange={(e) => handleIntervalChange(day.value, parseInt(e.target.value) || 30)}
+                                            className={styles.intervalInput}
                                         />
                                     </div>
-                                    <span className={styles.separator}>—</span>
-                                    <div 
-                                        className={styles.timeWrapper} 
-                                        onClick={() => handleEndTimeClick(day.value)}
-                                    >
-                                        <input
-                                            ref={(el) => {
-                                                if (el) endTimeRefs.current[day.value] = el;
-                                            }}
-                                            type="time"
-                                            value={customDay.endTime}
-                                            onChange={(e) => handleTimeChange(day.value, 'endTime', e.target.value)}
-                                            className={styles.timeInput}
-                                        />
-                                    </div>
-                                </div>
+                                </>
                             )}
                         </div>
                     );

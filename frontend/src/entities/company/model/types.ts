@@ -20,6 +20,7 @@ export interface Company {
   services?: Service[]
   bookingLeadDays: number
   workScheduleType: WorkScheduleType
+  slotInterval: number
   defaultStartTime: string
   defaultEndTime: string
   customWorkDays?: CustomWorkDay[]
@@ -46,6 +47,7 @@ export interface CustomWorkDay {
   dayOfWeek: number
   startTime: string
   endTime: string
+  slotInterval: number
 };
 
 export type WorkScheduleType = 'FIVE_TWO' | 'EVERY_DAY' | 'CUSTOM';

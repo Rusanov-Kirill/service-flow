@@ -12,21 +12,21 @@
         display: block;
     }
 
-    // ✅ БАЗА — 1 колонка (мобилка)
+    // БАЗА — 1 колонка (мобилка)
     .daysGrid {
         display: grid;
         grid-template-columns: 1fr;
         gap: $spacing-md;
     }
 
-    // ✅ 2 колонки (планшет)
+    // 2 колонки (планшет)
     @media (min-width: 768px) {
         .daysGrid {
             grid-template-columns: repeat(2, 1fr);
         }
     }
 
-    // ✅ 3 колонки (десктоп)
+    // 3 колонки (десктоп)
     @media (min-width: 1024px) {
         .daysGrid {
             grid-template-columns: repeat(3, 1fr);
@@ -71,10 +71,10 @@
             display: flex;
             align-items: center;
             gap: $spacing-xs;
-            padding: $spacing-sm;
+            padding: $spacing-sm $spacing-sm $spacing-xs $spacing-sm;
         }
 
-        // ✅ КЛЮЧ: не даём схлопываться
+        // КЛЮЧ: не даём схлопываться
         .timeWrapper {
             flex: 1;
             min-width: 80px;
@@ -89,10 +89,18 @@
             font-size: $font-size-xs;
             background: $white;
             text-align: center;
+            cursor: pointer;
+
+            &::-webkit-calendar-picker-indicator {
+                cursor: pointer;
+                padding: 2px;
+                opacity: 0.7;
+            }
 
             &:focus {
                 outline: none;
                 border-color: $primary;
+                box-shadow: 0 0 0 2px rgba($primary, 0.1);
             }
         }
 
@@ -101,11 +109,94 @@
             font-size: $font-size-xs;
             color: $text-secondary;
         }
+
+        .intervalWrapper {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            padding: $spacing-xs $spacing-sm $spacing-sm $spacing-sm;
+            border-top: 1px solid $border-light;
+            background: $bg-light;
+        }
+
+        .intervalLabel {
+            font-size: $font-size-3xs;
+            font-weight: 500;
+            color: $text-secondary;
+            flex-shrink: 0;
+        }
+
+        .intervalInput {
+            flex: 1;
+            padding: $spacing-2xs $spacing-xs;
+            border: 1px solid $border;
+            border-radius: $radius-sm;
+            font-size: $font-size-3xs;
+            background: $white;
+            text-align: center;
+
+            &:focus {
+                outline: none;
+                border-color: $primary;
+                box-shadow: 0 0 0 2px rgba($primary, 0.1);
+            }
+        }
     }
 
     .error {
         font-size: $font-size-3xs;
         color: $error;
         margin-top: $spacing-2xs;
+        display: block;
+    }
+
+    // Адаптация для мобильных
+    @media (max-width: 767px) {
+        .dayTimes {
+            flex-wrap: wrap;
+        }
+
+        .timeWrapper {
+            min-width: calc(50% - 8px) !important;
+        }
+
+        .separator {
+            display: none;
+        }
+
+        .intervalWrapper {
+            flex-wrap: wrap;
+        }
+
+        .intervalLabel {
+            width: 100%;
+            margin-bottom: $spacing-2xs;
+        }
+    }
+
+    @media (min-height: 1025px) {
+        .label {
+            font-size: $font-size-md;
+        }
+
+        .dayButton {
+            font-size: $font-size-md !important;
+        }
+
+        .timeInput {
+            font-size: $font-size-sm !important;
+        }
+
+        .intervalLabel {
+            font-size: $font-size-xs !important;
+        }
+
+        .intervalInput {
+            font-size: $font-size-xs !important;
+        }
+
+        .error {
+            font-size: $font-size-xs;
+        }
     }
 }

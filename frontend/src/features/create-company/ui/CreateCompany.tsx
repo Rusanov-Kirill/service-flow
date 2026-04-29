@@ -51,6 +51,7 @@ const CreateCompany = () => {
             website: '',
             bookingLeadDays: 30,
             workScheduleType: 'EVERY_DAY',
+            slotInterval: 30,
             defaultStartTime: '09:00',
             defaultEndTime: '18:00',
             customWorkDays: [],
@@ -322,6 +323,16 @@ const CreateCompany = () => {
                                     onChange={(value) => setValue('defaultEndTime', value, { shouldValidate: true })}
                                     error={errors.defaultEndTime?.message}
                                     required
+                                />
+
+                                <FormField
+                                    label="Интервал между слотами (минуты)"
+                                    id="slotInterval"
+                                    type="number"
+                                    placeholder="30"
+                                    required
+                                    error={errors.slotInterval?.message}
+                                    {...register('slotInterval', { valueAsNumber: true })}
                                 />
 
                                 {watchWorkScheduleType === 'CUSTOM' && (
