@@ -44,7 +44,7 @@ export const createCompanySchema = z.object({
     defaultEndTime: z.string()
         .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
     customWorkDays: z.array(customWorkDaySchema).optional(),
-    holidays: z.array(z.date()),
+    holidays: z.array(z.string()),
     autoConfirmBooking: z.boolean(),
     paymentMethods: z.enum(['CASH', 'PREPAYMENT', 'BOTH']),
 }).refine(data => {

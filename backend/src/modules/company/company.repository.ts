@@ -7,6 +7,17 @@ export const companyRepository = {
         companyData: CreateCompanyDto,
         servicesData: CreateServiceDto[]
     ) => {
+        const formattedHolidays = companyData.holidays?.map(holiday => {
+            if (holiday instanceof Date) return holiday;
+
+            if (typeof holiday === 'string') {
+                const date = new Date(holiday);
+                date.setUTCHours(0, 0, 0, 0);
+                return date;
+            }
+            return new Date(holiday);
+        }) || [];
+
         return prisma.$transaction(async (tx) => {
             const company = await tx.company.create({
                 data: {
@@ -30,7 +41,7 @@ export const companyRepository = {
                     defaultStartTime: companyData.defaultStartTime,
                     defaultEndTime: companyData.defaultEndTime,
                     customWorkDays: companyData.customWorkDays as any,
-                    holidays: companyData.holidays,
+                    holidays: formattedHolidays,
                     autoConfirmBooking: companyData.autoConfirmBooking,
                     paymentMethods: companyData.paymentMethods,
                 },
