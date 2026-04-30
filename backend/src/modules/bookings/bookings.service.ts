@@ -25,10 +25,7 @@ export const bookingsService = {
         let customer = await customerService.findOrCreate({
             userId: data.userId,
             companyId: data.companyId,
-            firstName: data.firstName,
-            lastName: data.lastName,
             email: data.email,
-            phone: data.phone,
         });
 
         await customerService.incrementTotalBookings(customer.id);
