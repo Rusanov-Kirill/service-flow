@@ -25,10 +25,7 @@ export const customerRepository = {
             data: {
                 userId: data.userId,
                 companyId: data.companyId,
-                firstName: data.firstName,
-                lastName: data.lastName,
                 email: data.email,
-                phone: data.phone,
                 totalBookings: 0,
             },
         });

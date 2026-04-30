@@ -122,10 +122,7 @@ model Customer {
   id          String   @id @default(uuid())
   userId      String?  @map("user_id")  
   companyId   String   @map("company_id")
-  firstName   String   @map("first_name")
-  lastName    String   @map("last_name")
   email       String
-  phone       String?
   
   totalBookings Int     @default(0) @map("total_bookings")
   
