@@ -18,7 +18,7 @@ export interface CreateCompanyDto {
     defaultStartTime: string;
     defaultEndTime: string;
     customWorkDays?: CustomWorkDay[];
-    holidays: Date[];
+    holidays: string[];
     autoConfirmBooking: boolean;
     paymentMethods: PaymentMethod;
 }

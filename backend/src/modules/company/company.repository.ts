@@ -8,14 +8,9 @@ export const companyRepository = {
         servicesData: CreateServiceDto[]
     ) => {
         const formattedHolidays = companyData.holidays?.map(holiday => {
-            if (holiday instanceof Date) return holiday;
-
-            if (typeof holiday === 'string') {
-                const date = new Date(holiday);
-                date.setUTCHours(0, 0, 0, 0);
-                return date;
-            }
-            return new Date(holiday);
+            const date = new Date(holiday);
+            date.setUTCHours(0, 0, 0, 0);
+            return date;
         }) || [];
 
         return prisma.$transaction(async (tx) => {
