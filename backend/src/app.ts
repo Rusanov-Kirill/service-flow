@@ -11,6 +11,7 @@ import userRoutes from './modules/user/user.routes';
 import companyRoutes from './modules/company/company.routes';
 import customerRoutes from './modules/customer/customer.routes';
 import bookingRoutes from './modules/bookings/bookings.routes';
+import companyMemberRoutes from './modules/company_member/company_member.routes';
 
 import { config } from './shared/config';
 import { errorHandler } from './shared/middleware/error.middleware';
@@ -48,6 +49,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/company-members', companyMemberRoutes);
 
 // Health check
 app.get('/health', (_, res) => {
