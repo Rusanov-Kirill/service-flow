@@ -102,11 +102,18 @@ model Company {
 }
 
 model CompanyMember {
-  id          String         @id @default(uuid())
-  userId      String         @map("user_id")
-  companyId   String         @map("company_id")
-  role        MemberRole     @default(member)
-  permissions String[] 
+  id                  String                      @id @default(uuid())
+  userId              String                      @map("user_id")
+  companyId           String                      @map("company_id")
+  role                MemberRole                  @default(member)
+
+  scheduleType        CompanyMemberScheduleType?  @map("schedule_type")
+  startWorkTime       String                      @map("start_work_time")
+  endWorkTime         String                      @map("end_work_time")
+  startWorkDay        DateTime?                   @map("start_work_day") 
+  customWorkSchedule  Json?                       @map("custom_work_schedule") 
+                                                  // Массив объектов: [{ dayOfWeek: 1, startWorkTime: "09:00", endWorkTime: "18:00" }, ...]
+                                                  // dayOfWeek: 1=пн, 2=вт, ..., 7=вс
   
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -200,4 +207,10 @@ enum PaymentMethod {
   CASH
   PREPAYMENT
   BOTH
+}
+
+enum CompanyMemberScheduleType {
+  FIVE_TWO     
+  TWO_TWO    
+  CUSTOM       
 }
