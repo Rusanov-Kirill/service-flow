@@ -2,28 +2,22 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-lg;
-
-    background: $white;
-    border-radius: $radius-lg;
     padding: $spacing-lg;
-    box-shadow: $shadow-sm;
-    border: 1px solid $border-light;
-
+    background: $bg-light;
     min-height: calc(100vh - 2 * $spacing-lg);
 
     .header {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        gap: $spacing-md;
+        align-items: center;
         flex-wrap: wrap;
+        gap: $spacing-md;
 
         h2 {
             font-size: $font-size-2xl;
             font-weight: 600;
             color: $text-primary;
             margin-bottom: $spacing-xs;
-            letter-spacing: -0.02em;
         }
 
         .subtitle {
@@ -32,160 +26,220 @@
         }
 
         .createBtn {
-            padding: 8px 14px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #fff;
+            padding: $spacing-sm $spacing-lg;
             background: $primary;
+            color: $white;
             border: none;
-            border-radius: 8px;
+            border-radius: $radius-md;
+            font-size: $font-size-sm;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+            transition: all $duration-fast;
 
             &:hover {
                 background: $primary-dark;
-            }
-
-            &:active {
-                transform: scale(0.97);
+                transform: translateY(-1px);
             }
         }
+    }
+
+    .loaderContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
     }
 
     .content {
-        display: flex;
-        flex-direction: column;
-        gap: $spacing-md;
-    }
-
-    .empty {
-        padding: $spacing-3xl;
-        text-align: center;
-        font-size: $font-size-md;
-        color: $gray-muted;
-        border: 1px dashed $border-light;
-        border-radius: $radius-md;
-        background: $bg-light;
-    }
-
-    .list {
-        display: flex;
-        flex-direction: column;
-        gap: $spacing-md;
-    }
-
-    .companyCard {
-        background: $white;
-        border: 1px solid $border;
-        border-radius: $radius-md;
-        transition: all $duration-fast;
-
-        &:hover {
-            border-color: $primary;
-            box-shadow: $shadow-sm;
-        }
-
-        .cardContent {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: $spacing-md;
-            gap: $spacing-md;
-        }
-
-        .left {
-            display: flex;
-            align-items: center;
-            gap: $spacing-md;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            border-radius: $radius-md;
-            object-fit: cover;
-            background: $bg-light-blue;
-            flex-shrink: 0;
-        }
-
-        .info {
+        .empty {
             display: flex;
             flex-direction: column;
-            gap: $spacing-2xs;
-            min-width: 0;
-            flex: 1;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-md;
+            padding: $spacing-3xl;
+            background: $white;
+            border-radius: $radius-lg;
+            text-align: center;
+            border: 1px dashed $border;
+
+            p {
+                font-size: $font-size-md;
+                color: $text-secondary;
+            }
+
+            .createEmptyBtn {
+                padding: $spacing-sm $spacing-lg;
+                background: $primary;
+                color: $white;
+                border: none;
+                border-radius: $radius-md;
+                font-size: $font-size-sm;
+                cursor: pointer;
+
+                &:hover {
+                    background: $primary-dark;
+                }
+            }
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+        }
+
+        .companyCard {
+            background: $white;
+            border-radius: $radius-lg;
+            border: 1px solid $border-light;
+            transition: all $duration-fast;
+
+            &:hover {
+                box-shadow: $shadow-md;
+                border-color: $primary-light;
+            }
+
+            .cardContent {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: $spacing-lg;
+                flex-wrap: wrap;
+                gap: $spacing-md;
+            }
+
+            .left {
+                display: flex;
+                align-items: center;
+                gap: $spacing-md;
+                flex: 1;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+                border-radius: $radius-md;
+                object-fit: cover;
+                background: $bg-light;
+                flex-shrink: 0;
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-2xs;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .nameRow {
+                display: flex;
+                align-items: center;
+                gap: $spacing-xs;
+                flex-wrap: wrap;
+            }
 
             .name {
-                font-size: $font-size-lg;
+                font-size: $font-size-md;
                 font-weight: 600;
                 color: $text-primary;
-                margin: 0;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                word-break: break-word;
+            }
+
+            .role {
+                font-size: $font-size-3xs;
+                padding: 2px 8px;
+                border-radius: $radius-sm;
+                font-weight: 500;
+                text-transform: capitalize;
                 white-space: nowrap;
+
+                &.roleOwner {
+                    background: rgba(79, 70, 229, 0.15);
+                    color: #4f46e5;
+                }
+
+                &.roleAdmin {
+                    background: rgba(239, 68, 68, 0.15);
+                    color: #ef4444;
+                }
+
+                &.roleManager {
+                    background: rgba(245, 158, 11, 0.15);
+                    color: #f59e0b;
+                }
+
+                &.roleReceptionist {
+                    background: rgba(16, 185, 129, 0.15);
+                    color: #10b981;
+                }
+
+                &.roleMember {
+                    background: rgba(107, 114, 128, 0.15);
+                    color: #6b7280;
+                }
             }
 
             .slug {
                 font-size: $font-size-xs;
                 color: $gray-muted;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                word-break: break-word;
             }
 
             .meta {
-                font-size: $font-size-3xs;
-                color: $gray-muted;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                font-size: $font-size-xs;
+                color: $text-secondary;
             }
-        }
 
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: $spacing-sm;
-            flex-shrink: 0;
+            .actions {
+                display: flex;
+                gap: $spacing-sm;
+                flex-shrink: 0;
+            }
 
             .openBtn {
-                background: transparent;
+                padding: $spacing-xs $spacing-lg;
+                background: $primary;
+                color: $white;
                 border: none;
-                color: $primary;
+                border-radius: $radius-md;
+                font-size: $font-size-sm;
                 cursor: pointer;
-                font-size: $font-size-xs;
-                padding: 6px 12px;
-                border-radius: 6px;
                 transition: all $duration-fast;
                 white-space: nowrap;
 
                 &:hover {
-                    background: rgba($primary, 0.1);
-                    text-decoration: underline;
+                    background: $primary-dark;
                 }
             }
 
             .settingsBtn {
-                padding: 6px 12px;
-                font-size: $font-size-xs;
-                border-radius: 6px;
+                padding: $spacing-xs $spacing-lg;
+                background: transparent;
+                color: $text-secondary;
                 border: 1px solid $border;
-                background: $white;
+                border-radius: $radius-md;
+                font-size: $font-size-sm;
                 cursor: pointer;
                 transition: all $duration-fast;
                 white-space: nowrap;
 
                 &:hover {
-                    background: $bg-light;
-                    border-color: $gray-muted;
+                    border-color: $primary;
+                    color: $primary;
                 }
+            }
+        }
+    }
 
-                &:active {
-                    transform: scale(0.97);
-                }
+    @media (max-width: 1024px) {
+        padding: $spacing-md;
+        gap: $spacing-md;
+
+        .companyCard {
+            .cardContent {
+                padding: $spacing-md;
             }
         }
     }
@@ -193,54 +247,165 @@
     @media (max-width: 768px) {
         .header {
             flex-direction: column;
-            align-items: stretch;
+            text-align: center;
 
             .createBtn {
                 width: 100%;
+            }
+        }
+
+        .companyCard {
+            .info {
+                .nameRow {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: $spacing-xs;
+                }
+
+                .name {
+                    margin-right: 0;
+                }
+
+                .role {
+                    align-self: flex-start;
+                }
+            }
+
+            .actions {
+                flex-direction: column;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+            .openBtn,
+            .settingsBtn {
+                flex: 1;
                 text-align: center;
+                width: 100%;
+            }
+        }
+    }
+
+    @media (max-width: 530px) {
+        padding: $spacing-sm;
+        gap: $spacing-sm;
+
+        .header {
+            h2 {
+                font-size: $font-size-xl;
+            }
+
+            .subtitle {
+                font-size: $font-size-xs;
+            }
+
+            .createBtn {
+                padding: $spacing-xs $spacing-md;
+                font-size: $font-size-xs;
+                width: 100%;
             }
         }
 
         .companyCard {
             .cardContent {
-                flex-direction: column;
-                align-items: flex-start;
+                padding: $spacing-sm;
             }
 
-            .left {
-                width: 100%;
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .name {
+                font-size: $font-size-sm;
+            }
+
+            .nameRow {
+                justify-content: center;
+            }
+
+            .role {
+                font-size: $font-size-3xs;
+                padding: 2px 6px;
+            }
+
+            .slug {
+                font-size: $font-size-2xs;
+            }
+
+            .meta {
+                font-size: $font-size-2xs;
             }
 
             .actions {
+                flex-direction: column;
                 width: 100%;
-                justify-content: flex-end;
+            }
+
+            .openBtn,
+            .settingsBtn {
+                padding: $spacing-xs $spacing-md;
+                font-size: $font-size-xs;
+                width: 100%;
+            }
+        }
+
+        .empty {
+            padding: $spacing-xl $spacing-md;
+
+            p {
+                font-size: $font-size-sm;
+            }
+
+            .createEmptyBtn {
+                padding: $spacing-xs $spacing-md;
+                font-size: $font-size-xs;
+                width: 100%;
             }
         }
     }
 
-    @media (max-width: 529px) {
-        padding: $spacing-md;
+    @media (max-width: 370px) {
+        .header {
+            h2 {
+                font-size: $font-size-lg;
+            }
+
+            .subtitle {
+                font-size: $font-size-2xs;
+            }
+        }
 
         .companyCard {
             .logo {
-                width: 55px;
-                height: 55px;
+                width: 40px;
+                height: 40px;
             }
 
-            .info {
-                .name {
-                    font-size: $font-size-md;
-                }
+            .name {
+                font-size: $font-size-xs;
             }
 
-            .actions {
-                justify-content: space-between;
+            .role {
+                font-size: $font-size-3xs;
+                padding: 2px 4px;
+            }
 
-                .openBtn,
-                .settingsBtn {
-                    padding: 4px 10px;
-                    font-size: $font-size-3xs;
-                }
+            .slug,
+            .meta {
+                font-size: $font-size-3xs;
+            }
+
+            .openBtn,
+            .settingsBtn {
+                padding: $spacing-2xs $spacing-sm;
+                font-size: $font-size-2xs;
+            }
+        }
+
+        .empty {
+            p {
+                font-size: $font-size-xs;
             }
         }
     }
