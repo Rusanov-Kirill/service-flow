@@ -2,7 +2,7 @@ import companyLogo from "@/shared/assets/images/company-image-placeholder.svg";
 import profileLogo from "@/shared/assets/images/user-placholder.jpg";
 
 interface PlaceholderLogoProps {
-    src?: string
+    src: string | null | undefined
     alt?: string
     className?: string
     variant: 'company' | 'profile'
