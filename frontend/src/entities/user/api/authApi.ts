@@ -63,4 +63,8 @@ export const authApi = {
     updateProfile: (data: UpdateProfileData) => {
         return apiClient.patch('/users/profile', data);
     },
+
+    getAllUserComapnies: () => {
+        return apiClient.get('/users/companies');
+    },
 };
