@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/entities/user/store/useAuthStore';
+import { authApi } from '@/entities/user/api/authApi';
 import EditProfileModal from '@/features/edit-profile';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
+import Loader from '@/shared/ui/Loader';
 
 import styles from './Profile.module.scss';
+import type { UserCompany } from '@/entities/user';
 
 const Profile = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [companies, setCompanies] = useState<UserCompany[]>([]);
   const { user } = useAuthStore();
 
   const handleOpenCompany = (slug: string) => {
@@ -18,6 +23,25 @@ const Profile = () => {
   };
 
   if (!user) return null;
+
+  useEffect(() => {
+    const fetchUserCompanies = async () => {
+      try {
+        setIsLoading(true);
+        const response = await authApi.getAllUserCompanies();
+        setCompanies(response.data.data || []);
+      } catch (error) {
+        console.error('Ошибка загрузки компаний:', error);
+        setCompanies([]);
+      } finally {
+        setIsLoading(false);
+      };
+    };
+
+    if (user) {
+      fetchUserCompanies();
+    }
+  }, [user]);
 
   return (
     <div className={styles.profile}>
@@ -92,20 +116,25 @@ const Profile = () => {
         <h4>Мои компании</h4>
 
         <div className={styles.companies}>
-          {!(user.companies && user.companies.length > 0) ? (
+          {isLoading ? (
+            <Loader />
+          ) : companies.length === 0 ? (
             <div className={styles.empty}>
-              У вас еще нету действующих компаний
+              У вас еще нет действующих компаний
             </div>
           ) : (
-            <div className={styles.companies}>
-              {user.companies?.map((c) => (
-                <div key={c.slug} className={styles.companyCard}>
+            <div className={styles.companiesList}>
+              {companies.map((company) => (
+                <div key={company.slug} className={styles.companyCard}>
                   <div>
-                    <p className={styles.companyName}>{c.name}</p>
-                    <span className={styles.slug}>@{c.slug}</span>
+                    <p className={styles.companyName}>{company.name}</p>
+                    <span className={styles.slug}>@{company.slug}</span>
                   </div>
 
-                  <button className={styles.openBtn} onClick={() => handleOpenCompany(c.slug)}>
+                  <button
+                    className={styles.openBtn}
+                    onClick={() => handleOpenCompany(company.slug)}
+                  >
                     Открыть
                   </button>
                 </div>
