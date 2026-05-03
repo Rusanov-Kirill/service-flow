@@ -1,5 +1,3 @@
-import type { Company } from "@prisma/client";
-
 export interface UpdateProfileInput {
     firstName?: string;
     lastName?: string;
