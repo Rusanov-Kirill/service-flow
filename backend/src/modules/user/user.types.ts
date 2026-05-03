@@ -19,5 +19,4 @@ export interface UserResponse {
     createdAt: Date;
     updatedAt: Date;
     lastLogin: Date | null,
-    companies?: Company[];
 }
