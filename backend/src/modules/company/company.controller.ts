@@ -36,21 +36,6 @@ export const companyController = {
         }
     },
 
-    getByOwnerId: async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const { ownerId } = req.params;
-
-            if (!ownerId || typeof ownerId !== 'string') {
-                return res.status(400).json({ error: 'Неверный формат ownerId' });
-            }
-
-            const companies = await companyService.getByOwnerId(ownerId);
-            return res.json(companies);
-        } catch (error: any) {
-            return res.status(400).json({ error: error.message });
-        }
-    },
-
     getById: async (req: Request, res: Response): Promise<Response> => {
         try {
             const { id } = req.params;

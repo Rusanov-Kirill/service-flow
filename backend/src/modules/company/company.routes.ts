@@ -5,7 +5,6 @@ import { companyMemberController } from '../company_member/company_member.contro
 const router = Router();
 
 router.get('/slug/:slug', companyController.getBySlug);
-router.get('/owner/:ownerId', companyController.getByOwnerId);
 
 router.get('/:companyId/members', companyMemberController.getAllByCompanyId);
 router.get('/:companyId/members/email/:email', companyMemberController.getByEmail);

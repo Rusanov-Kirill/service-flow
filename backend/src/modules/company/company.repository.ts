@@ -1,6 +1,7 @@
 import { prisma } from '../../shared/database/prisma';
-import type { CreateCompanyDto } from './company.types';
+import { ROLE_PERMISSIONS } from '../../shared/utils/rolePermissions';
 import type { CreateServiceDto } from '../service/service.types';
+import type { CreateCompanyDto } from './company.types';
 
 export const companyRepository = {
     createWithServices: async (
@@ -28,7 +29,6 @@ export const companyRepository = {
                     phone: companyData.phone,
                     email: companyData.email,
                     website: companyData.website,
-                    ownerId: companyData.ownerId,
                     isActive: true,
                     bookingLeadDays: companyData.bookingLeadDays,
                     workScheduleType: companyData.workScheduleType,
@@ -39,6 +39,18 @@ export const companyRepository = {
                     holidays: formattedHolidays,
                     autoConfirmBooking: companyData.autoConfirmBooking,
                     paymentMethods: companyData.paymentMethods,
+                },
+            });
+
+            const ownerPermissions = ROLE_PERMISSIONS.owner;
+            await tx.companyMember.create({
+                data: {
+                    userId: companyData.ownerId,
+                    companyId: company.id,
+                    role: 'owner',
+                    permissions: ownerPermissions,
+                    startWorkTime: companyData.defaultStartTime,
+                    endWorkTime: companyData.defaultEndTime,
                 },
             });
 
@@ -67,14 +79,6 @@ export const companyRepository = {
 
     findAll: async () => {
         return prisma.company.findMany({
-            orderBy: { createdAt: 'desc' },
-            include: { services: true },
-        });
-    },
-
-    findByOwnerId: async (ownerId: string) => {
-        return prisma.company.findMany({
-            where: { ownerId },
             orderBy: { createdAt: 'desc' },
             include: { services: true },
         });

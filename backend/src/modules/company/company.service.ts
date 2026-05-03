@@ -37,10 +37,6 @@ export const companyService = {
         return companyRepository.findAll();
     },
 
-    getByOwnerId: async (ownerId: string) => {
-        return companyRepository.findByOwnerId(ownerId);
-    },
-
     getById: async (id: string) => {
         const company = await companyRepository.findById(id);
 
