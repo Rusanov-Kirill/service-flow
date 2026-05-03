@@ -64,7 +64,7 @@ export const authApi = {
         return apiClient.patch('/users/profile', data);
     },
 
-    getAllUserComapnies: () => {
+    getAllUserCompanies: () => {
         return apiClient.get('/users/companies');
     },
 };

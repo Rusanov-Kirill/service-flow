@@ -10,4 +10,12 @@ export interface User {
     isActive?: boolean;
     lastLogin?: string;
     createdAt?: string;
-}
+};
+
+export interface UserCompany {
+    name: string;
+    slug: string;
+    city: string;
+    logo: string | null;
+    role: string;
+};
