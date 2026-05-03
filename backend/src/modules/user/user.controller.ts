@@ -66,4 +66,27 @@ export const userController = {
             });
         }
     },
+
+    getAllUserCompanies: async (req: Request, res: Response) => {
+        try {
+            const userId = (req as any).user?.id;
+
+            if (!userId) {
+                res.status(401).json({ success: false, error: 'User not authenticated' });
+                return;
+            }
+
+            const companies = await userService.getAllUserCompanies(userId);
+
+            res.json({
+                success: true,
+                data: companies
+            });
+        } catch (error: any) {
+            res.status(400).json({
+                success: false,
+                error: error.message
+            });
+        }
+    },
 };

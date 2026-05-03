@@ -14,4 +14,22 @@ export const userRepository = {
             data
         });
     },
+
+    getAllUserCompanies: async (id: string) => {
+        const members = await prisma.companyMember.findMany({
+            where: { userId: id },
+            include: {
+                company: {
+                    select: {
+                        name: true,
+                        slug: true,
+                        city: true,
+                        logo: true,
+                    }
+                }
+            }
+        });
+
+        return members.map(m => m.company);
+    },
 }

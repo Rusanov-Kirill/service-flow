@@ -70,4 +70,18 @@ export const userService = {
             lastLogin: updatedUser.lastLogin,
         };
     },
+
+    getAllUserCompanies: async (userId: string) => {
+        if (!userId) {
+            throw new Error('User ID is required');
+        }
+
+        const companies = await userRepository.getAllUserCompanies(userId);
+
+        if (!companies || companies.length === 0) {
+            return [];
+        }
+
+        return companies;
+    },
 };
