@@ -2,7 +2,7 @@ export interface CreateCompanyMemberDto {
     userId: string;
     companyId: string;
     role: MemberRole;
-    scheduleType: MemberScheduleType;
+    scheduleType?: MemberScheduleType;
     startWorkTime: string;
     endWorkTime: string;
     startWorkDay?: Date;

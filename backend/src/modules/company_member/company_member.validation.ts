@@ -12,7 +12,7 @@ export const createCompanyMemberSchema = z.object({
     userId: z.string().uuid('Неверный формат userId'),
     companyId: z.string().uuid('Неверный формат companyId'),
     role: z.enum(['owner', 'admin', 'manager', 'receptionist', 'member']),
-    scheduleType: z.enum(['FIVE_TWO', 'TWO_TWO', 'CUSTOM']),
+    scheduleType: z.enum(['FIVE_TWO', 'TWO_TWO', 'CUSTOM']).optional(),
     startWorkTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
     endWorkTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)'),
     startWorkDay: z.date().optional(),
