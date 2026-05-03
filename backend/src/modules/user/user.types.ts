@@ -1,3 +1,5 @@
+import type { MemberRole } from "../company_member/company_member.types";
+
 export interface UpdateProfileInput {
     firstName?: string;
     lastName?: string;
@@ -17,4 +19,12 @@ export interface UserResponse {
     createdAt: Date;
     updatedAt: Date;
     lastLogin: Date | null,
+}
+
+export interface UserCompaniesResponse {
+    role: MemberRole;
+    name: string;
+    slug: string;
+    city: string;
+    logo: string | null;
 }

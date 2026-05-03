@@ -18,7 +18,7 @@ export interface UpdateCompanyMemberDto {
     customWorkSchedule?: CustomWorkSchedule[];
 };
 
-type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
+export type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
 type MemberScheduleType = 'FIVE_TWO' | 'TWO_TWO' | 'CUSTOM';
 
 interface CustomWorkSchedule {

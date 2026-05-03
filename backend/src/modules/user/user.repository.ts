@@ -1,4 +1,5 @@
 import { prisma } from '../../shared/database/prisma';
+import type { UserCompaniesResponse } from './user.types';
 import { User } from '@prisma/client';
 
 export const userRepository = {
@@ -15,7 +16,7 @@ export const userRepository = {
         });
     },
 
-    getAllUserCompanies: async (id: string) => {
+    getAllUserCompanies: async (id: string): Promise<UserCompaniesResponse[]> => {
         const members = await prisma.companyMember.findMany({
             where: { userId: id },
             include: {
@@ -30,6 +31,9 @@ export const userRepository = {
             }
         });
 
-        return members.map(m => m.company);
+        return members.map(member => ({
+            ...member.company,
+            role: member.role
+        }));
     },
 }
