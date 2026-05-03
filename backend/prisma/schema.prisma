@@ -41,7 +41,6 @@ model User {
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
   sessions       Session[]
-  ownedCompanies Company[]  @relation("UserCompanies")
   companyMembers CompanyMember[]
   customers      Customer[]
 
@@ -76,7 +75,6 @@ model Company {
   email       String?
   website     String?
   isActive    Boolean  @default(true) @map("is_active")
-  ownerId     String   @map("owner_id")
 
   bookingLeadDays      Int                @default(30)
   workScheduleType     WorkScheduleType   @default(EVERY_DAY)
@@ -89,7 +87,6 @@ model Company {
   autoConfirmBooking   Boolean            @default(false) 
   paymentMethods       PaymentMethod      @default(BOTH)         
 
-  owner       User     @relation("UserCompanies", fields: [ownerId], references: [id], onDelete: Cascade)
   members     CompanyMember[]
   customers   Customer[]
   services    Service[]
