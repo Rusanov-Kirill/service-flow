@@ -1,5 +1,3 @@
-import type { Company } from "@prisma/client";
-
 export interface Tokens {
     accessToken: string;
     refreshToken: string;
@@ -18,6 +16,5 @@ export interface AuthResponse {
         phoneNumber?: string,
         lastLogin: Date | null;
         createdAt: Date;
-        companies?: Company[]
     };
 }
