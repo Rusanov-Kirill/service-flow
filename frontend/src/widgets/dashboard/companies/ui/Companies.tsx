@@ -33,6 +33,10 @@ const Companies = () => {
     navigate('/home/companies/create');
   };
 
+  const handleOpenCompanySettings = (slug: string) => {
+    navigate(`/home/companies/${slug}/settings`)
+  };
+
   useEffect(() => {
     const fetchCompanies = async () => {
       if (!user) return;
@@ -136,8 +140,11 @@ const Companies = () => {
                     >
                       Открыть
                     </button>
-                    <button className={styles.settingsBtn}>
-                      Настройки
+                    <button
+                      className={styles.settingsBtn}
+                      onClick={() => handleOpenCompanySettings(company.slug)}
+                    >
+                      Управление
                     </button>
                   </div>
                 </div>
