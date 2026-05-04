@@ -31,4 +31,9 @@ export const companyApi = {
         const response = await apiClient.get(`/companies/slug/${slug}`);
         return response.data;
     },
+
+    update: async (id: string, data: Partial<Company>) => {
+        const response = await apiClient.patch(`/companies/${id}`, data);
+        return response.data;
+    },
 };
