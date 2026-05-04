@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import type { Company } from '@/entities/company';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
+import Loader from '@/shared/ui/Loader';
 import { companyApi } from '@entities/company/api/companyApi';
 
 import styles from './PopularCompanies.module.scss';
@@ -11,10 +12,12 @@ const PopularCompanies = () => {
   const navigate = useNavigate();
   const [companies, setCompanies] = useState<Company[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
+        setIsLoading(true);
         const data = await companyApi.getAll();
         setCompanies(data);
         setError(null);
@@ -25,11 +28,21 @@ const PopularCompanies = () => {
         } else {
           setError('Не удалось загрузить компании');
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchCompanies();
   }, []);
+
+  if(isLoading) {
+    return (
+      <div className={styles.wrapper}>
+        <Loader />
+      </div>
+    )
+  };
 
   if (error) {
     return (
@@ -41,7 +54,7 @@ const PopularCompanies = () => {
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <div className={styles.wrapper}>
