@@ -1,0 +1,205 @@
+.settingsPage {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+    background: $bg-light;
+    min-height: calc(100vh - 2 * $spacing-lg);
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .backBtn {
+            background: none;
+            border: none;
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            cursor: pointer;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $radius-md;
+            transition: all $duration-fast;
+
+            &:hover {
+                background: $bg-light;
+                color: $primary;
+            }
+        }
+
+        h1 {
+            font-size: $font-size-2xl;
+            font-weight: 600;
+            color: $text-primary;
+        }
+
+        .placeholder {
+            width: 80px;
+        }
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    .accordionItem {
+        background: $white;
+        border-radius: $radius-lg;
+        border: 1px solid $border-light;
+        overflow: hidden;
+        transition: all $duration-fast;
+
+        &:hover {
+            box-shadow: $shadow-sm;
+        }
+    }
+
+    .accordionHeader {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        width: 100%;
+        padding: $spacing-md $spacing-lg;
+        background: $white;
+        border: none;
+        cursor: pointer;
+        transition: all $duration-fast;
+        text-align: left;
+
+        &:hover {
+            background: $bg-light;
+        }
+
+        &.open {
+            background: $primary-light;
+            border-bottom: 1px solid $border-light;
+
+            .accordionChevron {
+                color: $primary;
+            }
+        }
+
+        .accordionIcon {
+            font-size: $font-size-lg;
+        }
+
+        .accordionTitle {
+            flex: 1;
+            font-size: $font-size-md;
+            font-weight: 600;
+            color: $text-primary;
+        }
+
+        .accordionChevron {
+            font-size: $font-size-xs;
+            color: $gray-muted;
+            transition: transform $duration-fast;
+        }
+    }
+
+    .accordionContent {
+        padding: $spacing-lg;
+        border-top: 1px solid $border-light;
+        animation: slideDown $duration-fast ease;
+
+        .sectionContent {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+
+            [class*="field"]:first-of-type {
+                margin-top: 0;
+            }
+        }
+
+        .placeholderContent {
+            text-align: center;
+            padding: $spacing-3xl;
+            color: $text-secondary;
+
+            p {
+                margin-bottom: $spacing-md;
+            }
+        }
+
+        .error {
+            padding: $spacing-sm;
+            background: rgba($red, 0.1);
+            border: 1px solid $red;
+            border-radius: $radius-md;
+            color: $red;
+            font-size: $font-size-sm;
+            text-align: center;
+            margin-top: $spacing-md;
+        }
+
+        .success {
+            padding: $spacing-sm;
+            background: rgba($green, 0.1);
+            border: 1px solid $green;
+            border-radius: $radius-md;
+            color: $green;
+            font-size: $font-size-sm;
+            text-align: center;
+            margin-top: $spacing-md;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: $spacing-md;
+            padding-top: $spacing-lg;
+            margin-top: $spacing-lg;
+            border-top: 1px solid $border-light;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: $spacing-md;
+
+        .header {
+            h1 {
+                font-size: $font-size-xl;
+            }
+        }
+
+        .accordionHeader {
+            padding: $spacing-sm $spacing-md;
+
+            .accordionTitle {
+                font-size: $font-size-sm;
+            }
+        }
+
+        .accordionContent {
+            padding: $spacing-md;
+        }
+    }
+
+    @media (max-width: 530px) {
+        padding: $spacing-sm;
+
+        .accordionContent {
+            padding: $spacing-sm;
+
+            .actions {
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
