@@ -17,5 +17,7 @@ export interface UserCompany {
     slug: string;
     city: string;
     logo: string | null;
-    role: string;
+    role: MemberRole;
 };
+
+type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
