@@ -1,3 +1,5 @@
+import type { MemberRole } from "@/entities/company_member";
+
 export interface User {
     id: string;
     email: string;
@@ -19,5 +21,3 @@ export interface UserCompany {
     logo: string | null;
     role: MemberRole;
 };
-
-type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
