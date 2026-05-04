@@ -14,6 +14,7 @@ export const ROUTES = {
         MY_PROFILE: 'profile',
         MY_COMPANIES: 'companies',
         CREATE_COMPANY: 'companies/create',
+        COMPANY_SETTINGS: 'companies/:slug/settings',
     },
     NOT_FOUND: '*',
 } as const;
