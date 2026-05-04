@@ -11,7 +11,7 @@ import styles from './Companies.module.scss';
 
 const roleLabels: Record<string, string> = {
   owner: 'Владелец',
-  admin: 'Администратор',
+  admin: 'Системный администратор',
   manager: 'Управляющий',
   receptionist: 'Администратор',
   member: 'Сотрудник'
@@ -136,12 +136,9 @@ const Companies = () => {
                     >
                       Открыть
                     </button>
-
-                    {(company.role === 'owner' || company.role === 'admin') && (
-                      <button className={styles.settingsBtn}>
-                        Настройки
-                      </button>
-                    )}
+                    <button className={styles.settingsBtn}>
+                      Настройки
+                    </button>
                   </div>
                 </div>
               </div>
