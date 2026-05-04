@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import type { UserCompany } from '@/entities/user';
 import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import { authApi } from '@/entities/user/api/authApi';
 import EditProfileModal from '@/features/edit-profile';
@@ -8,7 +9,6 @@ import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 import Loader from '@/shared/ui/Loader';
 
 import styles from './Profile.module.scss';
-import type { UserCompany } from '@/entities/user';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -124,7 +124,7 @@ const Profile = () => {
             </div>
           ) : (
             <div className={styles.companiesList}>
-              {companies.map((company) => (
+              {companies.filter(c => c.role === 'owner').map((company) => (
                 <div key={company.slug} className={styles.companyCard}>
                   <div>
                     <p className={styles.companyName}>{company.name}</p>
