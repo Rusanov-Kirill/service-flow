@@ -10,6 +10,7 @@ router.get('/:companyId/members', companyMemberController.getAllByCompanyId);
 router.get('/:companyId/members/email/:email', companyMemberController.getByEmail);
 router.get('/:companyId/members/user/:userId', companyMemberController.getByUserId);
 
+router.patch('/:id', companyController.update);
 router.get('/:id', companyController.getById);
 router.get('/', companyController.getAll);
 router.post('/', companyController.createWithServices);

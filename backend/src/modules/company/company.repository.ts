@@ -70,6 +70,47 @@ export const companyRepository = {
         });
     },
 
+    update: async (id: string, data: Partial<CreateCompanyDto>) => {
+        let formattedData = { ...data };
+        let formattedHolidays: Date[] = [];
+
+        if (data.holidays) {
+            formattedHolidays = data.holidays?.map(holiday => {
+                const date = new Date(holiday);
+                date.setUTCHours(0, 0, 0, 0);
+                return date;
+            }) || [];
+        };
+
+        return prisma.company.update({
+            where: { id },
+            data: {
+                name: formattedData.name,
+                slug: formattedData.slug,
+                description: formattedData.description,
+                tags: formattedData.tags,
+                timezone: formattedData.timezone,
+                city: formattedData.city,
+                currency: formattedData.currency,
+                address: formattedData.address,
+                logo: formattedData.logo,
+                phone: formattedData.phone,
+                email: formattedData.email,
+                website: formattedData.website,
+                bookingLeadDays: formattedData.bookingLeadDays,
+                workScheduleType: formattedData.workScheduleType,
+                slotInterval: formattedData.slotInterval,
+                defaultStartTime: formattedData.defaultStartTime,
+                defaultEndTime: formattedData.defaultEndTime,
+                customWorkDays: formattedData.customWorkDays as any,
+                holidays: formattedHolidays,
+                autoConfirmBooking: formattedData.autoConfirmBooking,
+                paymentMethods: formattedData.paymentMethods,
+            },
+            include: { services: true },
+        });
+    },
+
     findById: async (id: string) => {
         return prisma.company.findUnique({
             where: { id },

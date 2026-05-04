@@ -33,6 +33,16 @@ export const companyService = {
         return companyRepository.createWithServices(formattedCompanyData, servicesData);
     },
 
+    update: async (id: string, data: Partial<CreateCompanyDto>) => {
+        const company = await companyRepository.findById(id);
+
+        if (!company) {
+            throw new Error('Компания не найдена');
+        }
+
+        return companyRepository.update(id, data);
+    },
+
     getAll: async () => {
         return companyRepository.findAll();
     },

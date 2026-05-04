@@ -27,6 +27,22 @@ export const companyController = {
         }
     },
 
+    update: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { id } = req.params;
+
+            if (!id || typeof id !== 'string') {
+                return res.status(400).json({ error: 'Неверный формат id' });
+            }
+
+            const company = await companyService.update(id, req.body);
+
+            return res.json(company);
+        } catch (error: any) {
+            return res.status(400).json({ error: error.message });
+        }
+    },
+
     getAll: async (_req: Request, res: Response): Promise<Response> => {
         try {
             const companies = await companyService.getAll();
