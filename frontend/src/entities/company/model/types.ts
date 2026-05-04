@@ -1,5 +1,3 @@
-import type { Service } from "@/entities/service";
-
 export interface Company {
   id: string
   name: string
@@ -15,32 +13,15 @@ export interface Company {
   email?: string
   website?: string
   isActive: boolean
-  ownerId: string
-  members?: CompanyMember[]
-  services?: Service[]
   bookingLeadDays: number
   workScheduleType: WorkScheduleType
   slotInterval: number
   defaultStartTime: string
   defaultEndTime: string
   customWorkDays?: CustomWorkDay[]
-  holidays: Date[]
+  holidays: string[]
   autoConfirmBooking: boolean
   paymentMethods: PaymentMethod
-};
-
-export interface CompanyMember {
-  id: string
-  userId: string
-  companyId: string
-  role: 'owner' | 'admin' | 'manager' | 'staff'
-  permissions: string[]
-  user?: {
-    firstName: string
-    lastName: string
-    email: string
-    avatar?: string
-  }
 };
 
 export interface CustomWorkDay {
