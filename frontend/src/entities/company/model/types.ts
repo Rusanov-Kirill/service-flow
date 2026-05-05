@@ -13,6 +13,7 @@ export interface Company {
   email?: string
   website?: string
   isActive: boolean
+  ownerId: string
   bookingLeadDays: number
   workScheduleType: WorkScheduleType
   slotInterval: number

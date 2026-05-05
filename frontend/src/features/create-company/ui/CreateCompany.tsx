@@ -75,6 +75,7 @@ const CreateCompany = () => {
             const requestData = {
                 ...data,
                 ownerId: user.id,
+                holidays: (data.holidays || []).map(d => d.toISOString()),
                 services: services.map(service => ({
                     name: service.name,
                     description: service.description,
@@ -126,7 +127,7 @@ const CreateCompany = () => {
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                    <form onSubmit={handleSubmit(onSubmit, (errors) => console.log('Form errors:', errors))}>
                         <div className={styles.formGrid}>
                             {/* Основная информация */}
                             <div className={styles.section}>
