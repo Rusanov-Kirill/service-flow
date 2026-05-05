@@ -12,3 +12,5 @@ export const createServiceSchema = z.object({
     currency: z.string().default("RUB"),
     isActive: z.boolean().default(true),
 });
+
+export const updateServiceSchema = createServiceSchema.partial();
