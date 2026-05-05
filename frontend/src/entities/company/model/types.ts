@@ -1,3 +1,5 @@
+import type { Service } from "@/entities/service";
+
 export interface Company {
   id: string
   name: string
@@ -14,6 +16,7 @@ export interface Company {
   website?: string
   isActive: boolean
   ownerId: string
+  services: Service[]
   bookingLeadDays: number
   workScheduleType: WorkScheduleType
   slotInterval: number
