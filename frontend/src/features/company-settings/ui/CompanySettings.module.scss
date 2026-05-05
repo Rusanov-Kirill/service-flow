@@ -69,12 +69,11 @@
         text-align: left;
 
         &:hover {
-            background: $bg-light;
+            background: $primary-light;
         }
 
         &.open {
             background: $primary-light;
-            border-bottom: 1px solid $border-light;
 
             .accordionChevron {
                 color: $primary;
@@ -82,7 +81,16 @@
         }
 
         .accordionIcon {
-            font-size: $font-size-lg;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: $font-size-md;
+            color: $primary;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
         }
 
         .accordionTitle {
@@ -111,6 +119,225 @@
 
             [class*="field"]:first-of-type {
                 margin-top: 0;
+            }
+        }
+
+        .servicesHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-md;
+
+            button {
+                padding: $spacing-xs $spacing-md;
+                font-size: $font-size-xs;
+                border-radius: $radius-md;
+            }
+        }
+
+        .servicesList {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+        }
+
+        .serviceCard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: $spacing-md;
+            padding: $spacing-md $spacing-lg;
+            border-radius: $radius-lg;
+            border: 1px solid $border-light;
+            background: $white;
+            transition: all $duration-fast;
+
+            &:hover {
+                box-shadow: $shadow-sm;
+                border-color: $primary-light;
+            }
+
+            .serviceMain {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .serviceName {
+                display: flex;
+                align-items: center;
+                gap: $spacing-sm;
+                font-weight: 600;
+                font-size: $font-size-sm;
+                color: $text-primary;
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .serviceIcon {
+                    color: $primary;
+                    flex-shrink: 0;
+                }
+            }
+
+            .serviceDetails {
+                display: flex;
+                gap: $spacing-sm;
+                flex-wrap: wrap;
+
+                .detailItem {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-2xs;
+                    font-size: $font-size-xs;
+                    color: $text-secondary;
+                    background: $bg-light;
+                    padding: 4px 8px;
+                    border-radius: $radius-xl;
+
+                    svg {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+            }
+
+            .serviceActions {
+                display: flex;
+                gap: $spacing-xs;
+                flex-shrink: 0;
+
+                button {
+                    width: 34px;
+                    height: 34px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    border: none;
+                    background: transparent;
+                    cursor: pointer;
+                    color: $text-secondary;
+                    transition: all $duration-fast;
+
+                    &:hover {
+                        transform: translateY(-1px);
+                        background: $bg-light;
+                    }
+
+                    svg {
+                        width: 14px;
+                        height: 14px;
+                    }
+                }
+
+                .editBtn:hover {
+                    background: $primary-light;
+                    color: $primary;
+                }
+
+                .deleteBtn:hover {
+                    background: rgba($red, 0.1);
+                    color: $red;
+                }
+            }
+        }
+
+        .membersTable {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+        }
+
+        .memberRow {
+            display: flex;
+            align-items: center;
+            gap: $spacing-md;
+            padding: $spacing-sm $spacing-md;
+            border: 1px solid $border-light;
+            border-radius: $radius-md;
+            background: $white;
+        }
+
+        .memberAvatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .memberName {
+            flex: 1;
+            font-weight: 500;
+            color: $text-primary;
+        }
+
+        .memberRole {
+            font-size: $font-size-xs;
+            color: $text-secondary;
+            background: $bg-light;
+            padding: 4px 8px;
+            border-radius: $radius-md;
+
+            &.roleOwner {
+                background: rgba(79, 70, 229, 0.15);
+                color: #4f46e5;
+            }
+
+            &.roleAdmin {
+                background: rgba(239, 68, 68, 0.15);
+                color: #ef4444;
+            }
+
+            &.roleManager {
+                background: rgba(245, 158, 11, 0.15);
+                color: #f59e0b;
+            }
+
+            &.roleReceptionist {
+                background: rgba(16, 185, 129, 0.15);
+                color: #10b981;
+            }
+
+            &.roleMember {
+                background: rgba(107, 114, 128, 0.15);
+                color: #6b7280;
+            }
+        }
+
+        .emptyServices {
+            text-align: center;
+            padding: $spacing-xl;
+            color: $text-secondary;
+            background: $bg-light;
+            border-radius: $radius-md;
+            border: 1px dashed $border;
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+
+            p {
+                font-size: $font-size-sm;
+                font-weight: 500;
+                color: $text-secondary;
+                margin: 0;
+            }
+
+            span {
+                font-size: $font-size-xs;
+                color: $gray-muted;
             }
         }
 
@@ -176,10 +403,73 @@
         .accordionContent {
             padding: $spacing-md;
         }
+
+        .servicesHeader {
+            flex-direction: column;
+            align-items: stretch;
+            gap: $spacing-sm;
+
+            button {
+                width: 100%;
+            }
+        }
+
+        .serviceCard {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: $spacing-sm;
+            padding: $spacing-md;
+
+            .serviceMain {
+                width: 100%;
+            }
+
+            .serviceName {
+                width: 100%;
+            }
+
+            .serviceDetails {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .serviceActions {
+                width: 100%;
+                justify-content: flex-end;
+                margin-top: $spacing-xs;
+            }
+        }
+
+        .emptyServices {
+            padding: $spacing-lg;
+        }
     }
 
     @media (max-width: 530px) {
         padding: $spacing-sm;
+
+        .header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: $spacing-xs;
+            position: relative;
+
+            .backBtn {
+                align-self: flex-start;
+                font-size: $font-size-xs;
+                padding: $spacing-2xs $spacing-xs;
+            }
+
+            h1 {
+                text-align: center;
+                font-size: $font-size-lg;
+                line-height: 1.2;
+            }
+
+            .placeholder {
+                display: none;
+            }
+        }
 
         .accordionContent {
             padding: $spacing-sm;
@@ -190,6 +480,44 @@
                 }
             }
         }
+
+        .serviceCard {
+            padding: $spacing-sm;
+
+            .serviceName {
+                font-size: $font-size-xs;
+            }
+
+            .serviceDetails {
+                gap: $spacing-xs;
+
+                .detailItem {
+                    font-size: 10px;
+                    padding: 3px 6px;
+                }
+            }
+
+            .serviceActions {
+                justify-content: space-between;
+
+                button {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+        }
+
+        .emptyServices {
+            padding: $spacing-md;
+
+            p {
+                font-size: $font-size-xs;
+            }
+
+            span {
+                font-size: 10px;
+            }
+        }
     }
 }
 
@@ -198,6 +526,7 @@
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

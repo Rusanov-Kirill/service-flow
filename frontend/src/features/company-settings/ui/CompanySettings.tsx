@@ -1,12 +1,29 @@
+import {
+    faCogs,
+    faClock,
+    faMoneyBillWave,
+    faPen,
+    faTrashAlt,
+    faBuilding,
+    faPhone,
+    faCalendarDays,
+    faScissors,
+    faUsers,
+    faWallet
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import type { CompanyMember } from '@/entities/company_member';
 import { companyMemberApi } from '@/entities/company_member';
 import { companyApi } from '@/entities/company/api/companyApi';
+import { serviceApi } from '@/entities/service/api/serviceApi';
 import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import type { Company } from '@/entities/company';
+import type { Service } from '@/entities/service';
 import type { WorkScheduleType, PaymentMethod } from '@/entities/company/model/types';
 import Button from '@/shared/ui/Button';
 import FormField from '@/shared/ui/auth/FormField';
@@ -17,6 +34,10 @@ import RadioGroup from '@/shared/ui/RadioGroup';
 import DatePicker from '@/shared/ui/DatePicker';
 import CustomWorkDays from '@/shared/ui/CustomWorkDays';
 import Loader from '@/shared/ui/Loader';
+import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
+import { roleLabels } from '@/shared/utils/roleUtils';
+import ConfirmModal from '@/shared/ui/ConfirmModal';
+import AddServiceModal from '@/features/add-service/ui/AddServiceModal';
 import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
 import { updateCompanySchema, type UpdateCompanyFormData } from '../model/CompanySettings.types';
 
@@ -43,6 +64,13 @@ const CompanySettings = () => {
     const [errors, setErrors] = useState<Record<string, string | null>>({});
     const [successes, setSuccesses] = useState<Record<string, string | null>>({});
     const [openSections, setOpenSections] = useState<string[]>([]);
+    const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+    const [editingService, setEditingService] = useState<Service | null>(null);
+    const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; serviceId: string | null }>({
+        isOpen: false,
+        serviceId: null,
+    });
+    const [members, setMembers] = useState<any[]>([]);
 
     const {
         trigger,
@@ -51,7 +79,7 @@ const CompanySettings = () => {
         setValue,
         watch,
         reset,
-        getValues 
+        getValues,
     } = useForm<UpdateCompanyFormData>({
         resolver: zodResolver(updateCompanySchema),
         defaultValues: {
@@ -76,7 +104,7 @@ const CompanySettings = () => {
             holidays: [],
             autoConfirmBooking: false,
             paymentMethods: 'BOTH',
-        }
+        },
     });
 
     const watchWorkScheduleType = watch('workScheduleType');
@@ -102,10 +130,13 @@ const CompanySettings = () => {
                 setIsLoading(true);
 
                 const companyRes = await companyApi.getBySlug(slug);
-                const memberRes = await companyMemberApi.getMemberByUserId(companyRes.id, user.id);
+                const membersRes: CompanyMember[] = await companyMemberApi.getByCompanyId(companyRes.id);
 
+                const currentMember = membersRes.find(m => m.userId === user.id) ?? null;
+
+                setMembers(membersRes);
                 setCompany(companyRes);
-                setMemberInfo(memberRes);
+                setMemberInfo(currentMember);
 
                 const formData: UpdateCompanyFormData = {
                     ...companyRes,
@@ -188,13 +219,9 @@ const CompanySettings = () => {
 
         if (sectionId === 'general') {
             fields = ['name', 'slug', 'description', 'tags', 'timezone', 'city', 'currency', 'address', 'logo'];
-        }
-
-        if (sectionId === 'contacts') {
+        } else if (sectionId === 'contacts') {
             fields = ['email', 'phone', 'website'];
-        }
-
-        if (sectionId === 'booking') {
+        } else if (sectionId === 'booking') {
             fields = [
                 'bookingLeadDays',
                 'workScheduleType',
@@ -204,25 +231,75 @@ const CompanySettings = () => {
                 'customWorkDays',
                 'holidays',
                 'autoConfirmBooking',
-                'paymentMethods'
+                'paymentMethods',
             ];
         }
 
         const isValid = await trigger(fields);
-
         if (!isValid) return;
 
         const data = getValues();
         onSubmitSection(sectionId, data);
     };
 
+    const handleAddService = () => {
+        setEditingService(null);
+        setIsServiceModalOpen(true);
+    };
+
+    const handleEditService = (service: Service) => {
+        setEditingService(service);
+        setIsServiceModalOpen(true);
+    };
+
+    const handleDeleteService = (serviceId: string) => {
+        setDeleteConfirm({ isOpen: true, serviceId });
+    };
+
+    const confirmDeleteService = async () => {
+        if (!deleteConfirm.serviceId) return;
+        try {
+            await serviceApi.delete(deleteConfirm.serviceId);
+            if (slug) {
+                const updatedCompany = await companyApi.getBySlug(slug);
+                setCompany(updatedCompany);
+            }
+            setSuccesses(prev => ({ ...prev, services: 'Услуга удалена' }));
+            setTimeout(() => setSuccesses(prev => ({ ...prev, services: null })), 3000);
+        } catch (err: any) {
+            setErrors(prev => ({ ...prev, services: err.response?.data?.error || 'Ошибка удаления' }));
+        } finally {
+            setDeleteConfirm({ isOpen: false, serviceId: null });
+        }
+    };
+
+    const handleServiceModalClose = async (updated?: boolean) => {
+        setIsServiceModalOpen(false);
+        setEditingService(null);
+        if (updated && slug) {
+            const updatedCompany = await companyApi.getBySlug(slug);
+            setCompany(updatedCompany);
+        }
+    };
+
+    const getRoleClassName = (role: string): string => {
+        const roleClassMap: Record<string, string | undefined> = {
+            owner: styles.roleOwner,
+            admin: styles.roleAdmin,
+            manager: styles.roleManager,
+            receptionist: styles.roleReceptionist,
+            member: styles.roleMember,
+        };
+        return roleClassMap[role] || styles.roleMember || '';
+    };
+
     const sections = [
-        { id: 'general', title: 'Основная информация', permission: 'edit_company', icon: '🏢' },
-        { id: 'contacts', title: 'Контакты', permission: 'edit_company', icon: '📞' },
-        { id: 'booking', title: 'Настройки бронирования', permission: 'edit_booking_settings', icon: '📅' },
-        { id: 'services', title: 'Услуги', permission: 'manage_services', icon: '✂️' },
-        { id: 'members', title: 'Сотрудники', permission: 'manage_members', icon: '👥' },
-        { id: 'finance', title: 'Финансы', permission: 'view_finance', icon: '💰' },
+        { id: 'general', title: 'Основная информация', permission: 'edit_company', icon: faBuilding },
+        { id: 'contacts', title: 'Контакты', permission: 'edit_company', icon: faPhone },
+        { id: 'booking', title: 'Настройки бронирования', permission: 'edit_booking_settings', icon: faCalendarDays },
+        { id: 'services', title: 'Услуги', permission: 'manage_services', icon: faScissors },
+        { id: 'members', title: 'Сотрудники', permission: 'manage_members', icon: faUsers },
+        { id: 'finance', title: 'Финансы', permission: 'view_finance', icon: faWallet },
     ];
 
     const visibleSections = sections.filter(s => hasPermission(s.permission));
@@ -233,12 +310,12 @@ const CompanySettings = () => {
                 <Loader />
             </div>
         );
-    }
+    };
 
     return (
         <div className={styles.settingsPage}>
             <div className={styles.header}>
-                <button className={styles.backBtn} onClick={() => navigate(`/home/companies`)}>
+                <button className={styles.backBtn} onClick={() => navigate('/home/companies')}>
                     ← Назад
                 </button>
                 <h1>Настройки компании</h1>
@@ -252,7 +329,9 @@ const CompanySettings = () => {
                         className={`${styles.accordionHeader} ${openSections.includes(section.id) ? styles.open : ''}`}
                         onClick={() => toggleSection(section.id)}
                     >
-                        <span className={styles.accordionIcon}>{section.icon}</span>
+                        <span className={styles.accordionIcon}>
+                            <FontAwesomeIcon icon={section.icon} />
+                        </span>
                         <span className={styles.accordionTitle}>{section.title}</span>
                         <span className={styles.accordionChevron}>
                             {openSections.includes(section.id) ? '▲' : '▼'}
@@ -272,7 +351,6 @@ const CompanySettings = () => {
                                         error={formErrors.name?.message}
                                         {...register('name')}
                                     />
-
                                     <FormField
                                         label="Короткое имя (slug)"
                                         id="slug"
@@ -281,7 +359,6 @@ const CompanySettings = () => {
                                         error={formErrors.slug?.message}
                                         {...register('slug')}
                                     />
-
                                     <FormField
                                         label="Описание"
                                         id="description"
@@ -289,7 +366,6 @@ const CompanySettings = () => {
                                         error={formErrors.description?.message}
                                         {...register('description')}
                                     />
-
                                     <MultiSelect
                                         label="Теги"
                                         options={TAGS_OPTIONS}
@@ -299,7 +375,6 @@ const CompanySettings = () => {
                                         required
                                         placeholder="Выберите теги"
                                     />
-
                                     <Select
                                         label="Часовой пояс"
                                         options={TIMEZONES}
@@ -309,7 +384,6 @@ const CompanySettings = () => {
                                         required
                                         placeholder="Выберите часовой пояс"
                                     />
-
                                     <FormField
                                         label="Город"
                                         id="city"
@@ -318,7 +392,6 @@ const CompanySettings = () => {
                                         error={formErrors.city?.message}
                                         {...register('city')}
                                     />
-
                                     <Select
                                         label="Валюта"
                                         options={CURRENCIES}
@@ -328,7 +401,6 @@ const CompanySettings = () => {
                                         required
                                         placeholder="Выберите валюту"
                                     />
-
                                     <FormField
                                         label="Адрес"
                                         id="address"
@@ -336,7 +408,6 @@ const CompanySettings = () => {
                                         error={formErrors.address?.message}
                                         {...register('address')}
                                     />
-
                                     <FormField
                                         label="Логотип (URL)"
                                         id="logo"
@@ -360,7 +431,6 @@ const CompanySettings = () => {
                                         error={formErrors.email?.message}
                                         {...register('email')}
                                     />
-
                                     <FormField
                                         label="Телефон"
                                         id="phone"
@@ -369,7 +439,6 @@ const CompanySettings = () => {
                                         error={formErrors.phone?.message}
                                         {...register('phone')}
                                     />
-
                                     <FormField
                                         label="Сайт"
                                         id="website"
@@ -393,7 +462,6 @@ const CompanySettings = () => {
                                         error={formErrors.bookingLeadDays?.message}
                                         {...register('bookingLeadDays', { valueAsNumber: true })}
                                     />
-
                                     <Select
                                         label="Тип рабочей недели"
                                         options={SCHEDULE_TYPES}
@@ -403,7 +471,6 @@ const CompanySettings = () => {
                                         required
                                         placeholder="Выберите график работы"
                                     />
-
                                     <TimePicker
                                         label="Начало рабочего дня"
                                         value={watch('defaultStartTime')}
@@ -411,7 +478,6 @@ const CompanySettings = () => {
                                         error={formErrors.defaultStartTime?.message}
                                         required
                                     />
-
                                     <TimePicker
                                         label="Конец рабочего дня"
                                         value={watch('defaultEndTime')}
@@ -419,7 +485,6 @@ const CompanySettings = () => {
                                         error={formErrors.defaultEndTime?.message}
                                         required
                                     />
-
                                     <FormField
                                         label="Интервал между слотами (минуты)"
                                         id="slotInterval"
@@ -429,7 +494,6 @@ const CompanySettings = () => {
                                         error={formErrors.slotInterval?.message}
                                         {...register('slotInterval', { valueAsNumber: true })}
                                     />
-
                                     {watchWorkScheduleType === 'CUSTOM' && (
                                         <CustomWorkDays
                                             value={watch('customWorkDays') ?? []}
@@ -437,26 +501,23 @@ const CompanySettings = () => {
                                             error={formErrors.customWorkDays?.message}
                                         />
                                     )}
-
                                     <DatePicker
                                         label="Праздничные (нерабочие) дни"
                                         value={watch('holidays')}
                                         onChange={(value) => setValue('holidays', value, { shouldValidate: true })}
                                         error={formErrors.holidays?.message}
                                     />
-
                                     <RadioGroup
                                         label="Подтверждение бронирования"
                                         options={[
                                             { value: true, label: 'Автоматически' },
-                                            { value: false, label: 'Вручную' }
+                                            { value: false, label: 'Вручную' },
                                         ]}
                                         value={watch('autoConfirmBooking')}
                                         onChange={(value) => setValue('autoConfirmBooking', value, { shouldValidate: true })}
                                         error={formErrors.autoConfirmBooking?.message}
                                         required
                                     />
-
                                     <Select
                                         label="Способы оплаты"
                                         options={PAYMENT_METHODS}
@@ -469,23 +530,103 @@ const CompanySettings = () => {
                                 </div>
                             )}
 
-                            {/* Услуги - заглушка */}
+                            {/* Услуги */}
                             {section.id === 'services' && (
                                 <div className={styles.sectionContent}>
-                                    <div className={styles.placeholderContent}>
-                                        <p>Управление услугами будет доступно здесь</p>
-                                        <Button variant="primary">+ Добавить услугу</Button>
+                                    <div className={styles.servicesHeader}>
+                                        <Button variant="primary" onClick={handleAddService}>
+                                            + Добавить услугу
+                                        </Button>
                                     </div>
+
+                                    {company?.services && company.services.length > 0 ? (
+                                        <div className={styles.servicesList}>
+                                            {company.services.map(service => (
+                                                <div key={service.id} className={styles.serviceCard}>
+
+                                                    <div className={styles.serviceMain}>
+                                                        <div className={styles.serviceName}>
+                                                            <FontAwesomeIcon icon={faCogs} className={styles.serviceIcon} />
+                                                            <span>{service.name}</span>
+                                                        </div>
+
+                                                        <div className={styles.serviceDetails}>
+                                                            <div className={styles.detailItem}>
+                                                                <FontAwesomeIcon icon={faClock} />
+                                                                <span>{service.duration} мин</span>
+                                                            </div>
+                                                            <div className={styles.detailItem}>
+                                                                <FontAwesomeIcon icon={faMoneyBillWave} />
+                                                                <span>{service.price} {service.currency}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={styles.serviceActions}>
+                                                        <button
+                                                            className={styles.editBtn}
+                                                            onClick={() => handleEditService(service)}
+                                                            title="Редактировать"
+                                                        >
+                                                            <FontAwesomeIcon icon={faPen} />
+                                                        </button>
+
+                                                        <button
+                                                            className={styles.deleteBtn}
+                                                            onClick={() => handleDeleteService(service.id)}
+                                                            title="Удалить"
+                                                        >
+                                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className={styles.emptyServices}>
+                                            <p>Услуги не добавлены</p>
+                                            <span>Нажмите «+ Добавить услугу», чтобы создать первую услугу</span>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
-                            {/* Сотрудники - заглушка */}
                             {section.id === 'members' && (
                                 <div className={styles.sectionContent}>
-                                    <div className={styles.placeholderContent}>
-                                        <p>Управление сотрудниками будет доступно здесь</p>
-                                        <Button variant="primary">+ Пригласить сотрудника</Button>
-                                    </div>
+                                    {members.length > 0 ? (
+                                        <div className={styles.membersTable}>
+                                            {members.map(member => (
+                                                <div key={member.id} className={styles.memberRow}>
+
+                                                    <div className={styles.memberAvatar}>
+                                                        <PlaceholderLogo
+                                                            src={member.user?.avatar}
+                                                            alt="avatar"
+                                                            variant='profile'
+                                                        />
+                                                    </div>
+
+                                                    <div className={styles.memberName}>
+                                                        {member.user?.firstName} {member.user?.lastName}
+                                                    </div>
+
+                                                    <div className={`${styles.memberRole} ${getRoleClassName(member.role)}`}>
+                                                        {roleLabels[member.role]}
+                                                    </div>
+
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className={styles.emptyServices}>
+                                            <p>Сотрудники не добавлены</p>
+                                        </div>
+                                    )}
+
+                                    <Button variant="primary">
+                                        + Пригласить сотрудника
+                                    </Button>
                                 </div>
                             )}
 
@@ -498,27 +639,44 @@ const CompanySettings = () => {
                                 </div>
                             )}
 
-                            {errors[section.id] && (
-                                <div className={styles.error}>{errors[section.id]}</div>
-                            )}
-                            {successes[section.id] && (
-                                <div className={styles.success}>{successes[section.id]}</div>
-                            )}
+                            {errors[section.id] && <div className={styles.error}>{errors[section.id]}</div>}
+                            {successes[section.id] && <div className={styles.success}>{successes[section.id]}</div>}
 
-                            <div className={styles.actions}>
-                                <Button
-                                    type="button"
-                                    variant="primary"
-                                    onClick={() => handleSectionSubmit(section.id)}
-                                    disabled={savingStates[section.id]}
-                                >
-                                    {savingStates[section.id] ? 'Сохранение...' : 'Сохранить изменения'}
-                                </Button>
-                            </div>
+                            {section.id !== 'services' && section.id !== 'members' && (
+                                <div className={styles.actions}>
+                                    <Button
+                                        type="button"
+                                        variant="primary"
+                                        onClick={() => handleSectionSubmit(section.id)}
+                                        disabled={savingStates[section.id]}
+                                    >
+                                        {savingStates[section.id] ? 'Сохранение...' : 'Сохранить изменения'}
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
             ))}
+
+            {/* Модальные окна для управления услугами */}
+            {isServiceModalOpen && (
+                <AddServiceModal
+                    onClose={handleServiceModalClose}
+                    initialService={editingService}
+                    companyId={company?.id}
+                />
+            )}
+
+            <ConfirmModal
+                isOpen={deleteConfirm.isOpen}
+                title="Удаление услуги"
+                message="Вы действительно хотите удалить эту услугу? Это действие нельзя отменить."
+                confirmText="Удалить"
+                cancelText="Отмена"
+                onConfirm={confirmDeleteService}
+                onCancel={() => setDeleteConfirm({ isOpen: false, serviceId: null })}
+            />
         </div>
     );
 };
