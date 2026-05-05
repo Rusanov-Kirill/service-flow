@@ -3,19 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { authApi } from '@/entities/user/api/authApi';
 import { useAuthStore } from '@/entities/user/store/useAuthStore';
+import { roleLabels } from '@/shared/utils/roleUtils';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 import Loader from '@/shared/ui/Loader';
 import type { UserCompany } from '@/entities/user';
 
 import styles from './Companies.module.scss';
-
-const roleLabels: Record<string, string> = {
-  owner: 'Владелец',
-  admin: 'Системный администратор',
-  manager: 'Управляющий',
-  receptionist: 'Администратор',
-  member: 'Сотрудник'
-};
 
 const Companies = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,7 +27,8 @@ const Companies = () => {
   };
 
   const handleOpenCompanySettings = (slug: string) => {
-    navigate(`/home/companies/${slug}/settings`)
+    navigate(`/home/companies/${slug}/settings`);
+    scrollTo(0, 0);
   };
 
   useEffect(() => {
