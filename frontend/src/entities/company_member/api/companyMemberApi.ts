@@ -24,4 +24,9 @@ export const companyMemberApi = {
         const response = await apiClient.get(`/company-members/user/${userId}/company/${companyId}`);
         return response.data;
     },
+
+    getByCompanyId: async (companyId: string) => {
+        const response = await apiClient.get(`/company-members/company/${companyId}`);
+        return response.data;
+    },
 }
