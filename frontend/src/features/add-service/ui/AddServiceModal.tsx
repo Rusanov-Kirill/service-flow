@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
+import { useEffect } from 'react';
 
 import { useServicesStore } from '@/entities/service';
+import { serviceApi } from '@/entities/service/api/serviceApi'; // убедитесь, что API существует
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import Select from '@/shared/ui/Select';
@@ -12,13 +14,15 @@ import { serviceSchema, type ServiceFormData } from '../modal/AddServiceModal.ty
 import styles from './AddServiceModal.module.scss';
 
 interface AddServiceModalProps {
-    onClose: () => void;
+    onClose: (updated?: boolean) => void;
+    initialService?: any;
+    companyId?: string;
 }
 
-const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
+const AddServiceModal = ({ onClose, initialService, companyId }: AddServiceModalProps) => {
     const addService = useServicesStore((state) => state.addService);
 
-    const { control, register, handleSubmit, formState: { errors }, setValue, reset } = useForm<ServiceFormData>({
+    const { control, register, handleSubmit, formState: { errors }, reset } = useForm<ServiceFormData>({
         resolver: zodResolver(serviceSchema),
         mode: "onBlur",
         defaultValues: {
@@ -30,24 +34,51 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
         }
     });
 
-    const onSubmit = (data: ServiceFormData) => {
-        addService({
-            name: data.name,
-            description: data.description,
-            duration: data.duration,
-            price: data.price,
-            currency: data.currency,
-            isActive: true,
-        });
-        reset();
-        onClose();
+    useEffect(() => {
+        if (initialService) {
+            reset({
+                name: initialService.name,
+                description: initialService.description || '',
+                duration: Number(initialService.duration),
+                price: Number(initialService.price),
+                currency: initialService.currency,
+            });
+        }
+    }, [initialService, reset]);
+
+    const onSubmit = async (data: ServiceFormData) => {
+        try {
+            if (initialService) {
+                await serviceApi.update(initialService.id, data);
+                onClose(true);
+            } else if (companyId) {
+                await serviceApi.create(companyId, data);
+                onClose(true);
+            } else {
+                addService({
+                    name: data.name,
+                    description: data.description,
+                    duration: data.duration,
+                    price: data.price,
+                    currency: data.currency,
+                    isActive: true,
+                });
+                reset();
+                onClose(false);
+            }
+        } catch (err) {
+            console.error(err);
+            onClose(false);
+        }
     };
+
+    const title = initialService ? 'Редактировать услугу' : 'Добавить услугу';
+    const submitButtonText = initialService ? 'Сохранить' : 'Добавить';
 
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                <h3>Добавить услугу</h3>
-
+                <h3>{title}</h3>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <div className={styles.formContent}>
                         <FormField
@@ -58,7 +89,6 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
                             error={errors.name?.message}
                             {...register('name')}
                         />
-
                         <FormField
                             label="Описание"
                             id="description"
@@ -66,7 +96,6 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
                             error={errors.description?.message}
                             {...register('description')}
                         />
-
                         <FormField
                             label="Длительность (минуты)"
                             id="duration"
@@ -74,9 +103,8 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
                             placeholder="60"
                             required
                             error={errors.duration?.message}
-                            onChange={(e) => setValue('duration', parseInt(e.target.value) || 0, { shouldValidate: true })}
+                            {...register('duration', { valueAsNumber: true })}
                         />
-
                         <Controller
                             name="currency"
                             control={control}
@@ -91,7 +119,6 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
                                 />
                             )}
                         />
-
                         <FormField
                             label="Цена"
                             id="price"
@@ -99,25 +126,12 @@ const AddServiceModal = ({ onClose }: AddServiceModalProps) => {
                             placeholder="1000"
                             required
                             error={errors.price?.message}
-                            onChange={(e) => setValue('price', parseFloat(e.target.value) || 0, { shouldValidate: true })}
+                            {...register('price', { valueAsNumber: true })}
                         />
                     </div>
-
                     <div className={styles.actions}>
-                        <Button
-                            type="button"
-                            onClick={onClose}
-                            variant="secondary"
-                        >
-                            Отмена
-                        </Button>
-
-                        <Button
-                            type="submit"
-                            variant="primary"
-                        >
-                            Добавить услугу
-                        </Button>
+                        <Button type="button" onClick={() => onClose(false)} variant="secondary">Отмена</Button>
+                        <Button type="submit" variant="primary">{submitButtonText}</Button>
                     </div>
                 </form>
             </div>
