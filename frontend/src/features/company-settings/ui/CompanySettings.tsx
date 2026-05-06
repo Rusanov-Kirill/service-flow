@@ -17,7 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { CompanyMember } from '@/entities/company_member';
+import type { CompanyMember, MemberRole } from '@/entities/company_member';
 import { companyMemberApi } from '@/entities/company_member';
 import { companyApi } from '@/entities/company/api/companyApi';
 import { serviceApi } from '@/entities/service/api/serviceApi';
@@ -33,9 +33,10 @@ import TimePicker from '@/shared/ui/TimePicker';
 import RadioGroup from '@/shared/ui/RadioGroup';
 import DatePicker from '@/shared/ui/DatePicker';
 import CustomWorkDays from '@/shared/ui/CustomWorkDays';
+import MemberDetailsModal from '@/shared/ui/MemberDetailsModal';
 import Loader from '@/shared/ui/Loader';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
-import { roleLabels } from '@/shared/utils/roleUtils';
+import { roleLabels, PERMISSIONS } from '@/shared/utils/roleUtils';
 import ConfirmModal from '@/shared/ui/ConfirmModal';
 import AddServiceModal from '@/features/add-service/ui/AddServiceModal';
 import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
@@ -48,9 +49,20 @@ type UpdateCompanyRequest = Omit<UpdateCompanyFormData, 'holidays'> & {
 };
 
 interface CompanyMemberInfo {
-    role: string;
-    permissions: string[];
-}
+    role?: string;
+    permissions?: string[];
+};
+
+type MemberUserPreview = {
+    firstName: string | null;
+    lastName: string | null;
+    email: string;
+    avatar: string | null;
+};
+
+export type MemberWithUser = CompanyMember & {
+    user: MemberUserPreview;
+};
 
 const CompanySettings = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -70,7 +82,9 @@ const CompanySettings = () => {
         isOpen: false,
         serviceId: null,
     });
-    const [members, setMembers] = useState<any[]>([]);
+    const [members, setMembers] = useState<MemberWithUser[]>([]);
+    const [selectedMember, setSelectedMember] = useState<MemberWithUser | null>(null);
+    const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
 
     const {
         trigger,
@@ -109,11 +123,6 @@ const CompanySettings = () => {
 
     const watchWorkScheduleType = watch('workScheduleType');
 
-    const hasPermission = (permission: string): boolean => {
-        if (memberInfo?.role === 'owner') return true;
-        return memberInfo?.permissions?.includes(permission) || false;
-    };
-
     const toggleSection = (sectionId: string) => {
         setOpenSections(prev =>
             prev.includes(sectionId)
@@ -130,13 +139,13 @@ const CompanySettings = () => {
                 setIsLoading(true);
 
                 const companyRes = await companyApi.getBySlug(slug);
-                const membersRes: CompanyMember[] = await companyMemberApi.getByCompanyId(companyRes.id);
+                const membersRes: MemberWithUser[] = await companyMemberApi.getByCompanyId(companyRes.id);
 
                 const currentMember = membersRes.find(m => m.userId === user.id) ?? null;
 
                 setMembers(membersRes);
                 setCompany(companyRes);
-                setMemberInfo(currentMember);
+                setMemberInfo({ role: currentMember?.role, permissions: currentMember?.permissions });
 
                 const formData: UpdateCompanyFormData = {
                     ...companyRes,
@@ -256,6 +265,21 @@ const CompanySettings = () => {
         setDeleteConfirm({ isOpen: true, serviceId });
     };
 
+    const handleMemberClick = (member: any) => {
+        setSelectedMember(member);
+        setIsMemberModalOpen(true);
+    };
+
+    const handleRoleChange = async (memberId: string, role: MemberRole) => {
+        await companyMemberApi.update(memberId, { role });
+
+        setMembers(prev =>
+            prev.map(m =>
+                m.id === memberId ? { ...m, role } : m
+            )
+        );
+    };
+
     const confirmDeleteService = async () => {
         if (!deleteConfirm.serviceId) return;
         try {
@@ -294,15 +318,26 @@ const CompanySettings = () => {
     };
 
     const sections = [
-        { id: 'general', title: 'Основная информация', permission: 'edit_company', icon: faBuilding },
-        { id: 'contacts', title: 'Контакты', permission: 'edit_company', icon: faPhone },
-        { id: 'booking', title: 'Настройки бронирования', permission: 'edit_booking_settings', icon: faCalendarDays },
-        { id: 'services', title: 'Услуги', permission: 'manage_services', icon: faScissors },
-        { id: 'members', title: 'Сотрудники', permission: 'manage_members', icon: faUsers },
-        { id: 'finance', title: 'Финансы', permission: 'view_finance', icon: faWallet },
+        { id: 'general', title: 'Основная информация', permission: PERMISSIONS.EDIT_COMPANY, icon: faBuilding },
+        { id: 'contacts', title: 'Контакты', permission: PERMISSIONS.EDIT_COMPANY, icon: faPhone },
+        { id: 'booking', title: 'Настройки бронирования', permission: PERMISSIONS.EDIT_BOOKING_SETTINGS, icon: faCalendarDays },
+        { id: 'services', title: 'Услуги', permission: PERMISSIONS.MANAGE_SERVICES, icon: faScissors },
+        { id: 'members', title: 'Сотрудники', permission: PERMISSIONS.VIEW_MEMBERS, icon: faUsers },
+        { id: 'finance', title: 'Финансы', permission: PERMISSIONS.VIEW_FINANCE, icon: faWallet },
     ];
 
-    const visibleSections = sections.filter(s => hasPermission(s.permission));
+    const hasPermission = (permission: string): boolean => {
+        if (!memberInfo) return false;
+
+        if (memberInfo.role === 'owner') return true;
+
+        return memberInfo.permissions?.includes(permission) ?? false;
+    };
+
+    const visibleSections = sections.filter(s => {
+        if (!memberInfo) return false;
+        return hasPermission(s.permission);
+    });
 
     if (isLoading) {
         return (
@@ -597,7 +632,11 @@ const CompanySettings = () => {
                                     {members.length > 0 ? (
                                         <div className={styles.membersTable}>
                                             {members.map(member => (
-                                                <div key={member.id} className={styles.memberRow}>
+                                                <div
+                                                    key={member.id}
+                                                    className={styles.memberRow}
+                                                    onClick={() => handleMemberClick(member)}
+                                                >
 
                                                     <div className={styles.memberAvatar}>
                                                         <PlaceholderLogo
@@ -659,12 +698,25 @@ const CompanySettings = () => {
                 </div>
             ))}
 
-            {/* Модальные окна для управления услугами */}
             {isServiceModalOpen && (
                 <AddServiceModal
                     onClose={handleServiceModalClose}
                     initialService={editingService}
                     companyId={company?.id}
+                />
+            )}
+
+            {isMemberModalOpen && selectedMember && (
+                <MemberDetailsModal
+                    member={selectedMember}
+                    onClose={() => {
+                        setIsMemberModalOpen(false);
+                        setSelectedMember(null);
+                    }}
+                    canManageMembers={hasPermission(PERMISSIONS.MANAGE_MEMBERS)}
+                    currentUserId={user?.id}
+                    onDelete={(memberId) => companyMemberApi.delete(memberId)}
+                    onRoleChange={handleRoleChange}
                 />
             )}
 
