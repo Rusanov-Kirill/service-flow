@@ -44,6 +44,7 @@
         max-height: 90vh;
         overflow-y: auto;
         box-shadow: $shadow-lg;
+        border: 1px solid $border;
 
         .modalHeader {
             display: flex;
