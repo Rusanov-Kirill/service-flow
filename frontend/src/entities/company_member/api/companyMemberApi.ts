@@ -16,7 +16,7 @@ export const companyMemberApi = {
     },
 
     delete: async (id: string) => {
-        const response = await apiClient.delete(`/company_members/${id}`);
+        const response = await apiClient.delete(`/company-members/${id}`);
         return response.data;
     },
 

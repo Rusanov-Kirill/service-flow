@@ -8,7 +8,7 @@ export interface CompanyMember {
     startWorkTime: string;
     endWorkTime: string;
     startWorkDay?: Date;
-    customWorkSchedule?: CustomWorkSchedule;
+    customWorkSchedule?: CustomWorkSchedule[];
 };
 
 export type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
