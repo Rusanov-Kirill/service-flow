@@ -7,7 +7,7 @@ export interface CompanyMember {
     scheduleType?: MemberScheduleType;
     startWorkTime?: string;
     endWorkTime?: string;
-    startWorkDay?: Date;
+    startWorkDay?: string;
     customWorkSchedule?: CustomWorkSchedule[];
 };
 
@@ -17,7 +17,7 @@ export type MemberWithUser = CompanyMember & {
 
 export type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
 
-interface CustomWorkSchedule {
+export interface CustomWorkSchedule {
     dayOfWeek: number;
     startWorkTime: string;
     endWorkTime: string;
