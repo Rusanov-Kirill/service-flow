@@ -1,0 +1,144 @@
+.customWorkDays {
+    display: flex;
+    flex-direction: column;
+    margin-top: $spacing-xl;
+    width: 100%;
+
+    .label {
+        font-size: $font-size-xs;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
+        display: block;
+    }
+
+    .daysGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $spacing-md;
+    }
+
+    @media (min-width: 768px) {
+        .daysGrid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .daysGrid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .dayCard {
+        display: flex;
+        flex-direction: column;
+        background: $white;
+        border: 1px solid $border-light;
+        border-radius: $radius-md;
+        overflow: hidden;
+        transition: all $duration-fast;
+
+        &.active {
+            border-color: $primary;
+            background: rgba($primary, 0.02);
+        }
+
+        .dayButton {
+            width: 100%;
+            padding: $spacing-sm $spacing-md;
+            background: $bg-light;
+            border: none;
+            font-size: $font-size-sm;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                background: $primary-light;
+            }
+
+            &.activeDay {
+                background: $primary;
+                color: $white;
+            }
+        }
+
+        .dayTimes {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            padding: $spacing-sm $spacing-sm $spacing-xs $spacing-sm;
+        }
+
+        .timeWrapper {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .timeInput {
+            width: 100%;
+            min-width: 80px;
+            padding: $spacing-xs $spacing-sm;
+            border: 1px solid $border;
+            border-radius: $radius-sm;
+            font-size: $font-size-xs;
+            background: $white;
+            text-align: center;
+            cursor: pointer;
+
+            &::-webkit-calendar-picker-indicator {
+                cursor: pointer;
+                padding: 2px;
+                opacity: 0.7;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: $primary;
+                box-shadow: 0 0 0 2px rgba($primary, 0.1);
+            }
+        }
+
+        .separator {
+            flex-shrink: 0;
+            font-size: $font-size-xs;
+            color: $text-secondary;
+        }
+    }
+
+    .error {
+        font-size: $font-size-3xs;
+        color: $error;
+        margin-top: $spacing-2xs;
+        display: block;
+    }
+
+    @media (max-width: 767px) {
+        .dayTimes {
+            flex-wrap: wrap;
+        }
+
+        .timeWrapper {
+            min-width: calc(50% - 8px) !important;
+        }
+
+        .separator {
+            display: none;
+        }
+    }
+
+    @media (min-height: 1025px) {
+        .label {
+            font-size: $font-size-md;
+        }
+
+        .dayButton {
+            font-size: $font-size-md !important;
+        }
+
+        .error {
+            font-size: $font-size-xs;
+        }
+    }
+}
