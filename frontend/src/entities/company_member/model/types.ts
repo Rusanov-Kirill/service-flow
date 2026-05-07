@@ -5,10 +5,14 @@ export interface CompanyMember {
     role: MemberRole;
     permissions: string[];
     scheduleType?: MemberScheduleType;
-    startWorkTime: string;
-    endWorkTime: string;
+    startWorkTime?: string;
+    endWorkTime?: string;
     startWorkDay?: Date;
     customWorkSchedule?: CustomWorkSchedule[];
+};
+
+export type MemberWithUser = CompanyMember & {
+    user: MemberUserPreview;
 };
 
 export type MemberRole = 'owner' | 'admin' | 'manager' | 'receptionist' | 'member';
@@ -20,3 +24,10 @@ interface CustomWorkSchedule {
 };
 
 type MemberScheduleType = 'FIVE_TWO' | 'TWO_TWO' | 'CUSTOM';
+
+type MemberUserPreview = {
+    firstName: string | null;
+    lastName: string | null;
+    email: string;
+    avatar: string | null;
+};

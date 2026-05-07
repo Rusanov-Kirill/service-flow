@@ -1,3 +1,3 @@
 export { companyMemberApi } from './api/companyMemberApi';
 
-export type { CompanyMember, MemberRole } from './model/types';
+export type { CompanyMember, MemberRole, MemberWithUser } from './model/types';
