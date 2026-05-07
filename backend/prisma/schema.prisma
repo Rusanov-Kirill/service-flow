@@ -106,8 +106,8 @@ model CompanyMember {
   permissions         String[]                    
 
   scheduleType        CompanyMemberScheduleType?  @map("schedule_type")
-  startWorkTime       String                      @map("start_work_time")
-  endWorkTime         String                      @map("end_work_time")
+  startWorkTime       String?                      @map("start_work_time")
+  endWorkTime         String?                      @map("end_work_time")
   startWorkDay        DateTime?                   @map("start_work_day") 
   customWorkSchedule  Json?                       @map("custom_work_schedule") 
                                                   // Массив объектов: [{ dayOfWeek: 1, startWorkTime: "09:00", endWorkTime: "18:00" }, ...]
