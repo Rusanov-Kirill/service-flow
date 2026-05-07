@@ -321,7 +321,7 @@ const CompanySettings = () => {
         { id: 'general', title: 'Основная информация', permission: PERMISSIONS.EDIT_COMPANY, icon: faBuilding },
         { id: 'contacts', title: 'Контакты', permission: PERMISSIONS.EDIT_COMPANY, icon: faPhone },
         { id: 'booking', title: 'Настройки бронирования', permission: PERMISSIONS.EDIT_BOOKING_SETTINGS, icon: faCalendarDays },
-        { id: 'services', title: 'Услуги', permission: PERMISSIONS.MANAGE_SERVICES, icon: faScissors },
+        { id: 'services', title: 'Услуги', permission: PERMISSIONS.VIEW_SERVICES, icon: faScissors },
         { id: 'members', title: 'Сотрудники', permission: PERMISSIONS.VIEW_MEMBERS, icon: faUsers },
         { id: 'finance', title: 'Финансы', permission: PERMISSIONS.VIEW_FINANCE, icon: faWallet },
     ];
@@ -568,12 +568,12 @@ const CompanySettings = () => {
                             {/* Услуги */}
                             {section.id === 'services' && (
                                 <div className={styles.sectionContent}>
-                                    <div className={styles.servicesHeader}>
+                                    {hasPermission(PERMISSIONS.MANAGE_SERVICES) && (<div className={styles.servicesHeader}>
                                         <Button variant="primary" onClick={handleAddService}>
                                             + Добавить услугу
                                         </Button>
                                     </div>
-
+                                    )}
                                     {company?.services && company.services.length > 0 ? (
                                         <div className={styles.servicesList}>
                                             {company.services.map(service => (
@@ -597,24 +597,25 @@ const CompanySettings = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className={styles.serviceActions}>
-                                                        <button
-                                                            className={styles.editBtn}
-                                                            onClick={() => handleEditService(service)}
-                                                            title="Редактировать"
-                                                        >
-                                                            <FontAwesomeIcon icon={faPen} />
-                                                        </button>
+                                                    {hasPermission(PERMISSIONS.MANAGE_SERVICES) && (
+                                                        <div className={styles.serviceActions}>
+                                                            <button
+                                                                className={styles.editBtn}
+                                                                onClick={() => handleEditService(service)}
+                                                                title="Редактировать"
+                                                            >
+                                                                <FontAwesomeIcon icon={faPen} />
+                                                            </button>
 
-                                                        <button
-                                                            className={styles.deleteBtn}
-                                                            onClick={() => handleDeleteService(service.id)}
-                                                            title="Удалить"
-                                                        >
-                                                            <FontAwesomeIcon icon={faTrashAlt} />
-                                                        </button>
-                                                    </div>
-
+                                                            <button
+                                                                className={styles.deleteBtn}
+                                                                onClick={() => handleDeleteService(service.id)}
+                                                                title="Удалить"
+                                                            >
+                                                                <FontAwesomeIcon icon={faTrashAlt} />
+                                                            </button>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             ))}
                                         </div>
