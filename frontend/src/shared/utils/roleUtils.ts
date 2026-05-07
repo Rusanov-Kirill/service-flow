@@ -17,6 +17,7 @@ export const PERMISSIONS = {
   VIEW_MEMBERS: 'view_members',
   MANAGE_MEMBERS: 'manage_members',
 
+  VIEW_SERVICES: 'view_services',
   MANAGE_SERVICES: 'manage_services',
 
   VIEW_CUSTOMERS: 'view_customers',
@@ -37,6 +38,7 @@ export const ROLE_PERMISSIONS: Record<string, string[]> = {
     'Просмотр финансов',
     'Просмотр сотрудников',
     'Управление сотрудниками',
+    'Просмотр услуг',
     'Управление услугами',
     'Просмотр клиентов',
     'Управление клиентами',
@@ -46,6 +48,7 @@ export const ROLE_PERMISSIONS: Record<string, string[]> = {
   ],
   manager: [
     'Просмотр сотрудников',
+    'Просмотр услуг',
     'Управление услугами',
     'Просмотр клиентов',
     'Просмотр бронирований',
@@ -56,9 +59,11 @@ export const ROLE_PERMISSIONS: Record<string, string[]> = {
     'Просмотр клиентов',
     'Просмотр сотрудников',
     'Просмотр бронирований',
+    'Просмотр услуг',
     'Управление бронированиями',
   ],
   member: [
+    'Просмотр услуг',
     'Просмотр клиентов',
     'Просмотр бронирований',
     'Просмотр сотрудников',
