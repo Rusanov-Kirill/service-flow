@@ -19,6 +19,16 @@ interface MemberDetailsModalProps {
     onRoleChange?: (memberId: string, role: MemberRole) => Promise<void> | void;
 }
 
+const dayLabels: Record<number, string> = {
+    1: 'Понедельник',
+    2: 'Вторник',
+    3: 'Среда',
+    4: 'Четверг',
+    5: 'Пятница',
+    6: 'Суббота',
+    7: 'Воскресенье',
+};
+
 const MemberDetailsModal = ({
     member,
     canManageMembers = false,
@@ -40,6 +50,19 @@ const MemberDetailsModal = ({
 
     const fullName = `${member.user?.firstName || ''} ${member.user?.lastName || ''}`.trim();
     const isSelf = member.userId === currentUserId;
+
+    const renderScheduleType = () => {
+        switch (member.scheduleType) {
+            case 'FIVE_TWO':
+                return '5/2';
+            case 'TWO_TWO':
+                return '2/2';
+            case 'CUSTOM':
+                return 'Индивидуальный';
+            default:
+                return '—';
+        }
+    };
 
     const handleDelete = async () => {
         if (!onDelete) return;
@@ -160,12 +183,36 @@ const MemberDetailsModal = ({
                         </div>
 
                         <div className={styles.section}>
+                            <h4>Тип графика</h4>
+                            <p>{renderScheduleType()}</p>
+                        </div>
+
+                        {member.scheduleType === 'CUSTOM' && member.customWorkSchedule && (
+                            <div className={styles.section}>
+                                <h4>Индивидуальный график</h4>
+
+                                <div className={styles.scheduleList}>
+                                    {member.customWorkSchedule.map((day: any, index: number) => (
+                                        <div key={index} className={styles.scheduleItem}>
+                                            <span className={styles.day}>
+                                                {dayLabels[day.dayOfWeek] || `День ${day.dayOfWeek}`}
+                                            </span>
+                                            <span className={styles.time}>
+                                                {day.startWorkTime} — {day.endWorkTime}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {member.scheduleType !== 'CUSTOM' && (<div className={styles.section}>
                             <h4>Рабочее время</h4>
                             <p>
                                 {member.startWorkTime} — {member.endWorkTime}
                             </p>
                         </div>
-
+                        )}
                     </div>
 
                     <div className={styles.footer}>
