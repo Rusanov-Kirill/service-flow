@@ -3,8 +3,8 @@ export interface CreateCompanyMemberDto {
     companyId: string;
     role: MemberRole;
     scheduleType?: MemberScheduleType;
-    startWorkTime: string;
-    endWorkTime: string;
+    startWorkTime?: string;
+    endWorkTime?: string;
     startWorkDay?: Date;
     customWorkSchedule?: CustomWorkSchedule[];
 };
