@@ -17,7 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { CompanyMember, MemberRole } from '@/entities/company_member';
+import type { MemberRole, MemberWithUser } from '@/entities/company_member';
 import { companyMemberApi } from '@/entities/company_member';
 import { companyApi } from '@/entities/company/api/companyApi';
 import { serviceApi } from '@/entities/service/api/serviceApi';
@@ -31,9 +31,11 @@ import Select from '@/shared/ui/Select';
 import MultiSelect from '@/shared/ui/MultiSelect';
 import TimePicker from '@/shared/ui/TimePicker';
 import RadioGroup from '@/shared/ui/RadioGroup';
+import SingleDatePicker from '@/shared/ui/SingleDatePicker';
 import DatePicker from '@/shared/ui/DatePicker';
+import MemberCustomWorkDays from '@/shared/ui/MemberCustomWorkDays';
 import CustomWorkDays from '@/shared/ui/CustomWorkDays';
-import MemberDetailsModal from '@/shared/ui/MemberDetailsModal';
+import MemberDetailsModal from '@/features/member-details-modal';
 import Loader from '@/shared/ui/Loader';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 import { roleLabels, PERMISSIONS } from '@/shared/utils/roleUtils';
@@ -48,29 +50,13 @@ type UpdateCompanyRequest = Omit<UpdateCompanyFormData, 'holidays'> & {
     holidays?: string[];
 };
 
-interface CompanyMemberInfo {
-    role?: string;
-    permissions?: string[];
-};
-
-type MemberUserPreview = {
-    firstName: string | null;
-    lastName: string | null;
-    email: string;
-    avatar: string | null;
-};
-
-export type MemberWithUser = CompanyMember & {
-    user: MemberUserPreview;
-};
-
 const CompanySettings = () => {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const { user } = useAuthStore();
 
     const [company, setCompany] = useState<Company | null>(null);
-    const [memberInfo, setMemberInfo] = useState<CompanyMemberInfo | null>(null);
+    const [currentMember, setCurrentMember] = useState<MemberWithUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [savingStates, setSavingStates] = useState<Record<string, boolean>>({});
     const [errors, setErrors] = useState<Record<string, string | null>>({});
@@ -118,10 +104,16 @@ const CompanySettings = () => {
             holidays: [],
             autoConfirmBooking: false,
             paymentMethods: 'BOTH',
+            memberScheduleType: 'FIVE_TWO',
+            memberStartWorkTime: '09:00',
+            memberEndWorkTime: '18:00',
+            memberStartWorkDay: undefined,
+            memberCustomWorkSchedule: [],
         },
     });
 
     const watchWorkScheduleType = watch('workScheduleType');
+    const watchMemberScheduleType = watch('memberScheduleType');
 
     const toggleSection = (sectionId: string) => {
         setOpenSections(prev =>
@@ -141,16 +133,21 @@ const CompanySettings = () => {
                 const companyRes = await companyApi.getBySlug(slug);
                 const membersRes: MemberWithUser[] = await companyMemberApi.getByCompanyId(companyRes.id);
 
-                const currentMember = membersRes.find(m => m.userId === user.id) ?? null;
+                const foundMember = membersRes.find(m => m.userId === user.id) ?? null;
 
                 setMembers(membersRes);
                 setCompany(companyRes);
-                setMemberInfo({ role: currentMember?.role, permissions: currentMember?.permissions });
+                setCurrentMember(foundMember);
 
                 const formData: UpdateCompanyFormData = {
                     ...companyRes,
                     holidays: (companyRes.holidays || []).map((d: string) => new Date(d)),
                     customWorkDays: companyRes.customWorkDays ?? [],
+                    memberScheduleType: foundMember?.scheduleType || 'FIVE_TWO',
+                    memberStartWorkTime: foundMember?.startWorkTime || '09:00',
+                    memberEndWorkTime: foundMember?.endWorkTime || '18:00',
+                    memberStartWorkDay: foundMember?.startWorkDay ?? undefined,
+                    memberCustomWorkSchedule: (foundMember?.customWorkSchedule as any) ?? [],
                 };
 
                 reset(formData);
@@ -164,6 +161,22 @@ const CompanySettings = () => {
 
         fetchData();
     }, [slug, user, reset]);
+
+    useEffect(() => {
+        if (watchMemberScheduleType !== 'TWO_TWO') {
+            setValue('memberStartWorkDay', undefined);
+        }
+
+        if (watchMemberScheduleType !== 'CUSTOM') {
+            setValue('memberCustomWorkSchedule', []);
+        }
+    }, [watchMemberScheduleType, setValue]);
+
+    useEffect(() => {
+        if (watchWorkScheduleType !== 'CUSTOM') {
+            setValue('customWorkDays', []);
+        }
+    }, [watchWorkScheduleType, setValue]);
 
     const onSubmitSection = async (sectionId: string, data: UpdateCompanyFormData) => {
         setSavingStates(prev => ({ ...prev, [sectionId]: true }));
@@ -208,6 +221,23 @@ const CompanySettings = () => {
                             paymentMethods: data.paymentMethods,
                         };
                         break;
+                    case 'mySchedule':
+                        if (!currentMember) return;
+
+                        await companyMemberApi.update(currentMember.id, {
+                            scheduleType: data.memberScheduleType,
+                            startWorkTime: data.memberStartWorkTime,
+                            endWorkTime: data.memberEndWorkTime,
+                            startWorkDay: data.memberStartWorkDay ?? undefined,
+                            customWorkSchedule: data.memberCustomWorkSchedule,
+                        });
+
+                        setSuccesses(prev => ({
+                            ...prev,
+                            mySchedule: 'Расписание обновлено',
+                        }));
+
+                        return;
                 }
 
                 await companyApi.update(company.id, updateData as Partial<Company>);
@@ -241,6 +271,14 @@ const CompanySettings = () => {
                 'holidays',
                 'autoConfirmBooking',
                 'paymentMethods',
+            ];
+        } else if (sectionId === 'mySchedule') {
+            fields = [
+                'memberScheduleType',
+                'memberStartWorkTime',
+                'memberEndWorkTime',
+                'memberStartWorkDay',
+                'memberCustomWorkSchedule',
             ];
         }
 
@@ -318,6 +356,7 @@ const CompanySettings = () => {
     };
 
     const sections = [
+        { id: 'mySchedule', title: 'Мое расписание', permission: PERMISSIONS.VIEW_MEMBERS, icon: faClock },
         { id: 'general', title: 'Основная информация', permission: PERMISSIONS.EDIT_COMPANY, icon: faBuilding },
         { id: 'contacts', title: 'Контакты', permission: PERMISSIONS.EDIT_COMPANY, icon: faPhone },
         { id: 'booking', title: 'Настройки бронирования', permission: PERMISSIONS.EDIT_BOOKING_SETTINGS, icon: faCalendarDays },
@@ -327,15 +366,14 @@ const CompanySettings = () => {
     ];
 
     const hasPermission = (permission: string): boolean => {
-        if (!memberInfo) return false;
+        if (!currentMember) return false;
 
-        if (memberInfo.role === 'owner') return true;
+        if (currentMember.role === 'owner') return true;
 
-        return memberInfo.permissions?.includes(permission) ?? false;
+        return currentMember.permissions?.includes(permission) ?? false;
     };
 
     const visibleSections = sections.filter(s => {
-        if (!memberInfo) return false;
         return hasPermission(s.permission);
     });
 
@@ -622,7 +660,7 @@ const CompanySettings = () => {
                                     ) : (
                                         <div className={styles.emptyServices}>
                                             <p>Услуги не добавлены</p>
-                                            <span>Нажмите «+ Добавить услугу», чтобы создать первую услугу</span>
+                                            {hasPermission(PERMISSIONS.MANAGE_SERVICES) && <span>Нажмите «+ Добавить услугу», чтобы создать первую услугу</span>}
                                         </div>
                                     )}
                                 </div>
@@ -667,6 +705,81 @@ const CompanySettings = () => {
                                     <Button variant="primary">
                                         + Пригласить сотрудника
                                     </Button>
+                                </div>
+                            )}
+
+                            {section.id === 'mySchedule' && (
+                                <div className={styles.scheduleCard}>
+                                    <Select
+                                        label="Тип графика"
+                                        options={[
+                                            { value: 'FIVE_TWO', label: '5/2' },
+                                            { value: 'TWO_TWO', label: '2/2' },
+                                            { value: 'CUSTOM', label: 'Свой график' },
+                                        ]}
+                                        value={watch('memberScheduleType')}
+                                        onChange={(value) =>
+                                            setValue(
+                                                'memberScheduleType',
+                                                value as any,
+                                                { shouldValidate: true }
+                                            )
+                                        }
+                                        required
+                                    />
+
+                                    <TimePicker
+                                        label="Начало рабочего дня"
+                                        value={watch('memberStartWorkTime')}
+                                        onChange={(value) =>
+                                            setValue(
+                                                'memberStartWorkTime',
+                                                value,
+                                                { shouldValidate: true }
+                                            )
+                                        }
+                                        required
+                                    />
+
+                                    <TimePicker
+                                        label="Конец рабочего дня"
+                                        value={watch('memberEndWorkTime')}
+                                        onChange={(value) =>
+                                            setValue(
+                                                'memberEndWorkTime',
+                                                value,
+                                                { shouldValidate: true }
+                                            )
+                                        }
+                                        required
+                                    />
+
+                                    {watchMemberScheduleType === 'TWO_TWO' && (
+                                        <SingleDatePicker
+                                            label="Первый рабочий день"
+                                            value={watch('memberStartWorkDay')}
+                                            onChange={(value) =>
+                                                setValue(
+                                                    'memberStartWorkDay',
+                                                    value,
+                                                    { shouldValidate: true }
+                                                )
+                                            }
+                                        />
+                                    )}
+
+                                    {watchMemberScheduleType === 'CUSTOM' && (
+                                        <MemberCustomWorkDays
+                                            value={watch('memberCustomWorkSchedule') ?? []}
+                                            onChange={(value) =>
+                                                setValue(
+                                                    'memberCustomWorkSchedule',
+                                                    value,
+                                                    { shouldValidate: true }
+                                                )
+                                            }
+                                        />
+                                    )}
                                 </div>
                             )}
 

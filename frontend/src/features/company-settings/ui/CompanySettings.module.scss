@@ -112,6 +112,10 @@
         border-top: 1px solid $border-light;
         animation: slideDown $duration-fast ease;
 
+        [class*="selectField"]:first-of-type {
+            margin-top: 0;
+        }
+
         .sectionContent {
             display: flex;
             flex-direction: column;

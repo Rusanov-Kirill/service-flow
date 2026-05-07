@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const updateCompanySchema = z.object({
+export const companySchema = z.object({
     name: z.string().min(2, 'Название компании должно содержать минимум 2 символа'),
     slug: z.string()
         .min(2, 'Slug должен состоять минимум из 2 символов')
@@ -26,4 +26,19 @@ export const updateCompanySchema = z.object({
     paymentMethods: z.enum(['CASH', 'PREPAYMENT', 'BOTH']),
 });
 
+export const memberScheduleSchema = z.object({
+    memberScheduleType: z.enum(['FIVE_TWO', 'TWO_TWO', 'CUSTOM']),
+    memberStartWorkTime: z.string(),
+    memberEndWorkTime: z.string(),
+    memberStartWorkDay: z.string().optional(),
+    memberCustomWorkSchedule: z.array(
+        z.object({
+            dayOfWeek: z.number(),
+            startWorkTime: z.string(),
+            endWorkTime: z.string(),
+        })
+    ).optional(),
+});
+
+export const updateCompanySchema = companySchema.merge(memberScheduleSchema);
 export type UpdateCompanyFormData = z.infer<typeof updateCompanySchema>;
