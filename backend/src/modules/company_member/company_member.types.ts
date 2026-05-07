@@ -5,7 +5,7 @@ export interface CreateCompanyMemberDto {
     scheduleType?: MemberScheduleType;
     startWorkTime?: string;
     endWorkTime?: string;
-    startWorkDay?: Date;
+    startWorkDay?: string;
     customWorkSchedule?: CustomWorkSchedule[];
 };
 
@@ -14,7 +14,7 @@ export interface UpdateCompanyMemberDto {
     scheduleType?: MemberScheduleType;
     startWorkTime?: string;
     endWorkTime?: string;
-    startWorkDay?: Date;
+    startWorkDay?: string;
     customWorkSchedule?: CustomWorkSchedule[];
 };
 

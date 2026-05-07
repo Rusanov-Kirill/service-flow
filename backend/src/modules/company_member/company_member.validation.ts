@@ -15,7 +15,7 @@ export const createCompanyMemberSchema = z.object({
     scheduleType: z.enum(['FIVE_TWO', 'TWO_TWO', 'CUSTOM']).optional(),
     startWorkTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)').optional(),
     endWorkTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)').optional(),
-    startWorkDay: z.date().optional(),
+    startWorkDay: z.string().optional(),
     customWorkSchedule: z.array(customWorkScheduleSchema).optional(),
 });
 
@@ -24,6 +24,6 @@ export const updateCompanyMemberSchema = z.object({
     scheduleType: z.enum(['FIVE_TWO', 'TWO_TWO', 'CUSTOM']).optional(),
     startWorkTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)').optional(),
     endWorkTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Неверный формат времени (HH:MM)').optional(),
-    startWorkDay: z.date().optional(),
+    startWorkDay: z.string().optional(),
     customWorkSchedule: z.array(customWorkScheduleSchema).optional(),
 });
