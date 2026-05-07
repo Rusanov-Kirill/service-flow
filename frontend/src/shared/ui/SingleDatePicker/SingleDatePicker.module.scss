@@ -1,0 +1,70 @@
+.datePicker {
+    display: flex;
+    flex-direction: column;
+    margin-top: $spacing-xl;
+    width: 100%;
+
+    .label {
+        font-size: $font-size-xs;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
+
+        .required {
+            color: $error;
+            margin-left: $spacing-2xs;
+        }
+    }
+
+    .inputWrapper {
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .input {
+        width: 100%;
+        padding: $spacing-sm $spacing-md;
+        border: 1px solid $border;
+        border-radius: $radius-sm;
+        font-size: $font-size-xs;
+        transition: all $duration-fast;
+        background: $white;
+        cursor: pointer;
+
+        &::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+
+        &.inputError {
+            border-color: $error;
+        }
+    }
+
+    .error {
+        font-size: $font-size-3xs;
+        color: $error;
+        margin-top: $spacing-2xs;
+        margin-left: $spacing-2xs;
+    }
+
+    @media (min-height: 1025px) {
+        .label {
+            font-size: $font-size-md;
+        }
+
+        .input {
+            font-size: $font-size-md;
+        }
+
+        .error {
+            font-size: $font-size-xs;
+        }
+    }
+}
