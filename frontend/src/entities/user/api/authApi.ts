@@ -64,6 +64,12 @@ export const authApi = {
         return apiClient.patch('/users/profile', data);
     },
 
+    getUserByEmail: (email: string) => {
+        return apiClient.get('/users/by-email', {
+            params: { email }
+        });
+    },
+
     getAllUserCompanies: () => {
         return apiClient.get('/users/companies');
     },

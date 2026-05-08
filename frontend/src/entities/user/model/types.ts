@@ -21,3 +21,10 @@ export interface UserCompany {
     logo: string | null;
     role: MemberRole;
 };
+
+export interface UserPreview {
+    id: string;
+    firstName: string;
+    lastName: string;
+    avatar: string | null;
+}
