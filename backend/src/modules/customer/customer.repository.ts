@@ -51,4 +51,34 @@ export const customerRepository = {
             },
         });
     },
+
+    incrementTotalSpent: async (id: string, price: number) => {
+        return prisma.customer.update({
+            where: { id },
+            data: {
+                totalSpent: {
+                    increment: price,
+                },
+            },
+        });
+    },
+
+    updatePreferences: async (
+        id: string,
+        preferences: {
+            preferredServiceIds: string[];
+            preferredStaffIds: string[];
+            preferredWeekDays: number[];
+        }
+    ) => {
+        return prisma.customer.update({
+            where: { id },
+            data: {
+                preferredServiceIds: preferences.preferredServiceIds,
+                preferredStaffIds: preferences.preferredStaffIds,
+                preferredWeekDays: preferences.preferredWeekDays,
+                updatedAt: new Date(),
+            },
+        });
+    },
 };
