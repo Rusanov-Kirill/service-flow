@@ -1,4 +1,4 @@
-import { CreateCustomerDto } from './customer.types';
+import { CreateCustomerDto, CreateCustomerDbDto } from './customer.types';
 
 import { prisma } from '../../shared/database/prisma';
 
@@ -21,13 +21,23 @@ export const customerRepository = {
     },
 
     create: async (data: CreateCustomerDto) => {
+        const createData: CreateCustomerDbDto = {
+            ...data,
+            totalBookings: 0,
+            totalSpent: 0,
+            averageCheck: 0,
+            preferredServiceIds: data.preferredServiceIds || [],
+            preferredStaffIds: data.preferredStaffIds || [],
+            preferredWeekDays: data.preferredWeekDays || [],
+            discountRate: data.discountRate ?? 0,
+            status: data.status || 'active',
+            blacklisted: data.blacklisted ?? false,
+            blacklistReason: data.blacklistReason ?? null,
+            notes: data.notes ?? null,
+        };
+
         return prisma.customer.create({
-            data: {
-                userId: data.userId,
-                companyId: data.companyId,
-                email: data.email,
-                totalBookings: 0,
-            },
+            data: createData,
         });
     },
 
