@@ -128,8 +128,24 @@ model Customer {
   userId      String?  @map("user_id")  
   companyId   String   @map("company_id")
   email       String
+
+  preferredServiceIds String[]     @map("preferred_service_ids") 
+  preferredStaffIds   String[]     @map("preferred_staff_ids")   
+  preferredTimeOfDay  TimeOfDay?   @map("preferred_time_of_day") 
+  preferredWeekDays   Int[]        @map("preferred_week_days")   
   
-  totalBookings Int     @default(0) @map("total_bookings")
+  totalBookings   Int        @default(0) @map("total_bookings")
+  totalSpent      Decimal    @default(0) @map("total_spent")
+  averageCheck    Decimal    @default(0) @map("average_check")
+  discountRate    Float?     @default(0) @map("discount_rate")
+
+  lastBookingDate      DateTime?  @map("last_booking_date")
+  firstBookingDate     DateTime?  @map("first_booking_date")
+
+  status               CustomerStatus  @default(active) @map("status")
+  blacklisted          Boolean         @default(false)
+  blacklistReason      String?         @map("blacklist_reason")
+  notes                String?
   
   user        User?    @relation(fields: [userId], references: [id])
   company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -212,4 +228,16 @@ enum CompanyMemberScheduleType {
   FIVE_TWO     
   TWO_TWO    
   CUSTOM       
+}
+
+enum TimeOfDay {
+  morning
+  afternoon
+  evening
+}
+
+enum CustomerStatus {
+  active      
+  inactive    
+  blocked     
 }
