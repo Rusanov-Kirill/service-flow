@@ -14,9 +14,15 @@ export const companyMemberController = {
 
             const member = await companyMemberService.create(result.data);
 
-            return res.status(201).json(member);
+            return res.json({
+                success: true,
+                data: member
+            });
         } catch (error: any) {
-            return res.status(400).json({ error: error.message });
+            return res.status(400).json({
+                success: false,
+                error: error.message
+            });
         }
     },
 
