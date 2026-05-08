@@ -1,0 +1,203 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 28, 0.5);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-md;
+
+    z-index: 1000;
+
+    animation: fadeIn $duration-fast ease;
+
+    .modal {
+        width: 100%;
+        max-width: 420px;
+
+        background: $white;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+
+        box-shadow: $shadow-lg;
+        border: 1px solid $border-light;
+
+        animation: scaleIn $duration-fast ease;
+
+        h3 {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+            letter-spacing: -0.02em;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+
+            [class^="_field"] {
+                margin-top: $spacing-xs;
+            }
+
+            [class^="_selectField"] {
+                margin-top: $spacing-xs;
+            }
+
+            .actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: $spacing-sm;
+                margin-top: $spacing-sm;
+            }
+
+            .emailField {
+                position: relative;
+                margin-bottom: 20px;
+
+                .userPreview {
+                    margin-top: 8px;
+                    padding: 12px;
+                    border-radius: 8px;
+                    background-color: #f5f5f5;
+                    animation: fadeIn 0.2s ease-in-out;
+
+                    .searching {
+                        color: #666;
+                        font-size: 14px;
+                        padding: 8px;
+                        text-align: center;
+                        animation: pulse 1.5s ease-in-out infinite;
+                    }
+
+                    .userInfo {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+
+                        .avatar {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            overflow: hidden;
+                            flex-shrink: 0;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+
+                            .avatarPlaceholder {
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background-color: #007bff;
+                                color: white;
+                                font-weight: 600;
+                                font-size: 16px;
+                            }
+                        }
+
+                        .userDetails {
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 4px;
+
+                            .userName {
+                                font-weight: 600;
+                                color: #333;
+                            }
+
+                            .userEmail {
+                                font-size: 12px;
+                                color: #666;
+                            }
+                        }
+
+                        .statusBadge {
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 12px;
+                            font-weight: 500;
+                            background-color: #28a745;
+                            color: white;
+                        }
+                    }
+                }
+
+                .userNotFound {
+                    color: #dc3545;
+                    font-size: 14px;
+                    padding: 8px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .modal {
+            max-width: 100%;
+            border-radius: $radius-md;
+            padding: $spacing-md;
+        }
+    }
+
+    @media (max-width: 529px) {
+        .modal {
+            h3 {
+                font-size: $font-size-lg;
+            }
+
+            .form {
+                .actions {
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
