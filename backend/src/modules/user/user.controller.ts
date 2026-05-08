@@ -67,6 +67,39 @@ export const userController = {
         }
     },
 
+    getUserByEmail: async (req: Request, res: Response) => {
+        try {
+            const { email } = req.query;
+
+            if (!email || typeof email !== 'string') {
+                res.status(400).json({
+                    success: false,
+                    error: 'Email is required and must be a string'
+                });
+                return;
+            }
+
+            const user = await userService.getUserByEmail(email);
+
+            res.json({
+                success: true,
+                data: user
+            });
+        } catch (error: any) {
+            if (error.message === 'User not found') {
+                res.status(404).json({
+                    success: false,
+                    error: error.message
+                });
+                return;
+            }
+            res.status(400).json({
+                success: false,
+                error: error.message
+            });
+        }
+    },
+
     getAllUserCompanies: async (req: Request, res: Response) => {
         try {
             const userId = (req as any).user?.id;

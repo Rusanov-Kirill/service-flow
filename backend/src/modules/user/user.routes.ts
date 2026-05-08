@@ -8,6 +8,7 @@ router.use(authMiddleware);
 
 router.get('/profile', userController.getProfile);
 router.patch('/profile', userController.updateProfile);
+router.get('/by-email', userController.getUserByEmail);
 router.get('/companies', userController.getAllUserCompanies);
 
 export default router;

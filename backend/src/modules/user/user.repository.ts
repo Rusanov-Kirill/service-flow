@@ -16,6 +16,18 @@ export const userRepository = {
         });
     },
 
+    getUserByEmail: async (email: string) => {
+        return prisma.user.findUnique({
+            where: { email },
+            select: { 
+                id: true,
+                firstName: true,
+                lastName: true,
+                avatar: true
+            }
+        });
+    },
+
     getAllUserCompanies: async (id: string): Promise<UserCompaniesResponse[]> => {
         const members = await prisma.companyMember.findMany({
             where: { userId: id },

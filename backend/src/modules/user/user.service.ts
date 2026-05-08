@@ -71,6 +71,20 @@ export const userService = {
         };
     },
 
+    getUserByEmail: async (email: string) => {
+        if (!email) {
+            throw new Error('Email is required');
+        }
+
+        const user = await userRepository.getUserByEmail(email);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        return user;
+    },
+
     getAllUserCompanies: async (userId: string) => {
         if (!userId) {
             throw new Error('User ID is required');
