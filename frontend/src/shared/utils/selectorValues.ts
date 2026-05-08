@@ -38,6 +38,14 @@ export const PAYMENT_METHODS = [
     { value: 'BOTH', label: 'Наличные и предоплата' }
 ];
 
+export const MEMBER_ROLE = [
+    {value: 'owner', label: 'Владелец'},
+    {value: 'admin', label: 'Системный администратор'},
+    {value: 'manager', label: 'Управляющий'},
+    {value: 'receptionist', label: 'Администратор'},
+    {value: 'member', label: 'Сотрудник'},
+];
+
 export const CURRENCIES = [
     { value: 'RUB', label: 'RUB - Российский рубль' },
     { value: 'USD', label: 'USD - Доллар США' },
