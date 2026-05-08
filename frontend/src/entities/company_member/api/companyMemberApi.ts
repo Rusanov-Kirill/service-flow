@@ -1,7 +1,7 @@
 import type { CompanyMember } from "@/entities/company_member";
 import { apiClient } from "@/shared/api/client";
 
-type CreateCompanyMemberDto = Omit<CompanyMember, 'id'>;
+type CreateCompanyMemberDto = Omit<CompanyMember, 'id' | 'permissions'>;
 type UpdateCompanyMemberDto = Partial<Omit<CompanyMember, 'id' | 'userId' | 'companyId' | 'permissions'>>;
 
 export const companyMemberApi = {
