@@ -37,6 +37,7 @@ import MemberCustomWorkDays from '@/shared/ui/MemberCustomWorkDays';
 import CustomWorkDays from '@/shared/ui/CustomWorkDays';
 import MemberDetailsModal from '@/features/member-details-modal';
 import Loader from '@/shared/ui/Loader';
+import AddMemberModal from '@/features/add-member-modal';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 import { roleLabels, PERMISSIONS } from '@/shared/utils/roleUtils';
 import ConfirmModal from '@/shared/ui/ConfirmModal';
@@ -71,6 +72,7 @@ const CompanySettings = () => {
     const [members, setMembers] = useState<MemberWithUser[]>([]);
     const [selectedMember, setSelectedMember] = useState<MemberWithUser | null>(null);
     const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
+    const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState<boolean>(false)
 
     const {
         trigger,
@@ -306,6 +308,15 @@ const CompanySettings = () => {
     const handleMemberClick = (member: any) => {
         setSelectedMember(member);
         setIsMemberModalOpen(true);
+    };
+
+    const handleAddMember = () => {
+        if (!company?.id) return;
+        setIsAddMemberModalOpen(true);
+    };
+
+    const handleAddMemberClose = () => {
+        setIsAddMemberModalOpen(false);
     };
 
     const handleRoleChange = async (memberId: string, role: MemberRole) => {
@@ -702,9 +713,14 @@ const CompanySettings = () => {
                                         </div>
                                     )}
 
-                                    <Button variant="primary">
-                                        + Пригласить сотрудника
-                                    </Button>
+                                    {hasPermission(PERMISSIONS.MANAGE_MEMBERS) &&
+                                        <Button
+                                            variant="primary"
+                                            onClick={handleAddMember}
+                                        >
+                                            + Добавить сотрудника
+                                        </Button>
+                                    }
                                 </div>
                             )}
 
@@ -831,6 +847,13 @@ const CompanySettings = () => {
                     currentUserId={user?.id}
                     onDelete={(memberId) => companyMemberApi.delete(memberId)}
                     onRoleChange={handleRoleChange}
+                />
+            )}
+
+            {isAddMemberModalOpen && company?.id && (
+                <AddMemberModal
+                    companyId={company.id}
+                    onClose={handleAddMemberClose}
                 />
             )}
 
