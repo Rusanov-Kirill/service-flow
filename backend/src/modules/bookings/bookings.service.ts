@@ -29,6 +29,8 @@ export const bookingsService = {
         });
 
         await customerService.incrementTotalBookings(customer.id);
+        await customerService.incrementTotalSpent(customer.id, data.totalPrice);
+        customerService.updatePreferencesAfterBooking(customer.id);
 
         return bookingsRepository.create({
             companyId: data.companyId,
