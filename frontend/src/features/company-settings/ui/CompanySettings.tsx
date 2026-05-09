@@ -9,6 +9,7 @@ import {
     faCalendarDays,
     faScissors,
     faUsers,
+    faAddressBook,
     faWallet
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,6 +45,8 @@ import ConfirmModal from '@/shared/ui/ConfirmModal';
 import AddServiceModal from '@/features/add-service/ui/AddServiceModal';
 import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
 import { updateCompanySchema, type UpdateCompanyFormData } from '../model/CompanySettings.types';
+
+import CustomerSection from '../components/CusomerSection/CustomerSection';
 
 import styles from './CompanySettings.module.scss';
 
@@ -373,6 +376,7 @@ const CompanySettings = () => {
         { id: 'booking', title: 'Настройки бронирования', permission: PERMISSIONS.EDIT_BOOKING_SETTINGS, icon: faCalendarDays },
         { id: 'services', title: 'Услуги', permission: PERMISSIONS.VIEW_SERVICES, icon: faScissors },
         { id: 'members', title: 'Сотрудники', permission: PERMISSIONS.VIEW_MEMBERS, icon: faUsers },
+        { id: 'customers', title: 'Список клиентов', permission: PERMISSIONS.VIEW_CUSTOMERS, icon: faAddressBook },
         { id: 'finance', title: 'Финансы', permission: PERMISSIONS.VIEW_FINANCE, icon: faWallet },
     ];
 
@@ -799,6 +803,13 @@ const CompanySettings = () => {
                                 </div>
                             )}
 
+                            {section.id === 'customers' &&
+                                <CustomerSection
+                                    companyId={company?.id}
+                                    canManageCustomers={hasPermission(PERMISSIONS.MANAGE_CUSTOMERS)}
+                                />
+                            }
+
                             {/* Финансы - заглушка */}
                             {section.id === 'finance' && (
                                 <div className={styles.sectionContent}>
@@ -811,7 +822,7 @@ const CompanySettings = () => {
                             {errors[section.id] && <div className={styles.error}>{errors[section.id]}</div>}
                             {successes[section.id] && <div className={styles.success}>{successes[section.id]}</div>}
 
-                            {section.id !== 'services' && section.id !== 'members' && (
+                            {section.id !== 'services' && section.id !== 'members' && section.id !== 'customers' && (
                                 <div className={styles.actions}>
                                     <Button
                                         type="button"
