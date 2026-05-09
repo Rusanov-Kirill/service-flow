@@ -3,32 +3,6 @@ import { CreateCustomerDto, CreateCustomerDbDto } from './customer.types';
 import { prisma } from '../../shared/database/prisma';
 
 export const customerRepository = {
-    findById: async (id: string) => {
-        return prisma.customer.findUnique({
-            where: { id },
-        });
-    },
-
-    findByUserAndCompany: async (userId: string, companyId: string) => {
-        return prisma.customer.findUnique({
-            where: {
-                userId_companyId: {
-                    userId,
-                    companyId,
-                },
-            },
-            include: {
-                user: {
-                    select: {
-                        firstName: true,
-                        lastName: true,
-                        avatar: true,
-                    },
-                },
-            },
-        });
-    },
-
     create: async (data: CreateCustomerDto) => {
         const createData: CreateCustomerDbDto = {
             ...data,
@@ -59,6 +33,25 @@ export const customerRepository = {
         });
     },
 
+    updatePreferences: async (
+        id: string,
+        preferences: {
+            preferredServiceIds: string[];
+            preferredStaffIds: string[];
+            preferredWeekDays: number[];
+        }
+    ) => {
+        return prisma.customer.update({
+            where: { id },
+            data: {
+                preferredServiceIds: preferences.preferredServiceIds,
+                preferredStaffIds: preferences.preferredStaffIds,
+                preferredWeekDays: preferences.preferredWeekDays,
+                updatedAt: new Date(),
+            },
+        });
+    },
+
     incrementTotalBookings: async (id: string) => {
         return prisma.customer.update({
             where: { id },
@@ -81,22 +74,53 @@ export const customerRepository = {
         });
     },
 
-    updatePreferences: async (
-        id: string,
-        preferences: {
-            preferredServiceIds: string[];
-            preferredStaffIds: string[];
-            preferredWeekDays: number[];
-        }
-    ) => {
-        return prisma.customer.update({
+    findById: async (id: string) => {
+        return prisma.customer.findUnique({
             where: { id },
-            data: {
-                preferredServiceIds: preferences.preferredServiceIds,
-                preferredStaffIds: preferences.preferredStaffIds,
-                preferredWeekDays: preferences.preferredWeekDays,
-                updatedAt: new Date(),
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
             },
         });
+    },
+
+    findByUserAndCompany: async (userId: string, companyId: string) => {
+        return prisma.customer.findUnique({
+            where: {
+                userId_companyId: {
+                    userId,
+                    companyId,
+                },
+            },
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
+            },
+        });
+    },
+
+    getAllCustomersByCompanyId: async (companyId: string) => {
+        return prisma.customer.findMany({
+            where: { companyId },
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
+            },
+        })
     },
 };

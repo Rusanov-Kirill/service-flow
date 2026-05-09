@@ -19,3 +19,7 @@ export const findByUserAndCompanySchema = z.object({
     userId: z.string().uuid('Неверный формат userId'),
     companyId: z.string().uuid('Неверный формат companyId'),
 });
+
+export const getAllCustomersByCompanyId = z.object({
+    companyId: z.string().uuid('Неверный формат companyId'),
+});

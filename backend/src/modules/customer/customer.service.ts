@@ -43,6 +43,14 @@ export const customerService = {
         return customer;
     },
 
+    getAllCustomersByCompanyId: async (companyId: string) => {
+        let customers = await customerRepository.getAllCustomersByCompanyId(companyId);
+
+        if (!customers || customers.length === 0) throw Error("В данной компании клиентов не найдено");
+
+        return customers;
+    },
+
     updatePreferences: async (customerId: string) => {
         const bookings = await prisma.booking.findMany({
             where: {
