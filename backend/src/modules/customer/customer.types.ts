@@ -13,6 +13,19 @@ export interface CreateCustomerDto {
     notes?: string | null;
 }
 
+export interface UpdateCustomerDto {
+    preferredServiceIds?: string[];
+    preferredStaffIds?: string[];
+    preferredTimeOfDay?: TimeOfDay | null;
+    preferredWeekDays?: number[];
+    discountRate?: number | null;
+    status?: CustomerStatus;
+    blacklisted?: boolean;
+    blacklistReason?: string | null;
+    notes?: string | null;
+}
+
+
 export interface CreateCustomerDbDto extends CreateCustomerDto {
     totalBookings: number;
     totalSpent: number;

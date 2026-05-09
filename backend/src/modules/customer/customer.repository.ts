@@ -33,6 +33,33 @@ export const customerRepository = {
         });
     },
 
+    update: async (id: string, data: Partial<Omit<CreateCustomerDto, 'userId' | 'companyId' | 'email'>>) => {
+        return prisma.customer.update({
+            where: { id },
+            data: {
+                preferredServiceIds: data.preferredServiceIds,
+                preferredStaffIds: data.preferredStaffIds,
+                preferredTimeOfDay: data.preferredTimeOfDay,
+                preferredWeekDays: data.preferredWeekDays,
+                discountRate: data.discountRate,
+                status: data.status,
+                blacklisted: data.blacklisted,
+                blacklistReason: data.blacklistReason,
+                notes: data.notes,
+                updatedAt: new Date(),
+            },
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
+            },
+        });
+    },
+
     updatePreferences: async (
         id: string,
         preferences: {

@@ -1,6 +1,6 @@
 import { prisma } from '../../shared/database/prisma';
 import { customerRepository } from './customer.repository';
-import { CreateCustomerDto } from './customer.types';
+import { CreateCustomerDto, UpdateCustomerDto } from './customer.types';
 
 export const customerService = {
     findOrCreate: async (data: CreateCustomerDto) => {
@@ -14,6 +14,15 @@ export const customerService = {
         }
 
         return customer;
+    },
+
+    update: async (id: string, data: UpdateCustomerDto) => {
+        const customer = await customerRepository.findById(id);
+        if (!customer) {
+            throw new Error('Клиент не найден');
+        }
+
+        return customerRepository.update(id, data);
     },
 
     incrementTotalBookings: async (customerId: string) => {
