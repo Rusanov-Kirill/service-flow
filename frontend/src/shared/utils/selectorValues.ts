@@ -46,6 +46,12 @@ export const MEMBER_ROLE = [
     {value: 'member', label: 'Сотрудник'},
 ];
 
+export const CUSTOMER_STATUS = [
+    { value: 'active', label: 'Активный' },
+    { value: 'inactive', label: 'Неактивный' },
+    { value: 'blocked', label: 'Заблокированный' },
+];
+
 export const CURRENCIES = [
     { value: 'RUB', label: 'RUB - Российский рубль' },
     { value: 'USD', label: 'USD - Доллар США' },
