@@ -32,6 +32,17 @@ export const customerService = {
         return customer;
     },
 
+    findByUserAndCompany: async (userId: string, companyId: string) => {
+        let customer = await customerRepository.findByUserAndCompany(
+            userId,
+            companyId
+        );
+
+        if (!customer) throw Error('Клиент не найден');
+
+        return customer;
+    },
+
     updatePreferences: async (customerId: string) => {
         const bookings = await prisma.booking.findMany({
             where: {

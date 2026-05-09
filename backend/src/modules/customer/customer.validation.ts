@@ -14,3 +14,8 @@ export const findOrCreateCustomerSchema = z.object({
     blacklistReason: z.string().nullable().default(null),
     notes: z.string().nullable().default(null),
 });
+
+export const findByUserAndCompanySchema = z.object({
+    userId: z.string().uuid('Неверный формат userId'),
+    companyId: z.string().uuid('Неверный формат companyId'),
+});

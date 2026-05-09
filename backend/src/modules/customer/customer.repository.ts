@@ -17,6 +17,15 @@ export const customerRepository = {
                     companyId,
                 },
             },
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
+            },
         });
     },
 
@@ -38,6 +47,15 @@ export const customerRepository = {
 
         return prisma.customer.create({
             data: createData,
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
+            },
         });
     },
 
