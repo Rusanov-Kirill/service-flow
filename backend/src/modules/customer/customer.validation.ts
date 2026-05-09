@@ -20,6 +20,11 @@ export const findByUserAndCompanySchema = z.object({
     companyId: z.string().uuid('Неверный формат companyId'),
 });
 
-export const getAllCustomersByCompanyId = z.object({
+export const getAllCustomersByCompanyIdSchema = z.object({
     companyId: z.string().uuid('Неверный формат companyId'),
+});
+
+export const getCustomerByEmailSchema = z.object({
+    companyId: z.string().uuid('Неверный формат companyId'),
+    email: z.string().email('Неверный формат email'),
 });

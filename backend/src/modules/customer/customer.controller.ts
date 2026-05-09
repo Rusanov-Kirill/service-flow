@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { customerService } from './customer.service';
-import { findOrCreateCustomerSchema, findByUserAndCompanySchema, getAllCustomersByCompanyId } from './customer.validation';
+import { findOrCreateCustomerSchema, findByUserAndCompanySchema, getAllCustomersByCompanyIdSchema, getCustomerByEmailSchema } from './customer.validation';
 
 export const customerController = {
     findOrCreate: async (req: Request, res: Response): Promise<Response> => {
@@ -56,7 +56,7 @@ export const customerController = {
 
     getAllCustomersByCompanyId: async (req: Request, res: Response): Promise<Response> => {
         try {
-            const result = getAllCustomersByCompanyId.safeParse({
+            const result = getAllCustomersByCompanyIdSchema.safeParse({
                 companyId: req.query['companyId'],
             });
 
@@ -75,6 +75,40 @@ export const customerController = {
             });
         } catch (error: any) {
             if (error.message === 'Клиентов не найдено') {
+                return res.status(404).json({
+                    success: false,
+                    error: error.message
+                });
+            }
+            return res.status(400).json({
+                success: false,
+                error: error.message
+            });
+        }
+    },
+
+    getCustomerByEmail: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const result = getCustomerByEmailSchema.safeParse({
+                companyId: req.query['companyId'],
+                email: req.query['email'],
+            });
+
+            if (!result.success) {
+                return res.status(400).json({
+                    error: result.error.issues[0]?.message || 'Ошибка валидации'
+                });
+            }
+
+            const { companyId, email } = result.data;
+            const customer = await customerService.getCustomerByEmail(companyId, email);
+
+            return res.status(200).json({
+                success: true,
+                data: customer
+            });
+        } catch (error: any) {
+            if (error.message === 'Клиент не найден') {
                 return res.status(404).json({
                     success: false,
                     error: error.message

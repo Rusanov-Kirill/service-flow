@@ -51,6 +51,14 @@ export const customerService = {
         return customers;
     },
 
+    getCustomerByEmail: async (companyId: string, email: string) => {
+        let customer = await customerRepository.getCustomerByEmail(companyId, email);
+
+        if (!customer) throw Error("Клиент не найден");
+
+        return customer;
+    },
+
     updatePreferences: async (customerId: string) => {
         const bookings = await prisma.booking.findMany({
             where: {

@@ -123,4 +123,22 @@ export const customerRepository = {
             },
         })
     },
+
+    getCustomerByEmail: async (companyId: string, email: string) => {
+        return prisma.customer.findFirst({
+            where: {
+                companyId,
+                email
+            },
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatar: true,
+                    },
+                },
+            },
+        });
+    },
 };
