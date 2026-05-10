@@ -39,17 +39,31 @@ export const PAYMENT_METHODS = [
 ];
 
 export const MEMBER_ROLE = [
-    {value: 'owner', label: 'Владелец'},
-    {value: 'admin', label: 'Системный администратор'},
-    {value: 'manager', label: 'Управляющий'},
-    {value: 'receptionist', label: 'Администратор'},
-    {value: 'member', label: 'Сотрудник'},
+    { value: 'owner', label: 'Владелец' },
+    { value: 'admin', label: 'Системный администратор' },
+    { value: 'manager', label: 'Управляющий' },
+    { value: 'receptionist', label: 'Администратор' },
+    { value: 'member', label: 'Сотрудник' },
 ];
 
 export const CUSTOMER_STATUS = [
     { value: 'active', label: 'Активный' },
     { value: 'inactive', label: 'Неактивный' },
     { value: 'blocked', label: 'Заблокированный' },
+];
+
+export const STATUS_LABELS = {
+    pending: 'Ожидает',
+    confirmed: 'Подтверждено',
+    completed: 'Завершено',
+    cancelled: 'Отменено',
+};
+
+export const STATUS_OPTIONS = [
+    { value: 'pending', label: 'Ожидает' },
+    { value: 'confirmed', label: 'Подтверждено' },
+    { value: 'completed', label: 'Завершено' },
+    { value: 'cancelled', label: 'Отменено' },
 ];
 
 export const CURRENCIES = [
