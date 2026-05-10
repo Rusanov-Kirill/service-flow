@@ -60,8 +60,26 @@ export const bookingsRepository = {
             },
             select: {
                 startTime: true,
-                endTime: true, 
+                endTime: true,
             },
         });
+    },
+
+    findAllCompanyBookings: async (companyId: string) => {
+        return prisma.booking.findMany({
+            where: { companyId },
+            include: {
+                customer: {
+                    include: {
+                        user: {
+                            select: { firstName: true, lastName: true }
+                        }
+                    }
+                },
+                service: {
+                    select: { name: true, duration: true }
+                }
+            }
+        })
     },
 };

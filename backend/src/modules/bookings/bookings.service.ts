@@ -95,4 +95,12 @@ export const bookingsService = {
 
         return [...new Set(bookedSlotsList)];
     },
+
+    findAllCompanyBookings: async (companyId: string) => {
+        const bookings = await bookingsRepository.findAllCompanyBookings(companyId);
+
+        if (!bookings) throw Error('Не найдено ни одной записи');
+
+        return bookings;
+    },  
 };

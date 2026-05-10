@@ -39,5 +39,9 @@ export const getBookedSlotsSchema = z.object({
     serviceId: z.string().uuid('Неверный формат serviceId').optional(),
 });
 
+export const findAllCompanyBookingsSchema = z.object({
+    companyId: z.string().uuid('Неверный формат companyId'),
+});
+
 export type CreateBookingInput = z.infer<typeof createBookingSchema>;
 export type UpdateBookingDto = z.infer<typeof updateBookingSchema>;

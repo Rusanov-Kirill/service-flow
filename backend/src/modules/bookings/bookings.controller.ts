@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { bookingsService } from './bookings.service';
-import { createBookingSchema, updateBookingSchema, bookingIdSchema } from './bookings.validation';
+import { createBookingSchema, updateBookingSchema, bookingIdSchema, findAllCompanyBookingsSchema } from './bookings.validation';
 
 export const bookingsController = {
     create: async (req: Request, res: Response): Promise<Response> => {
@@ -63,4 +63,37 @@ export const bookingsController = {
             return res.status(400).json({ error: error.message });
         }
     },
+
+    findAllCompanyBookings: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const result = findAllCompanyBookingsSchema.safeParse({
+                companyId: req.query['companyId'],
+            });
+
+            if (!result.success) {
+                return res.status(400).json({
+                    error: result.error.issues[0]?.message || 'Ошибка валидации'
+                });
+            }
+
+            const { companyId } = result.data;
+            const bookings = await bookingsService.findAllCompanyBookings(companyId);
+
+            return res.status(200).json({
+                success: true,
+                data: bookings
+            });
+        } catch (error: any) {
+            if (error.message === 'Бронирований не найдено') {
+                return res.status(404).json({
+                    success: false,
+                    error: error.message
+                });
+            }
+            return res.status(400).json({
+                success: false,
+                error: error.message
+            });
+        }
+    }
 };
