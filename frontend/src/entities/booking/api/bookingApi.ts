@@ -22,4 +22,11 @@ export const bookingApi = {
         const response = await apiClient.get(`/bookings/${companyId}/booked-slots?${params}`);
         return response.data;
     },
+
+    getAllBookings: async (companyId: string) => {
+        const response = await apiClient.get(`/bookings/${companyId}`, {
+            params: { companyId }
+        });
+        return response.data;
+    },
 };

@@ -4,7 +4,7 @@ export interface Booking {
     startTime: Date;
     endTime: Date;
     totalPrice: number;
-    status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+    status: BookingStatus;
 }
 
 export interface CreateCustomerDto {
@@ -21,3 +21,5 @@ export interface UpdateBookingDto {
     status?: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     totalPrice?: number;
 }
+
+export type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled';

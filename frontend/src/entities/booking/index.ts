@@ -1,3 +1,3 @@
-export type { Booking, CreateCustomerDto } from './model/types';
+export type { Booking, CreateCustomerDto, BookingStatus } from './model/types';
 
 export { bookingApi } from './api/bookingApi';
