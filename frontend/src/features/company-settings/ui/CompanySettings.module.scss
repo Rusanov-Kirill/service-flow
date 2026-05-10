@@ -5,6 +5,8 @@
     padding: $spacing-lg;
     background: $bg-light;
     min-height: calc(100vh - 2 * $spacing-lg);
+    max-width: 100vw;
+    overflow-x: hidden;
 
     .header {
         display: flex;
@@ -50,6 +52,8 @@
         border: 1px solid $border-light;
         overflow: hidden;
         transition: all $duration-fast;
+        max-width: 85vw;
+        width: 100%;
 
         &:hover {
             box-shadow: $shadow-sm;
@@ -120,6 +124,10 @@
             display: flex;
             flex-direction: column;
             gap: $spacing-md;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: visible;
+            position: relative;
 
             [class*="field"]:first-of-type {
                 margin-top: 0;
@@ -407,6 +415,10 @@
 
         .accordionContent {
             padding: $spacing-md;
+
+            .sectionContent {
+                overflow-x: visible;
+            }
         }
 
         .servicesHeader {
@@ -478,6 +490,10 @@
 
         .accordionContent {
             padding: $spacing-sm;
+
+            .sectionContent {
+                overflow-x: visible;
+            }
 
             .actions {
                 button {

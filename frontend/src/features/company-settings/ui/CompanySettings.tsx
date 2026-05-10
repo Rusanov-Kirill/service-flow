@@ -10,7 +10,8 @@ import {
     faScissors,
     faUsers,
     faAddressBook,
-    faWallet
+    faWallet,
+    faBook
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
@@ -47,6 +48,7 @@ import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } 
 import { updateCompanySchema, type UpdateCompanyFormData } from '../model/CompanySettings.types';
 
 import CustomerSection from '../components/CusomerSection/CustomerSection';
+import BookingsSection from '../components/BookingSection/BookingSection';
 
 import styles from './CompanySettings.module.scss';
 
@@ -378,6 +380,7 @@ const CompanySettings = () => {
         { id: 'members', title: 'Сотрудники', permission: PERMISSIONS.VIEW_MEMBERS, icon: faUsers },
         { id: 'customers', title: 'Список клиентов', permission: PERMISSIONS.VIEW_CUSTOMERS, icon: faAddressBook },
         { id: 'finance', title: 'Финансы', permission: PERMISSIONS.VIEW_FINANCE, icon: faWallet },
+        { id: 'booking-list', title: 'Список бронирований', permission: PERMISSIONS.VIEW_BOOKINGS, icon: faBook }
     ];
 
     const hasPermission = (permission: string): boolean => {
@@ -810,6 +813,10 @@ const CompanySettings = () => {
                                 />
                             }
 
+                            {section.id === 'booking-list' &&
+                                <BookingsSection companyId={company?.id} canManageStatus={hasPermission(PERMISSIONS.MANAGE_BOOKINGS)} />
+                            }
+
                             {/* Финансы - заглушка */}
                             {section.id === 'finance' && (
                                 <div className={styles.sectionContent}>
@@ -822,7 +829,7 @@ const CompanySettings = () => {
                             {errors[section.id] && <div className={styles.error}>{errors[section.id]}</div>}
                             {successes[section.id] && <div className={styles.success}>{successes[section.id]}</div>}
 
-                            {section.id !== 'services' && section.id !== 'members' && section.id !== 'customers' && (
+                            {section.id !== 'services' && section.id !== 'members' && section.id !== 'customers' && section.id !== 'booking-list' && (
                                 <div className={styles.actions}>
                                     <Button
                                         type="button"
