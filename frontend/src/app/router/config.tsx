@@ -14,6 +14,8 @@ export const ROUTES = {
         MY_PROFILE: 'profile',
         MY_COMPANIES: 'companies',
         CREATE_COMPANY: 'companies/create',
+        FAVORITE_COMPANIES: 'favorite',
+        MY_BOOKINGS: 'my-bookings',
         COMPANY_SETTINGS: 'companies/:slug/settings',
     },
     NOT_FOUND: '*',
