@@ -43,6 +43,7 @@ model User {
   sessions       Session[]
   companyMembers CompanyMember[]
   customers      Customer[]
+  favorites      Favorite[]
 
   @@unique([provider, providerId])  
   @@map("users")
@@ -91,6 +92,7 @@ model Company {
   customers   Customer[]
   services    Service[]
   bookings    Booking[]
+  favorites   Favorite[]
   
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -195,6 +197,20 @@ model Booking {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("bookings")
+}
+
+model Favorite {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  companyId    String   @map("company_id")
+  
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, companyId]) 
+  @@map("favorites")
 }
 
 enum MemberRole {
