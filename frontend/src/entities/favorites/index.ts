@@ -1,0 +1,1 @@
+export { favoritesApi } from './api/favoritesApi';
