@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react';
 import type { Company } from '@/entities/company';
+import { favoritesApi } from '@/entities/favorites';
 import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
+import Button from '@/shared/ui/Button';
 import { TIMEZONES } from '@/shared/utils/selectorValues';
 
 import styles from './OverviewTab.module.scss';
@@ -9,6 +12,45 @@ interface OverviewTabProps {
 };
 
 const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
+    const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (selectedCompany?.id) {
+            checkFavoriteStatus();
+        }
+    }, [selectedCompany?.id]);
+
+    const checkFavoriteStatus = async () => {
+        if (!selectedCompany?.id) return;
+        
+        try {
+            const status = await favoritesApi.checkFavorite(selectedCompany.id);
+            setIsFavorite(status);
+        } catch (error) {
+            console.error('Ошибка проверки избранного:', error);
+        }
+    };
+
+    const handleToggleFavorite = async () => {
+        if (!selectedCompany?.id) return;
+        
+        setIsLoading(true);
+        try {
+            if (isFavorite) {
+                await favoritesApi.removeFromFavorites(selectedCompany.id);
+                setIsFavorite(false);
+            } else {
+                await favoritesApi.addToFavorites(selectedCompany.id);
+                setIsFavorite(true);
+            }
+        } catch (error) {
+            console.error('Ошибка при изменении избранного:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     if (!selectedCompany) return null;
 
     const hasAddress = !!selectedCompany.address;
@@ -26,8 +68,29 @@ const OverviewTab = ({ selectedCompany }: OverviewTabProps) => {
                     variant='company'
                 />
 
-                <div>
-                    <h2>{selectedCompany.name}</h2>
+                <div className={styles.headerInfo}>
+                    <div className={styles.titleRow}>
+                        <h2>{selectedCompany.name}</h2>
+                        <Button
+                            variant={isFavorite ? "secondary" : "primary"}
+                            onClick={handleToggleFavorite}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                '...'
+                            ) : isFavorite ? (
+                                <>
+                                    <span className={styles.starIcon}>★</span>
+                                    В избранном
+                                </>
+                            ) : (
+                                <>
+                                    <span className={styles.starIcon}>☆</span>
+                                    Добавить в избранное
+                                </>
+                            )}
+                        </Button>
+                    </div>
                     <span className={styles.slug}>
                         @{selectedCompany.slug}
                     </span>

@@ -15,9 +15,21 @@
             object-fit: cover;
         }
 
-        h2 {
-            line-height: .9;
-            margin-bottom: $spacing-xs;
+        .headerInfo {
+            flex: 1;
+
+            .titleRow {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: $spacing-md;
+                flex-wrap: wrap;
+
+                h2 {
+                    line-height: .9;
+                    margin-bottom: $spacing-xs;
+                }
+            }
         }
 
         .slug {
@@ -64,8 +76,12 @@
 
     @media (max-width: 767px) {
         .header {
-            h2 {
-                font-size: $font-size-2xl;
+            .headerInfo {
+                .titleRow {
+                    h2 {
+                        font-size: $font-size-2xl;
+                    }
+                }
             }
         }
     }
@@ -74,6 +90,7 @@
         gap: $spacing-md;
 
         .header {
+            flex-direction: column;
             gap: $spacing-sm;
 
             .logo {
@@ -81,8 +98,16 @@
                 height: 100px;
             }
 
-            h2 {
-                font-size: $font-size-xl;
+            .headerInfo {
+                .titleRow {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    width: 100%;
+
+                    h2 {
+                        font-size: $font-size-xl;
+                    }
+                }
             }
         }
 
