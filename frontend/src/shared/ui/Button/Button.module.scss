@@ -17,6 +17,7 @@
     background-color: $primary;
     color: $white;
     box-shadow: $shadow-primary;
+    border: 1px solid transparent;
 
     &:hover {
       background-color: $primary-dark;
