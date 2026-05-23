@@ -36,6 +36,12 @@ const Sidebar = () => {
                         <NavLink to="/home/dashboard" className={getLinkClass} onClick={handleLinkClick}>
                             Доска предложений
                         </NavLink>
+                        <NavLink to="/home/favorite" className={getLinkClass} onClick={handleLinkClick}>
+                            Закладки
+                        </NavLink>
+                        <NavLink to="/home/my-bookings" className={getLinkClass} onClick={handleLinkClick}>
+                            Список бронирований
+                        </NavLink>
                         <NavLink to="/home/settings" className={getLinkClass} onClick={handleLinkClick}>
                             Настройки
                         </NavLink>
