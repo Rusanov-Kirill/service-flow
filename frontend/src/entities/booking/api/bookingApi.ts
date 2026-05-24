@@ -4,6 +4,33 @@ import type { Booking, CreateCustomerDto, UpdateBookingDto } from "../model/type
 
 type BookingCreateDto = Booking & CreateCustomerDto;
 
+export interface UserBooking {
+    id: string;
+    totalPrice: number;
+    startTime: string;
+    status: string;
+    company: {
+        id: string;
+        name: string;
+        slug: string;
+        logo?: string | null;
+    };
+    service: {
+        name: string;
+        duration: number;
+    };
+}
+
+interface BookingsResponse {
+    success: boolean;
+    data: Booking[];
+}
+
+interface UserBookingsResponse {
+    success: boolean;
+    data: UserBooking[];
+}
+
 export const bookingApi = {
     create: async (data: BookingCreateDto) => {
         const response = await apiClient.post('/bookings', data);
@@ -23,10 +50,15 @@ export const bookingApi = {
         return response.data;
     },
 
-    getAllBookings: async (companyId: string) => {
+    getAllBookings: async (companyId: string): Promise<BookingsResponse> => {
         const response = await apiClient.get(`/bookings/${companyId}`, {
             params: { companyId }
         });
+        return response.data;
+    },
+
+    getUserBookings: async (userId: string): Promise<UserBookingsResponse> => {
+        const response = await apiClient.get(`/bookings/user/${userId}`);
         return response.data;
     },
 };
