@@ -1,0 +1,308 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+    background: $bg-light;
+    min-height: calc(100vh - 2 * $spacing-lg);
+
+    .content {
+        flex: 1;
+        background: $white;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+        box-shadow: $shadow-sm;
+        border: 1px solid $border-light;
+        display: flex;
+        flex-direction: column;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: $spacing-lg;
+            flex-wrap: wrap;
+            gap: $spacing-sm;
+
+            .title {
+                font-size: $font-size-lg;
+                font-weight: 600;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            .subtitle {
+                font-size: $font-size-sm;
+                color: $text-secondary;
+                margin: 0;
+            }
+        }
+
+        .errorContainer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: $spacing-md;
+            padding: $spacing-3xl $spacing-lg;
+            background: $bg-light;
+            border-radius: $radius-lg;
+            min-height: 300px;
+
+            .errorIcon {
+                font-size: 48px;
+                opacity: 0.5;
+            }
+
+            p {
+                font-size: $font-size-sm;
+                color: $red;
+                margin: 0;
+            }
+        }
+
+        .emptyContainer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: $spacing-md;
+            padding: $spacing-3xl $spacing-lg;
+            background: $bg-light;
+            border-radius: $radius-lg;
+            min-height: 300px;
+
+            .emptyIcon {
+                font-size: 64px;
+            }
+
+            h3 {
+                font-size: $font-size-lg;
+                font-weight: 600;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            p {
+                font-size: $font-size-sm;
+                color: $text-secondary;
+                margin: 0;
+            }
+        }
+    }
+
+    .tableWrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        
+        &::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+            
+            &:hover {
+                background: #a8a8a8;
+            }
+        }
+    }
+
+    .table {
+        min-width: 900px;
+        border: 1px solid $border-light;
+        border-radius: $radius-lg;
+        overflow: hidden;
+        background: $white;
+    }
+
+    .tableHead {
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr 1fr 2fr 1.5fr;
+        gap: $spacing-md;
+        padding: $spacing-md $spacing-lg;
+        background: $bg-light;
+        border-bottom: 1px solid $border-light;
+        font-size: $font-size-xs;
+        font-weight: 600;
+        color: $text-secondary;
+        white-space: nowrap;
+    }
+
+    .tableBody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr 1fr 2fr 1.5fr;
+        gap: $spacing-md;
+        align-items: center;
+        padding: $spacing-md $spacing-lg;
+        border-bottom: 1px solid $border-light;
+        transition: background $duration-fast;
+        white-space: nowrap;
+
+        &:hover {
+            background: $bg-light;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .company {
+        .companyInfo {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+        }
+
+        .companyLogo {
+            width: 40px;
+            height: 40px;
+            border-radius: $radius-md;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .companyName {
+            font-weight: 600;
+            color: $text-primary;
+            font-size: $font-size-sm;
+        }
+
+        .companySlug {
+            font-size: $font-size-xs;
+            color: $gray-muted;
+        }
+    }
+
+    .service {
+        font-size: $font-size-sm;
+        color: $text-primary;
+    }
+
+    .price {
+        font-weight: 600;
+        color: $text-primary;
+        font-size: $font-size-sm;
+    }
+
+    .duration {
+        font-size: $font-size-sm;
+        color: $text-primary;
+    }
+
+    .date {
+        font-size: $font-size-sm;
+        color: $text-primary;
+    }
+
+    .statusCell {
+        display: flex;
+        align-items: center;
+    }
+
+    .status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .pending {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+    }
+
+    .confirmed {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+    }
+
+    .completed {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+    }
+
+    .cancelled {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+    }
+
+    @media (max-width: 768px) {
+        padding: $spacing-md;
+
+        .content {
+            padding: $spacing-md;
+        }
+
+        .tableHead,
+        .row {
+            padding: $spacing-sm $spacing-md;
+            gap: $spacing-sm;
+        }
+
+        .tableHead {
+            font-size: 10px;
+        }
+
+        .company .companyInfo .companyLogo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .companyName,
+        .service,
+        .price,
+        .duration,
+        .date {
+            font-size: $font-size-xs;
+        }
+    }
+
+    @media (max-width: 529px) {
+        padding: $spacing-sm;
+
+        .content {
+            padding: $spacing-sm;
+        }
+
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .errorContainer,
+        .emptyContainer {
+            padding: $spacing-2xl $spacing-md;
+            min-height: 250px;
+
+            .errorIcon,
+            .emptyIcon {
+                font-size: 36px;
+            }
+
+            p {
+                font-size: $font-size-xs;
+            }
+        }
+    }
+}
