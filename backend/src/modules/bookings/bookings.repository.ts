@@ -82,4 +82,43 @@ export const bookingsRepository = {
             }
         })
     },
+
+    findAllUserBookings: async (userId: string) => {
+        return prisma.booking.findMany({
+            where: {
+                customer: {
+                    userId: userId
+                }
+            },
+            include: {
+                company: {
+                    select: {
+                        id: true,
+                        name: true,
+                        slug: true,
+                        logo: true,
+                    }
+                },
+                service: {
+                    select: {
+                        name: true,
+                        duration: true
+                    }
+                },
+                customer: {
+                    select: {
+                        user: {
+                            select: {
+                                firstName: true,
+                                lastName: true,
+                            }
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                startTime: 'asc'
+            }
+        });
+    },
 };

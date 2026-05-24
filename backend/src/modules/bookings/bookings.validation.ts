@@ -43,5 +43,9 @@ export const findAllCompanyBookingsSchema = z.object({
     companyId: z.string().uuid('Неверный формат companyId'),
 });
 
+export const findAllUserBookingsSchema = z.object({
+    userId: z.string().uuid('Неверный формат userId'),
+});
+
 export type CreateBookingInput = z.infer<typeof createBookingSchema>;
 export type UpdateBookingDto = z.infer<typeof updateBookingSchema>;

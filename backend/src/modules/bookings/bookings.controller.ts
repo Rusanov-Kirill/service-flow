@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { bookingsService } from './bookings.service';
-import { createBookingSchema, updateBookingSchema, bookingIdSchema, findAllCompanyBookingsSchema } from './bookings.validation';
+import { createBookingSchema, updateBookingSchema, bookingIdSchema, findAllCompanyBookingsSchema, findAllUserBookingsSchema } from './bookings.validation';
 
 export const bookingsController = {
     create: async (req: Request, res: Response): Promise<Response> => {
@@ -95,5 +95,33 @@ export const bookingsController = {
                 error: error.message
             });
         }
-    }
+    },
+
+    findAllUserBookings: async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const result = findAllUserBookingsSchema.safeParse({
+                userId: req.params['userId'],
+            });
+
+            if (!result.success) {
+                return res.status(400).json({
+                    success: false,
+                    error: result.error.issues[0]?.message || 'Ошибка валидации'
+                });
+            }
+
+            const { userId } = result.data;
+            const bookings = await bookingsService.findAllUserBookings(userId);
+
+            return res.status(200).json({
+                success: true,
+                data: bookings
+            });
+        } catch (error: any) {
+            return res.status(400).json({
+                success: false,
+                error: error.message
+            });
+        }
+    },
 };

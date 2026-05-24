@@ -102,5 +102,30 @@ export const bookingsService = {
         if (!bookings) throw Error('Не найдено ни одной записи');
 
         return bookings;
-    },  
+    },
+
+    findAllUserBookings: async (userId: string) => {
+        const bookings = await bookingsRepository.findAllUserBookings(userId);
+
+        if (!bookings || bookings.length === 0) {
+            return [];
+        }
+
+        return bookings.map(booking => ({
+            id: booking.id,
+            totalPrice: booking.totalPrice,
+            startTime: booking.startTime,
+            status: booking.status,
+            company: {
+                id: booking.company.id,
+                name: booking.company.name,
+                slug: booking.company.slug,
+                logo: booking.company.logo,
+            },
+            service: {
+                name: booking.service.name,
+                duration: booking.service.duration,
+            }
+        }));
+    },
 };
