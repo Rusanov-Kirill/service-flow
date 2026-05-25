@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import type { WorkScheduleType, PaymentMethod } from '@/entities/company/model/types';
+import type { WorkScheduleType, PaymentMethod, TaxationType } from '@/entities/company/model/types';
 import { useServicesStore } from '@/entities/service';
 import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import AddServiceModal from '@/features/add-service';
@@ -17,7 +17,7 @@ import MultiSelect from '@/shared/ui/MultiSelect';
 import RadioGroup from '@/shared/ui/RadioGroup';
 import Select from '@/shared/ui/Select';
 import TimePicker from '@/shared/ui/TimePicker';
-import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
+import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS, TAXATION_TYPE } from '@/shared/utils/selectorValues';
 import { companyApi } from '@entities/company/api/companyApi';
 
 import { createCompanySchema, type CreateCompanyFormData } from '../model/CreateCompany.types';
@@ -49,6 +49,7 @@ const CreateCompany = () => {
             phone: '',
             email: '',
             website: '',
+            taxationType: 'SELF_EMPLOYED',
             bookingLeadDays: 30,
             workScheduleType: 'EVERY_DAY',
             slotInterval: 30,
@@ -167,6 +168,15 @@ const CreateCompany = () => {
                                     error={errors.tags?.message}
                                     required
                                     placeholder="Выберите теги"
+                                />
+                                <Select
+                                    label="Система налогообложения"
+                                    options={TAXATION_TYPE}
+                                    value={watch('taxationType')}
+                                    onChange={(value) => setValue('taxationType', value as TaxationType, { shouldValidate: true })}
+                                    error={errors.taxationType?.message}
+                                    required
+                                    placeholder="Выберите систему налогообложения"
                                 />
                             </div>
 
