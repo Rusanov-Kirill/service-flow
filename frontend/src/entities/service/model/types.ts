@@ -7,6 +7,7 @@ export interface ClientService {
     duration: number;
     price: number;
     currency: CurrenciesType;
+    cost?: number;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date | null;
