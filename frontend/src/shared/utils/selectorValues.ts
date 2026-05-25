@@ -66,6 +66,12 @@ export const STATUS_OPTIONS = [
     { value: 'cancelled', label: 'Отменено' },
 ];
 
+export const TAXATION_TYPE = [
+    { value: 'SELF_EMPLOYED', label: 'Самозанятый специалист' },
+    { value: 'SOLE_PROPRIETOR', label: 'Индивидуальный предприниматель (ИП)' },
+    { value: 'LEGAL_ENTITY', label: 'Общество с ограниченной ответственностью (ООО)' },
+];
+
 export const CURRENCIES = [
     { value: 'RUB', label: 'RUB - Российский рубль' },
     { value: 'USD', label: 'USD - Доллар США' },
