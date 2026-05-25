@@ -17,6 +17,7 @@ export const serviceRepository = {
                 duration: data.duration,
                 price: data.price,
                 currency: data.currency,
+                cost: data.cost,
                 isActive: data.isActive ?? true,
             },
         });
@@ -31,6 +32,7 @@ export const serviceRepository = {
                 duration: data.duration,
                 price: data.price,
                 currency: data.currency,
+                cost: data.cost,
                 isActive: data.isActive,
             },
         });

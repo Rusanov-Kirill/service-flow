@@ -5,5 +5,6 @@ export interface CreateServiceDto {
     duration: number;
     price: number;
     currency: string;
+    cost?: number;
     isActive: boolean;
 }
