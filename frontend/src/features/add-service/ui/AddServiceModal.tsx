@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useEffect } from 'react';
 
 import { useServicesStore } from '@/entities/service';
-import { serviceApi } from '@/entities/service/api/serviceApi'; // убедитесь, что API существует
+import { serviceApi } from '@/entities/service/api/serviceApi';
 import FormField from '@/shared/ui/auth/FormField';
 import Button from '@/shared/ui/Button';
 import Select from '@/shared/ui/Select';
@@ -30,6 +30,7 @@ const AddServiceModal = ({ onClose, initialService, companyId }: AddServiceModal
             description: '',
             duration: 60,
             price: 0,
+            cost: undefined,
             currency: 'RUB',
         }
     });
@@ -41,6 +42,7 @@ const AddServiceModal = ({ onClose, initialService, companyId }: AddServiceModal
                 description: initialService.description || '',
                 duration: Number(initialService.duration),
                 price: Number(initialService.price),
+                cost: Number(initialService.cost),
                 currency: initialService.currency,
             });
         }
@@ -61,6 +63,7 @@ const AddServiceModal = ({ onClose, initialService, companyId }: AddServiceModal
                     duration: data.duration,
                     price: data.price,
                     currency: data.currency,
+                    cost: data.cost,
                     isActive: true,
                 });
                 reset();
@@ -127,6 +130,14 @@ const AddServiceModal = ({ onClose, initialService, companyId }: AddServiceModal
                             required
                             error={errors.price?.message}
                             {...register('price', { valueAsNumber: true })}
+                        />
+                        <FormField
+                            label="Себестоимость"
+                            id="cost"
+                            type="number"
+                            placeholder="500"
+                            error={errors.cost?.message}
+                            {...register('cost', { valueAsNumber: true })}
                         />
                     </div>
                     <div className={styles.actions}>

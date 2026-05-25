@@ -13,6 +13,10 @@ export const serviceSchema = z.object({
     price: z.number()
         .min(0, 'Цена не может быть отрицательной')
         .max(100_000_000, 'Цена не может превышать 100 000 000'),
+    cost: z.number()
+        .min(0, 'Себестоимость не может быть отрицательной')
+        .max(100_000_000, 'Себестоимость не может превышать 100 000 000')
+        .optional(),
     currency: z.enum(currencyValues),
 });
 
