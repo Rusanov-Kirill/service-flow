@@ -30,6 +30,7 @@ export const createCompanySchema = z.object({
     website: z.string().url('Неверный URL').optional().or(z.literal('')),
     ownerId: z.string().uuid('Неверный формат ownerId'),
     services: z.array(createServiceSchema).optional(),
+    taxationType: z.enum(['SELF_EMPLOYED', 'SOLE_PROPRIETOR', 'LEGAL_ENTITY']),
     bookingLeadDays: z.number()
         .int('Значение должно быть целым числом')
         .min(1, 'Минимум 1 день')

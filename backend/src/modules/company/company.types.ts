@@ -12,6 +12,7 @@ export interface CreateCompanyDto {
     email?: string;
     website?: string;
     ownerId: string;
+    taxationType: TaxationType;
     bookingLeadDays: number;
     workScheduleType: WorkScheduleType;
     slotInterval: number;
@@ -32,3 +33,5 @@ interface CustomWorkDay {
     endTime: string;   
     slotInterval: number;
 }
+
+export type TaxationType = 'SELF_EMPLOYED' | 'SOLE_PROPRIETOR' | 'LEGAL_ENTITY';    
