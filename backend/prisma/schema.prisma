@@ -77,6 +77,8 @@ model Company {
   website     String?
   isActive    Boolean  @default(true) @map("is_active")
 
+  taxationType   TaxationType  @default(SELF_EMPLOYED) @map("taxation_type")
+
   bookingLeadDays      Int                @default(30)
   workScheduleType     WorkScheduleType   @default(EVERY_DAY)
   slotInterval         Int                @default(30)
@@ -93,6 +95,7 @@ model Company {
   services    Service[]
   bookings    Booking[]
   favorites   Favorite[]
+  expenses Expense[]
   
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -167,8 +170,9 @@ model Service {
   description String?
   duration    Int     
   price       Decimal
-  currency    String   @default("RUB")
-  isActive    Boolean  @default(true) @map("is_active")
+  currency    String     @default("RUB")
+  isActive    Boolean    @default(true) @map("is_active")
+  cost        Decimal?   @default(0) @db.Decimal(10, 2)
   
   company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   bookings    Booking[]
@@ -196,6 +200,8 @@ model Booking {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
+  @@index([companyId, status, startTime])
+  @@index([companyId, serviceId])
   @@map("bookings")
 }
 
@@ -211,6 +217,22 @@ model Favorite {
   
   @@unique([userId, companyId]) 
   @@map("favorites")
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  companyId   String   @map("company_id")
+  amount      Decimal  @db.Decimal(10, 2)
+  category    String   
+  description String?
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt      @map("updated_at")
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, date])
+  @@map("expenses")
 }
 
 enum MemberRole {
@@ -256,4 +278,10 @@ enum CustomerStatus {
   active      
   inactive    
   blocked     
+}
+
+enum TaxationType {
+  SELF_EMPLOYED   
+  SOLE_PROPRIETOR 
+  LEGAL_ENTITY    
 }
