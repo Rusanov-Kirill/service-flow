@@ -1,0 +1,312 @@
+.sectionContent {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: visible;
+
+    .statsSection {
+        background: $bg-light;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+        border: 1px solid $border-light;
+
+        h4 {
+            font-size: $font-size-sm;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-md;
+        }
+
+        .categoryStats {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            margin-bottom: $spacing-lg;
+
+            .statItem {
+                .statHeader {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: $spacing-2xs;
+                    font-size: $font-size-xs;
+
+                    .categoryName {
+                        color: $text-secondary;
+                    }
+
+                    .categoryAmount {
+                        font-weight: 600;
+                        color: $text-primary;
+                    }
+                }
+
+                .progressBar {
+                    height: 8px;
+                    background: $border-light;
+                    border-radius: $radius-sm;
+                    overflow: hidden;
+                    margin-bottom: $spacing-2xs;
+
+                    .progressFill {
+                        height: 100%;
+                        background: $primary;
+                        border-radius: $radius-sm;
+                        transition: width 0.3s ease;
+                    }
+                }
+
+                .statFooter {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: $font-size-3xs;
+                    color: $gray-muted;
+                }
+            }
+        }
+
+        .totalExpenses {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: $spacing-md;
+            border-top: 1px solid $border-light;
+            font-size: $font-size-sm;
+
+            strong {
+                font-size: $font-size-lg;
+                color: $primary;
+            }
+        }
+    }
+
+    .form {
+        background: $white;
+        border: 1px solid $border-light;
+        border-radius: $radius-lg;
+        padding: $spacing-lg;
+        
+        h4 {
+            font-size: $font-size-md;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-md;
+        }
+
+        .formRow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: $spacing-md;
+            margin-bottom: $spacing-md;
+        }
+
+        .formActions {
+            display: flex;
+            justify-content: flex-end;
+            gap: $spacing-sm;
+            margin-top: $spacing-md;
+            padding-top: $spacing-md;
+            border-top: 1px solid $border-light;
+        }
+    }
+
+    .addButton {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .expensesList {
+        h4 {
+            font-size: $font-size-sm;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-md;
+        }
+
+        .empty {
+            text-align: center;
+            padding: $spacing-xl;
+            background: $bg-light;
+            border-radius: $radius-lg;
+            border: 1px dashed $border;
+
+            p {
+                font-size: $font-size-sm;
+                font-weight: 500;
+                color: $text-secondary;
+                margin-bottom: $spacing-xs;
+            }
+
+            span {
+                font-size: $font-size-xs;
+                color: $gray-muted;
+            }
+        }
+
+        .tableWrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            
+            &::-webkit-scrollbar {
+                height: 8px;
+            }
+            
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                background: #c1c1c1;
+                border-radius: 4px;
+                
+                &:hover {
+                    background: #a8a8a8;
+                }
+            }
+        }
+
+        .expensesTable {
+            min-width: 700px;
+            border: 1px solid $border-light;
+            border-radius: $radius-lg;
+            overflow: hidden;
+            background: $white;
+
+            .tableHeader {
+                display: grid;
+                grid-template-columns: 100px 120px 1fr 120px 60px;
+                gap: $spacing-md;
+                padding: $spacing-sm $spacing-md;
+                background: $bg-light;
+                border-bottom: 1px solid $border-light;
+                font-size: $font-size-xs;
+                font-weight: 600;
+                color: $text-secondary;
+                white-space: nowrap;
+            }
+
+            .tableRow {
+                display: grid;
+                grid-template-columns: 100px 120px 1fr 120px 60px;
+                gap: $spacing-md;
+                align-items: center;
+                padding: $spacing-sm $spacing-md;
+                border-bottom: 1px solid $border-light;
+                transition: background 0.2s ease;
+                white-space: nowrap;
+
+                &:hover {
+                    background: $bg-light;
+                }
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .date {
+                    font-size: $font-size-xs;
+                    color: $text-secondary;
+                }
+
+                .category {
+                    .categoryBadge {
+                        display: inline-block;
+                        padding: 4px 8px;
+                        border-radius: $radius-sm;
+                        font-size: $font-size-3xs;
+                        font-weight: 500;
+                        white-space: nowrap;
+
+                        &.advertising {
+                            background: rgba(79, 70, 229, 0.12);
+                            color: #4f46e5;
+                        }
+                        &.rent {
+                            background: rgba(245, 158, 11, 0.12);
+                            color: #f59e0b;
+                        }
+                        &.materials {
+                            background: rgba(16, 185, 129, 0.12);
+                            color: #10b981;
+                        }
+                        &.salary {
+                            background: rgba(59, 130, 246, 0.12);
+                            color: #3b82f6;
+                        }
+                        &.taxes {
+                            background: rgba(239, 68, 68, 0.12);
+                            color: #ef4444;
+                        }
+                        &.other {
+                            background: rgba(107, 114, 128, 0.12);
+                            color: #6b7280;
+                        }
+                    }
+                }
+
+                .description {
+                    font-size: $font-size-xs;
+                    color: $text-primary;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .amount {
+                    font-weight: 600;
+                    color: $text-primary;
+                    font-size: $font-size-xs;
+                }
+
+                .actions {
+                    display: flex;
+                    gap: $spacing-xs;
+
+                    button {
+                        width: 34px;
+                        height: 34px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        border: none;
+                        background: transparent;
+                        cursor: pointer;
+                        color: $text-secondary;
+                        transition: all $duration-fast;
+
+                        &:hover {
+                            transform: translateY(-1px);
+                            background: $bg-light;
+                        }
+
+                        svg {
+                            width: 14px;
+                            height: 14px;
+                        }
+                    }
+
+                    .editBtn:hover {
+                        background: $primary-light;
+                        color: $primary;
+                    }
+
+                    .deleteBtn:hover {
+                        background: rgba($red, 0.1);
+                        color: $red;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form {
+            .formRow {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
