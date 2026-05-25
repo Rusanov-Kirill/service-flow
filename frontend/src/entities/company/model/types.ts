@@ -17,6 +17,7 @@ export interface Company {
   isActive: boolean
   ownerId: string
   services: Service[]
+  taxationType: TaxationType
   bookingLeadDays: number
   workScheduleType: WorkScheduleType
   slotInterval: number
@@ -37,3 +38,4 @@ export interface CustomWorkDay {
 
 export type WorkScheduleType = 'FIVE_TWO' | 'EVERY_DAY' | 'CUSTOM';
 export type PaymentMethod = 'CASH' | 'PREPAYMENT' | 'BOTH';
+export type TaxationType = 'SELF_EMPLOYED' | 'SOLE_PROPRIETOR' | 'LEGAL_ENTITY';    
