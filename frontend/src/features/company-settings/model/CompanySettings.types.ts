@@ -15,6 +15,7 @@ export const companySchema = z.object({
     phone: z.string().optional(),
     email: z.string().email('Неверный формат email').optional(),
     website: z.string().optional(),
+    taxationType: z.enum(['SELF_EMPLOYED', 'SOLE_PROPRIETOR', 'LEGAL_ENTITY']),
     bookingLeadDays: z.number().int().min(1).max(365),
     workScheduleType: z.enum(['FIVE_TWO', 'EVERY_DAY', 'CUSTOM']),
     slotInterval: z.number().int().min(5).max(1440),
