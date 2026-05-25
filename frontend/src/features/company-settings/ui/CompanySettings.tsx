@@ -11,7 +11,8 @@ import {
     faUsers,
     faAddressBook,
     faWallet,
-    faBook
+    faBook,
+    faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
@@ -19,6 +20,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import type { TaxationType } from '@/entities/company/model/types';
 import type { MemberRole, MemberWithUser } from '@/entities/company_member';
 import { companyMemberApi } from '@/entities/company_member';
 import { companyApi } from '@/entities/company/api/companyApi';
@@ -44,11 +46,13 @@ import PlaceholderLogo from '@/shared/ui/PlaceholderLogo';
 import { roleLabels, PERMISSIONS } from '@/shared/utils/roleUtils';
 import ConfirmModal from '@/shared/ui/ConfirmModal';
 import AddServiceModal from '@/features/add-service/ui/AddServiceModal';
-import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS } from '@/shared/utils/selectorValues';
+import { TIMEZONES, CURRENCIES, TAGS_OPTIONS, SCHEDULE_TYPES, PAYMENT_METHODS, TAXATION_TYPE } from '@/shared/utils/selectorValues';
 import { updateCompanySchema, type UpdateCompanyFormData } from '../model/CompanySettings.types';
 
 import CustomerSection from '../components/CusomerSection/CustomerSection';
 import BookingsSection from '../components/BookingSection/BookingSection';
+import AnalyticsSection from '../components/AnalyticsSection/AnalyticsSection';
+import ExpensesSection from '../components/ExpensesSection/ExpensesSection';
 
 import styles from './CompanySettings.module.scss';
 
@@ -102,6 +106,7 @@ const CompanySettings = () => {
             phone: '',
             email: '',
             website: '',
+            taxationType: 'SELF_EMPLOYED',
             bookingLeadDays: 30,
             workScheduleType: 'EVERY_DAY',
             slotInterval: 30,
@@ -206,6 +211,7 @@ const CompanySettings = () => {
                             currency: data.currency,
                             address: data.address,
                             logo: data.logo,
+                            taxationType: data.taxationType,
                         };
                         break;
                     case 'contacts':
@@ -379,8 +385,9 @@ const CompanySettings = () => {
         { id: 'services', title: 'Услуги', permission: PERMISSIONS.VIEW_SERVICES, icon: faScissors },
         { id: 'members', title: 'Сотрудники', permission: PERMISSIONS.VIEW_MEMBERS, icon: faUsers },
         { id: 'customers', title: 'Список клиентов', permission: PERMISSIONS.VIEW_CUSTOMERS, icon: faAddressBook },
-        { id: 'finance', title: 'Финансы', permission: PERMISSIONS.VIEW_FINANCE, icon: faWallet },
-        { id: 'booking-list', title: 'Список бронирований', permission: PERMISSIONS.VIEW_BOOKINGS, icon: faBook }
+        { id: 'booking-list', title: 'Список бронирований', permission: PERMISSIONS.VIEW_BOOKINGS, icon: faBook },
+        { id: 'expenses', title: 'Расходы', permission: PERMISSIONS.VIEW_FINANCE, icon: faWallet },
+        { id: 'analytics', title: 'Аналитика', permission: PERMISSIONS.VIEW_FINANCE, icon: faChartLine },
     ];
 
     const hasPermission = (permission: string): boolean => {
@@ -465,6 +472,15 @@ const CompanySettings = () => {
                                         error={formErrors.tags?.message}
                                         required
                                         placeholder="Выберите теги"
+                                    />
+                                    <Select
+                                        label="Система налогообложения"
+                                        options={TAXATION_TYPE}
+                                        value={watch('taxationType')}
+                                        onChange={(value) => setValue('taxationType', value as TaxationType, { shouldValidate: true })}
+                                        error={formErrors.taxationType?.message}
+                                        required
+                                        placeholder="Выберите систему налогообложения"
                                     />
                                     <Select
                                         label="Часовой пояс"
@@ -817,19 +833,18 @@ const CompanySettings = () => {
                                 <BookingsSection companyId={company?.id} canManageStatus={hasPermission(PERMISSIONS.MANAGE_BOOKINGS)} />
                             }
 
-                            {/* Финансы - заглушка */}
-                            {section.id === 'finance' && (
-                                <div className={styles.sectionContent}>
-                                    <div className={styles.placeholderContent}>
-                                        <p>Финансовая информация будет доступна здесь</p>
-                                    </div>
-                                </div>
+                            {section.id === 'expenses' && (
+                                <ExpensesSection companyId={company?.id} />
+                            )}
+
+                            {section.id === 'analytics' && (
+                                <AnalyticsSection companyId={company?.id} />
                             )}
 
                             {errors[section.id] && <div className={styles.error}>{errors[section.id]}</div>}
                             {successes[section.id] && <div className={styles.success}>{successes[section.id]}</div>}
 
-                            {section.id !== 'services' && section.id !== 'members' && section.id !== 'customers' && section.id !== 'booking-list' && (
+                            {section.id !== 'services' && section.id !== 'members' && section.id !== 'customers' && section.id !== 'booking-list' && section.id !== 'analytics' && section.id !== 'expenses' && (
                                 <div className={styles.actions}>
                                     <Button
                                         type="button"
