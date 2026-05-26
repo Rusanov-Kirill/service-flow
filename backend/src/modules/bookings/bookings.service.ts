@@ -1,4 +1,6 @@
 import { DateTime } from 'luxon';
+import { prisma } from '../../shared/database/prisma';
+import { emailService } from '../../shared/utils/email.service';
 
 import { bookingsRepository } from './bookings.repository';
 import type { CreateBookingInput, UpdateBookingDto } from './bookings.validation';
@@ -50,7 +52,44 @@ export const bookingsService = {
             throw new Error('Бронирование не найдено');
         }
 
-        return bookingsRepository.update(id, data);
+        const oldStatus = existingBooking.status;
+        const newStatus = data.status;
+
+        const updatedBooking = await bookingsRepository.update(id, data);
+
+        if (oldStatus !== newStatus && newStatus === 'confirmed') {
+            try {
+                const customer = await prisma.customer.findUnique({
+                    where: { id: existingBooking.customerId },
+                    include: { user: true }
+                });
+
+                const service = await prisma.service.findUnique({
+                    where: { id: existingBooking.serviceId }
+                });
+
+                const company = await prisma.company.findUnique({
+                    where: { id: existingBooking.companyId }
+                });
+
+                if (customer?.email && customer.user) {
+                    await emailService.sendBookingConfirmedEmail(customer.email, {
+                        bookingId: updatedBooking.id,
+                        customerName: `${customer.user.firstName || ''} ${customer.user.lastName || ''}`.trim() || 'Клиент',
+                        serviceName: service?.name || 'Услуга',
+                        startTime: updatedBooking.startTime,
+                        companyName: company?.name || 'Компания',
+                        companySlug: company?.slug,
+                    });
+
+                    console.log(`✅ Email о подтверждении отправлен на ${customer.email}`);
+                }
+            } catch (emailError) {
+                console.error('❌ Не удалось отправить email уведомление:', emailError);
+            }
+        }
+
+        return updatedBooking;
     },
 
     getBookedSlots: async (companyId: string, date: string, serviceId?: string) => {
