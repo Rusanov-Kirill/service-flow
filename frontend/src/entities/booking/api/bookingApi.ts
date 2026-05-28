@@ -1,8 +1,50 @@
 import { apiClient } from "@/shared/api/client";
 
-import type { Booking, CreateCustomerDto, UpdateBookingDto } from "../model/types";
+import type { UpdateBookingDto, BookingStatus } from "../model/types";
 
-type BookingCreateDto = Booking & CreateCustomerDto;
+type BookingCreateDto = {
+    companyId: string;
+    serviceId: string;
+    startTime: Date;
+    endTime: Date;
+    totalPrice: number;
+    status: BookingStatus;
+    userId: string;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+};
+
+export interface BookingResponse {
+    id: string;
+    companyId: string;
+    customerId: string;
+    serviceId: string;
+    startTime: string;
+    endTime: string;
+    status: BookingStatus;
+    totalPrice: number;
+    createdAt: string;
+    updatedAt: string;
+    customer: {
+        id: string;
+        userId: string | null;
+        email: string;
+        user?: {
+            firstName?: string | null;
+            lastName?: string | null;
+            avatar?: string | null;
+        } | null;
+    };
+    service: {
+        id: string;
+        name: string;
+        duration: number;
+        price: number;
+        currency: string;
+    };
+}
 
 export interface UserBooking {
     id: string;
@@ -23,7 +65,7 @@ export interface UserBooking {
 
 interface BookingsResponse {
     success: boolean;
-    data: Booking[];
+    data: BookingResponse[];
 }
 
 interface UserBookingsResponse {
@@ -54,7 +96,10 @@ export const bookingApi = {
         const response = await apiClient.get(`/bookings/${companyId}`, {
             params: { companyId }
         });
-        return response.data;
+        return {
+            success: response.data.success !== false,
+            data: response.data.data || response.data
+        };
     },
 
     getUserBookings: async (userId: string): Promise<UserBookingsResponse> => {

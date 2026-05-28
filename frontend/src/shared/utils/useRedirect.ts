@@ -8,6 +8,6 @@ export const useRedirect = () => {
     return {
         redirectToLogin: () => navigate(ROUTES.AUTH.LOGIN),
         redirectToRegister: () => navigate(ROUTES.AUTH.REGISTER),
-        redirectToHome: () => navigate(ROUTES.HOME),
+        redirectToHome: () => navigate(ROUTES.HOME.ROOT),
     };
 };
