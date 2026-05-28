@@ -48,16 +48,16 @@ if (config.nodeEnv === 'development') {
 }
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/companies', companyRoutes);
-app.use('/api/customers', customerRoutes);
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/company-members', companyMemberRoutes);
-app.use('/api/services', serviceRoutes);
-app.use('/api/favorites', favoritesRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/expenses', expensesRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/companies', companyRoutes);
+app.use('/customers', customerRoutes);
+app.use('/bookings', bookingRoutes);
+app.use('/company-members', companyMemberRoutes);
+app.use('/services', serviceRoutes);
+app.use('/favorites', favoritesRoutes);
+app.use('/analytics', analyticsRoutes);
+app.use('/expenses', expensesRoutes);
 
 // Health check
 app.get('/health', (_, res) => {
