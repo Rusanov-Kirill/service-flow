@@ -24,6 +24,7 @@ $RECYCLE.BIN/
 .cache
 .temp
 .tmp
+.env
 
 # Docker (общие)
 *.pid
