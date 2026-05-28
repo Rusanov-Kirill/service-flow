@@ -4,12 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
 import SectionHeading from '@/shared/ui/SectionHeading';
+import { useRedirect } from '@/shared/utils/useRedirect';
 
 import DashboardPreview from '../components/DashboardPreview';
 
 import styles from './SpecialistPanel.module.scss';
 
 const SpecialistPanel = () => {
+    const { redirectToLogin } = useRedirect();
+
     return (
         <div className={styles['hero-specialist']}>
             <div className={styles.wrapper}>
@@ -20,7 +23,7 @@ const SpecialistPanel = () => {
                     </SectionHeading>
                     <div className={styles['hero-form']}>
                         <InputField type='email' placeholder='Введите ваш email' />
-                        <Button variant='primary' size='large'>Начать бесплатно</Button>
+                        <Button variant='primary' size='large' onClick={redirectToLogin}>Начать бесплатно</Button>
                     </div>
                     <div className={styles['hero-stats']}>
                         <span>

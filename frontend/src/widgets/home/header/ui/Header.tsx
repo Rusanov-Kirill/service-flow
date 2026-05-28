@@ -41,11 +41,6 @@ const Header = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleScrollPricing = () => {
-        refs?.pricingRef?.current?.scrollIntoView();
-        setIsMenuOpen(!isMenuOpen);
-    };
-
     if (!isInitialized) {
         return <HeaderSkeleton />;
     };
@@ -66,7 +61,6 @@ const Header = () => {
                         <button onClick={handleScrollValues}>Ценности</button>
                         <button onClick={handleScrollAudience}>Аудитория</button>
                         <button onClick={handleScrollCapabilities}>Для специалистов</button>
-                        <button onClick={handleScrollPricing}>Тарифы</button>
                     </nav>
                     {!accessToken ?
                         <Button className={styles['sign-in']} onClick={redirectToLogin}>Войти</Button>

@@ -6,12 +6,15 @@ import Button from '@/shared/ui/Button';
 import InputField from '@/shared/ui/InputField';
 import MasterCard from '@/shared/ui/MasterCard';
 import SectionHeading from '@/shared/ui/SectionHeading';
+import { useRedirect } from '@/shared/utils/useRedirect';
 
 import styles from './ClientPanel.module.scss';
 
 const categories = ['Красота', 'Образование', 'Фитнес', 'Ремонт', 'Консультации'];
 
 const ClientPanel = () => {
+    const { redirectToLogin } = useRedirect();
+
     return (
         <div className={styles['hero-client']}>
             <div className={styles.wrapper}>
@@ -22,7 +25,7 @@ const ClientPanel = () => {
                     <div className={styles['search-bar']}>
                         <InputField className={styles['search-bar-input']} type="text" placeholder="Что ищете?" />
                         <CityDropdown />
-                        <Button isSearch>
+                        <Button isSearch onClick={redirectToLogin}>
                             <FontAwesomeIcon icon={faSearch} />
                             <span>Найти</span>
                         </Button>
