@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import type { Company } from '@/entities/company';
 import { companyApi } from '@/entities/company/api/companyApi';
 import { useCompanyStore } from '@/entities/company/store/useCompanyStore';
-import { useAuthStore } from '@/entities/user/store/useAuthStore';
 import CompanySearch from '@/features/company-search';
 import Loader from '@/shared/ui/Loader';
 import PopularCompanies from '@/widgets/dashboard/popular-companies';
@@ -18,7 +17,6 @@ type Tab = 'overview' | 'services' | 'finance' | 'bookings';
 
 const DashboardMain = () => {
   const { slug } = useParams<{ slug?: string }>();
-  const { user } = useAuthStore();
   const { companies, fetchCompanies, isLoading: isCompaniesLoading } = useCompanyStore();
 
   const [isCompanyLoading, setIsCompanyLoading] = useState(false);
@@ -111,15 +109,6 @@ const DashboardMain = () => {
                 Услуги
               </button>
 
-              {company.ownerId === user?.id ? (
-                <button
-                  className={activeTab === 'finance' ? styles.activeTab : ''}
-                  onClick={() => setActiveTab('finance')}
-                >
-                  Финансы
-                </button>
-              ) : null}
-
               <button
                 className={activeTab === 'bookings' ? styles.activeTab : ''}
                 onClick={() => setActiveTab('bookings')}
@@ -135,10 +124,6 @@ const DashboardMain = () => {
 
               {activeTab === 'services' && (
                 <ServicesTab selectedCompany={company} />
-              )}
-
-              {activeTab === 'finance' && (
-                <div>Финансовая информация</div>
               )}
 
               {activeTab === 'bookings' && (

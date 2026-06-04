@@ -42,9 +42,6 @@ const Sidebar = () => {
                         <NavLink to="/home/my-bookings" className={getLinkClass} onClick={handleLinkClick}>
                             Список бронирований
                         </NavLink>
-                        <NavLink to="/home/settings" className={getLinkClass} onClick={handleLinkClick}>
-                            Настройки
-                        </NavLink>
                     </nav>
                 </div>
 

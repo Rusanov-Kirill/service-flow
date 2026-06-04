@@ -427,23 +427,6 @@ const AnalyticsSection = ({ companyId }: AnalyticsSectionProps) => {
 
     return (
         <div className={styles.sectionContent}>
-            {/* CONTROLS */}
-            <div className={styles.controls}>
-                <Select
-                    label="Период"
-                    options={periodOptions}
-                    value={period}
-                    onChange={handlePeriodChange}
-                />
-
-                <Button
-                    variant="secondary"
-                    onClick={fetchAllData}
-                >
-                    Обновить
-                </Button>
-            </div>
-
             {/* KPI */}
             {dashboardStats && (
                 <div className={styles.kpiGrid}>
@@ -573,6 +556,23 @@ const AnalyticsSection = ({ companyId }: AnalyticsSectionProps) => {
                     </div>
                 </div>
             )}
+
+            {/* CONTROLS */}
+            <div className={styles.controls}>
+                <Select
+                    label="Период"
+                    options={periodOptions}
+                    value={period}
+                    onChange={handlePeriodChange}
+                />
+
+                <Button
+                    variant="secondary"
+                    onClick={fetchAllData}
+                >
+                    Обновить
+                </Button>
+            </div>
 
             {/* FINANCE */}
             {financeData && (
