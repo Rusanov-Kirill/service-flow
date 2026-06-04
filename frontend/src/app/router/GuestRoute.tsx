@@ -9,16 +9,14 @@ interface Props {
 
 const GuestRoute = ({ children }: Props) => {
     const { accessToken, isInitialized } = useAuthStore();
-
-    if (!isInitialized) {
-        return <div>Loading...</div>;
-    }
-
-    if (accessToken) {
-        return <Navigate to={ROUTES.HOME.ROOT} replace />;
-    }
-
-    return children;
+    
+    const content = (() => {
+        if (!isInitialized) return <div>Loading...</div>;
+        if (accessToken) return <Navigate to={ROUTES.HOME.ROOT} replace />;
+        return children;
+    })();
+    
+    return <>{content}</>;
 };
 
 export default GuestRoute;

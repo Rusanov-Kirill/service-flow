@@ -22,8 +22,6 @@ const Profile = () => {
     navigate(`/home/dashboard/${slug}`);
   };
 
-  if (!user) return null;
-
   useEffect(() => {
     const fetchUserCompanies = async () => {
       try {
@@ -42,6 +40,8 @@ const Profile = () => {
       fetchUserCompanies();
     }
   }, [user]);
+
+  if (!user) return null;
 
   return (
     <div className={styles.profile}>

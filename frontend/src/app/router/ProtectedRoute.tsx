@@ -9,16 +9,14 @@ interface Props {
 
 const ProtectedRoute = ({ children }: Props) => {
     const { accessToken, isInitialized } = useAuthStore();
-
-    if (!isInitialized) {
-        return <div>Loading...</div>; 
-    }
-
-    if (!accessToken) {
-        return <Navigate to={ROUTES.AUTH.LOGIN} replace />;
-    }
-
-    return children;
+    
+    const content = (() => {
+        if (!isInitialized) return <div>Loading...</div>;
+        if (!accessToken) return <Navigate to={ROUTES.AUTH.LOGIN} replace />;
+        return children;
+    })();
+    
+    return <>{content}</>;
 };
 
 export default ProtectedRoute;
